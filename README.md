@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Claude Agency System
 
-## Getting Started
+A numbered, animated component library and Next.js starter kit for composing
+client marketing sites with Claude Code — instead of designing every hero,
+CTA, and pricing grid from scratch each project, Claude composes pages from a
+small, fixed, well-designed catalog. See **[MODULE-LIBRARY.md](./MODULE-LIBRARY.md)**
+for the full explanation and the workflow this is built around.
 
-First, run the development server:
+## Quick start
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) — the homepage
+(`src/app/page.tsx`) is a working example assembling nine of the fifteen
+starter modules end to end, including a title on Effect B (module 5) and
+scroll-linked parallax images (module 14).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## What's here
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+src/registry/
+  modules/            15 numbered, self-contained marketing sections
+  modules.json         the catalog Claude Code reads to resolve "module N"
+  lib/motion-variants.tsx   the A–J animation effect system, shared by every module
+src/app/page.tsx       worked example composing modules into a page
+MODULE-LIBRARY.md      how the system works, how to extend it
+CLAUDE.md              project instructions Claude Code loads automatically
+```
 
-## Learn More
+Stack: Next.js 16 (App Router) · React 19 · Tailwind CSS v4 · Motion (the
+React animation library formerly known as Framer Motion) · TypeScript.
 
-To learn more about Next.js, take a look at the following resources:
+## Using this on a new client project
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+This repo is meant to be the reusable base, not a one-off site. The usual
+pattern: start a new project from this one (clone, or use it as a template),
+strip `src/app/page.tsx` back to a blank page, then build the client's actual
+pages by telling Claude Code which modules to use, in what order, with which
+effects — see the worked example in MODULE-LIBRARY.md. Grow the catalog over
+time as you build; new modules benefit every future project.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Deploying
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Standard Next.js app — deploys as-is to Vercel, Netlify, or any Node hosting.
+See the [Next.js deployment docs](https://nextjs.org/docs/app/building-your-application/deploying).

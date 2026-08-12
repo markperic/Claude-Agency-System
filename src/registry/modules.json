@@ -1,0 +1,141 @@
+{
+  "$schema": "./modules.schema.json",
+  "description": "The numbered module catalog. Claude Code reads this file to resolve instructions like 'use module 5' to a real component, its default animation effects, and which named elements inside it are meant to be adjustable (see 'editable').",
+  "modules": [
+    {
+      "id": 1,
+      "name": "Hero — Centered",
+      "category": "hero",
+      "file": "src/registry/modules/01-hero-centered.tsx",
+      "component": "HeroCentered",
+      "description": "Single-column hero: eyebrow, headline, subhead, two CTAs, no image.",
+      "editable": { "title": "B", "body/cta group": "F (stagger of A)" }
+    },
+    {
+      "id": 2,
+      "name": "Hero — Split with Visual",
+      "category": "hero",
+      "file": "src/registry/modules/02-hero-split.tsx",
+      "component": "HeroSplit",
+      "description": "Two-column hero: copy + CTA left, visual placeholder right.",
+      "editable": { "title": "A", "visual": "E" }
+    },
+    {
+      "id": 3,
+      "name": "Logo Cloud",
+      "category": "social-proof",
+      "file": "src/registry/modules/03-logo-cloud.tsx",
+      "component": "LogoCloud",
+      "description": "Row of client/partner logo placeholders.",
+      "editable": { "logo row": "F (stagger of A)" }
+    },
+    {
+      "id": 4,
+      "name": "Feature Grid — 3 Column",
+      "category": "content",
+      "file": "src/registry/modules/04-feature-grid.tsx",
+      "component": "FeatureGrid",
+      "description": "Icon + title + description, repeated three times.",
+      "editable": { "heading": "A", "cards": "F (stagger of A)" }
+    },
+    {
+      "id": 5,
+      "name": "Content Split — Image Right",
+      "category": "content",
+      "file": "src/registry/modules/05-content-split.tsx",
+      "component": "ContentSplit",
+      "description": "Mid-page section: eyebrow/title/body left, visual right. The worked example in MODULE-LIBRARY.md references this module's title.",
+      "editable": { "title": "B", "visual": "E", "body": "A" }
+    },
+    {
+      "id": 6,
+      "name": "Stats Row",
+      "category": "social-proof",
+      "file": "src/registry/modules/06-stats-row.tsx",
+      "component": "StatsRow",
+      "description": "3–4 large numbers with labels on a dark background.",
+      "editable": { "stats": "F (stagger of A)" }
+    },
+    {
+      "id": 7,
+      "name": "Testimonial — Single Quote",
+      "category": "social-proof",
+      "file": "src/registry/modules/07-testimonial.tsx",
+      "component": "Testimonial",
+      "description": "Large centered quote with attribution.",
+      "editable": { "block": "G" }
+    },
+    {
+      "id": 8,
+      "name": "Testimonial Grid",
+      "category": "social-proof",
+      "file": "src/registry/modules/08-testimonial-grid.tsx",
+      "component": "TestimonialGrid",
+      "description": "3 short quotes in hoverable cards.",
+      "editable": { "cards": "F (stagger of A)", "card hover": "I" }
+    },
+    {
+      "id": 9,
+      "name": "Pricing Grid — 3 Tier",
+      "category": "pricing",
+      "file": "src/registry/modules/09-pricing-grid.tsx",
+      "component": "PricingGrid",
+      "description": "3-tier pricing cards with the middle tier highlighted.",
+      "editable": { "cards": "F (stagger of A)", "card hover": "I" }
+    },
+    {
+      "id": 10,
+      "name": "FAQ Accordion",
+      "category": "content",
+      "file": "src/registry/modules/10-faq-accordion.tsx",
+      "component": "FaqAccordion",
+      "description": "Expandable question list.",
+      "editable": { "questions": "F (stagger of A)" }
+    },
+    {
+      "id": 11,
+      "name": "Team Grid",
+      "category": "content",
+      "file": "src/registry/modules/11-team-grid.tsx",
+      "component": "TeamGrid",
+      "description": "Photo, name, role — repeated in a 4-column grid.",
+      "editable": { "cards": "F (stagger of E)" }
+    },
+    {
+      "id": 12,
+      "name": "CTA Banner",
+      "category": "cta",
+      "file": "src/registry/modules/12-cta-banner.tsx",
+      "component": "CtaBanner",
+      "description": "Full-width closing call-to-action block.",
+      "editable": { "block": "G" }
+    },
+    {
+      "id": 13,
+      "name": "Newsletter Signup",
+      "category": "cta",
+      "file": "src/registry/modules/13-newsletter.tsx",
+      "component": "Newsletter",
+      "description": "Compact centered email capture form.",
+      "editable": { "block": "A" }
+    },
+    {
+      "id": 14,
+      "name": "Gallery — Scroll Parallax",
+      "category": "content",
+      "file": "src/registry/modules/14-gallery-scroll.tsx",
+      "component": "GalleryScroll",
+      "description": "3-image row with scroll-linked parallax drift. The worked example in MODULE-LIBRARY.md references this module's images.",
+      "editable": { "heading": "A", "images": "H" }
+    },
+    {
+      "id": 15,
+      "name": "Footer — Multi Column",
+      "category": "footer",
+      "file": "src/registry/modules/15-footer.tsx",
+      "component": "Footer",
+      "description": "4-column footer with link groups. No entrance animation by convention.",
+      "editable": {}
+    }
+  ]
+}

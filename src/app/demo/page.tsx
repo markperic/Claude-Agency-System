@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import modulesData from "@/registry/modules.json";
+import { SiteNav } from "@/components/site-nav";
 
 const CATEGORIES: { slug: string; title: string; description: string }[] = [
   { slug: "hero", title: "Hero sections", description: "Opening sections — the first thing a visitor sees." },
@@ -22,8 +23,9 @@ function countFor(slug: string) {
  */
 export default function DemoPage() {
   return (
-    <main className="min-h-screen bg-white px-6 py-16">
-      <div className="mx-auto max-w-5xl">
+    <main className="min-h-screen bg-white">
+      <SiteNav />
+      <div className="mx-auto max-w-5xl px-6 py-16">
         <div className="text-center">
           <p className="mb-3 text-sm font-medium tracking-wide text-zinc-500 uppercase">
             Claude Agency System

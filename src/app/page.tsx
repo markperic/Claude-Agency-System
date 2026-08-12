@@ -1,3 +1,4 @@
+import { SiteNav } from "@/components/site-nav";
 import HeroSplit from "@/registry/modules/02-hero-split";
 import FeatureGrid from "@/registry/modules/04-feature-grid";
 import ContentSplit from "@/registry/modules/05-content-split";
@@ -20,6 +21,8 @@ import Footer from "@/registry/modules/15-footer";
 export default function Home() {
   return (
     <main>
+      <SiteNav />
+
       <HeroSplit />
       <FeatureGrid />
       <ContentSplit />

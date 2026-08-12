@@ -10,6 +10,35 @@
   --color-foreground: var(--foreground);
   --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  /* Shared animation utilities for hero modules (src/registry/modules/16-25).
+     Not part of the lettered A-J effect catalog (see motion-variants.tsx) —
+     these are CSS-driven background/decoration loops, registered here the
+     same way Tailwind registers its own built-ins like animate-spin. */
+  --animate-aurora: aurora 14s ease-in-out infinite alternate;
+  --animate-marquee: marquee 28s linear infinite;
+  --animate-beam-drift: beam-drift 9s ease-in-out infinite alternate;
+  --animate-border-spin: border-spin 3.5s linear infinite;
+}
+
+@keyframes aurora {
+  0% { transform: translate(-10%, -10%) rotate(0deg) scale(1); }
+  50% { transform: translate(5%, 10%) rotate(8deg) scale(1.15); }
+  100% { transform: translate(-5%, -5%) rotate(-6deg) scale(1.05); }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes beam-drift {
+  0% { transform: translate(-8%, -4%) rotate(12deg); opacity: 0.35; }
+  100% { transform: translate(8%, 6%) rotate(12deg); opacity: 0.7; }
+}
+
+@keyframes border-spin {
+  to { transform: rotate(360deg); }
 }
 
 @media (prefers-color-scheme: dark) {

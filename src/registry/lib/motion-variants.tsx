@@ -112,9 +112,20 @@ export function ScrollReveal({ effect = "G", as = "div", className, children, ..
 }
 
 /** Effect F helper: wrap a grid/row of items in this, give each item <ScrollReveal effect="A"> (or Reveal) and they'll stagger. */
-export function StaggerGroup({ className, children, viewport = true }: { className?: string; children: ReactNode; viewport?: boolean }) {
+export function StaggerGroup({
+  className,
+  children,
+  viewport = true,
+  as = "div",
+}: {
+  className?: string;
+  children: ReactNode;
+  viewport?: boolean;
+  as?: ElementType;
+}) {
+  const MotionTag = motion[as as "div"] ?? motion.div;
   return (
-    <motion.div
+    <MotionTag
       initial="hidden"
       {...(viewport
         ? { whileInView: "show", viewport: { once: true, margin: "-80px" } }
@@ -123,7 +134,7 @@ export function StaggerGroup({ className, children, viewport = true }: { classNa
       className={className}
     >
       {children}
-    </motion.div>
+    </MotionTag>
   );
 }
 

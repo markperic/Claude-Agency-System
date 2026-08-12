@@ -136,6 +136,429 @@
       "component": "Footer",
       "description": "4-column footer with link groups. No entrance animation by convention.",
       "editable": {}
+    },
+    {
+      "id": 16,
+      "name": "Hero — Macbook Scroll Reveal",
+      "category": "hero",
+      "file": "src/registry/modules/16-hero-macbook-scroll.tsx",
+      "component": "HeroMacbookScroll",
+      "description": "Tall sticky section: a laptop mockup opens and its screen scales in as you scroll past. Recreated from scratch with motion's scroll hooks, inspired by Aceternity's Macbook Scroll.",
+      "editable": { "title": "B", "screen content": "custom scroll-linked, see file" }
+    },
+    {
+      "id": 17,
+      "name": "Hero — Spotlight",
+      "category": "hero",
+      "file": "src/registry/modules/17-hero-spotlight.tsx",
+      "component": "HeroSpotlight",
+      "description": "Dark hero with a blurred radial spotlight glow and faded grid behind centered copy.",
+      "editable": { "title": "B", "body/cta group": "F (stagger of A)" }
+    },
+    {
+      "id": 18,
+      "name": "Hero — Aurora Background",
+      "category": "hero",
+      "file": "src/registry/modules/18-hero-aurora.tsx",
+      "component": "HeroAurora",
+      "description": "Dark hero with three large gradient blobs drifting slowly behind centered copy (shared animate-aurora keyframe).",
+      "editable": { "title": "B", "body/cta group": "F (stagger of A)" }
+    },
+    {
+      "id": 19,
+      "name": "Hero — Grid Background",
+      "category": "hero",
+      "file": "src/registry/modules/19-hero-grid.tsx",
+      "component": "HeroGrid",
+      "description": "Light hero with a faded CSS grid-line background behind centered copy and a badge eyebrow.",
+      "editable": { "title": "A", "body/cta group": "F (stagger of A)" }
+    },
+    {
+      "id": 20,
+      "name": "Hero — Bento Product Grid",
+      "category": "hero",
+      "file": "src/registry/modules/20-hero-bento.tsx",
+      "component": "HeroBento",
+      "description": "Split hero: copy + CTA left, a bento-style grid of product tiles right, staggering in on scale.",
+      "editable": { "title": "A", "bento tiles": "F (stagger of E)" }
+    },
+    {
+      "id": 21,
+      "name": "Hero — Marquee Logo Wall",
+      "category": "hero",
+      "file": "src/registry/modules/21-hero-marquee.tsx",
+      "component": "HeroMarquee",
+      "description": "Centered headline/CTA with an infinite horizontal logo marquee below (shared animate-marquee keyframe, pauses on hover).",
+      "editable": { "title": "B", "logo marquee": "custom loop, see file" }
+    },
+    {
+      "id": 22,
+      "name": "Hero — Text Generate",
+      "category": "hero",
+      "file": "src/registry/modules/22-hero-text-generate.tsx",
+      "component": "HeroTextGenerate",
+      "description": "Headline splits into words that stagger in one by one (Effect F wrapping Effect A at word granularity).",
+      "editable": { "title": "F (word-level stagger of A)", "body/cta group": "F (stagger of A)" }
+    },
+    {
+      "id": 23,
+      "name": "Hero — Gradient Beams",
+      "category": "hero",
+      "file": "src/registry/modules/23-hero-beams.tsx",
+      "component": "HeroBeams",
+      "description": "Dark hero with drifting diagonal gradient beams and a CTA button with an animated spinning gradient border.",
+      "editable": { "title": "B", "cta border": "custom spinning ring, see file" }
+    },
+    {
+      "id": 24,
+      "name": "Hero — Device Split with Play Button",
+      "category": "hero",
+      "file": "src/registry/modules/24-hero-device-split.tsx",
+      "component": "HeroDeviceSplit",
+      "description": "Split hero: copy + CTA left, browser-window mockup right with a gradient video placeholder and a hover-lift play button.",
+      "editable": { "title": "A", "visual": "E", "play button hover": "I" }
+    },
+    {
+      "id": 25,
+      "name": "Hero — 3D Tilt Card",
+      "category": "hero",
+      "file": "src/registry/modules/25-hero-3d-tilt.tsx",
+      "component": "Hero3DTilt",
+      "description": "Split hero: copy left, a product card right that tilts in 3D perspective following the cursor and springs back on mouse leave.",
+      "editable": { "title": "A", "visual": "custom mouse-tilt, see file" }
+    },
+    {
+      "id": 26,
+      "name": "Content — Process Timeline",
+      "category": "content",
+      "file": "src/registry/modules/26-content-timeline.tsx",
+      "component": "ContentTimeline",
+      "description": "Numbered steps, horizontal on desktop, stacked on mobile.",
+      "editable": { "heading": "A", "steps": "F (stagger of A)" }
+    },
+    {
+      "id": 27,
+      "name": "Content — Comparison Table",
+      "category": "content",
+      "file": "src/registry/modules/27-content-comparison-table.tsx",
+      "component": "ContentComparisonTable",
+      "description": "Two-column \"us vs. them\" feature comparison table.",
+      "editable": { "heading": "A", "table": "G" }
+    },
+    {
+      "id": 28,
+      "name": "Content — Tabs Showcase",
+      "category": "content",
+      "file": "src/registry/modules/28-content-tabs.tsx",
+      "component": "ContentTabs",
+      "description": "Tabbed panel switching between three short text/visual states. Local interactive state, not part of the A-J catalog.",
+      "editable": { "heading": "A", "tabs": "A" }
+    },
+    {
+      "id": 29,
+      "name": "Content — Video Embed",
+      "category": "content",
+      "file": "src/registry/modules/29-content-video-embed.tsx",
+      "component": "ContentVideoEmbed",
+      "description": "Standalone centered video placeholder with a hover-lift play button.",
+      "editable": { "heading": "A", "frame": "E", "play button hover": "I" }
+    },
+    {
+      "id": 30,
+      "name": "Content — Checklist Split",
+      "category": "content",
+      "file": "src/registry/modules/30-content-checklist-split.tsx",
+      "component": "ContentChecklistSplit",
+      "description": "Visual left, checklist of benefits right — a variant of module 05 with the image on the opposite side and a list instead of a paragraph.",
+      "editable": { "title": "A", "visual": "E", "checklist": "F (stagger of A)" }
+    },
+    {
+      "id": 31,
+      "name": "Social Proof — Case Study Cards",
+      "category": "social-proof",
+      "file": "src/registry/modules/31-social-case-studies.tsx",
+      "component": "SocialCaseStudies",
+      "description": "Logo placeholder + headline result metric + link, per card.",
+      "editable": { "heading": "A", "cards": "F (stagger of A)", "card hover": "I" }
+    },
+    {
+      "id": 32,
+      "name": "Social Proof — Press Mentions",
+      "category": "social-proof",
+      "file": "src/registry/modules/32-social-press.tsx",
+      "component": "SocialPress",
+      "description": "\"As featured in\" row with a pull-quote per outlet.",
+      "editable": { "row": "F (stagger of A)" }
+    },
+    {
+      "id": 33,
+      "name": "Social Proof — Rating Summary",
+      "category": "social-proof",
+      "file": "src/registry/modules/33-social-rating-summary.tsx",
+      "component": "SocialRatingSummary",
+      "description": "Large average rating and review count, plus three short review snippets.",
+      "editable": { "score": "B", "snippets": "F (stagger of A)" }
+    },
+    {
+      "id": 34,
+      "name": "Social Proof — Trust Badges",
+      "category": "social-proof",
+      "file": "src/registry/modules/34-social-trust-badges.tsx",
+      "component": "SocialTrustBadges",
+      "description": "Compact row of security/compliance badges (SOC 2, GDPR, uptime).",
+      "editable": { "badges": "F (stagger of A)" }
+    },
+    {
+      "id": 35,
+      "name": "Social Proof — Video Testimonial Grid",
+      "category": "social-proof",
+      "file": "src/registry/modules/35-social-video-testimonials.tsx",
+      "component": "SocialVideoTestimonials",
+      "description": "Testimonial cards framed as short videos with a hover-lift play button, distinct from module 08's text-quote grid.",
+      "editable": { "heading": "A", "cards": "F (stagger of A)", "play button hover": "I" }
+    },
+    {
+      "id": 36,
+      "name": "Social Proof — Single Powerful Stat",
+      "category": "social-proof",
+      "file": "src/registry/modules/36-social-big-stat.tsx",
+      "component": "SocialBigStat",
+      "description": "One dramatic full-width number with a supporting line, distinct from module 06's 3-up stats row.",
+      "editable": { "number": "J (Gradient Shimmer)", "supporting line": "A" }
+    },
+    {
+      "id": 37,
+      "name": "Pricing — Two Tier",
+      "category": "pricing",
+      "file": "src/registry/modules/37-pricing-two-tier.tsx",
+      "component": "PricingTwoTier",
+      "description": "Two larger plan cards, for products with a simpler pricing story than module 09's 3-tier grid.",
+      "editable": { "heading": "A", "cards": "F (stagger of A)", "card hover": "I" }
+    },
+    {
+      "id": 38,
+      "name": "Pricing — Single Plan Highlight",
+      "category": "pricing",
+      "file": "src/registry/modules/38-pricing-single-highlight.tsx",
+      "component": "PricingSingleHighlight",
+      "description": "One centered plan card, no tiers to compare.",
+      "editable": { "heading": "A", "card": "E" }
+    },
+    {
+      "id": 39,
+      "name": "Pricing — Feature Comparison Table",
+      "category": "pricing",
+      "file": "src/registry/modules/39-pricing-comparison-table.tsx",
+      "component": "PricingComparisonTable",
+      "description": "Full feature matrix across three plans.",
+      "editable": { "heading": "A", "table": "G" }
+    },
+    {
+      "id": 40,
+      "name": "Pricing — Monthly/Annual Toggle",
+      "category": "pricing",
+      "file": "src/registry/modules/40-pricing-toggle.tsx",
+      "component": "PricingToggle",
+      "description": "A toggle switches the displayed price between monthly and annual. Local interactive state, not part of the A-J catalog.",
+      "editable": { "heading": "A", "cards": "F (stagger of A)", "card hover": "I" }
+    },
+    {
+      "id": 41,
+      "name": "Pricing — Plans + Enterprise Contact",
+      "category": "pricing",
+      "file": "src/registry/modules/41-pricing-enterprise-cta.tsx",
+      "component": "PricingEnterpriseCta",
+      "description": "Two standard plans plus a distinct \"talk to us\" enterprise card.",
+      "editable": { "heading": "A", "cards": "F (stagger of A)", "card hover": "I" }
+    },
+    {
+      "id": 42,
+      "name": "Pricing — Usage-Based Slider",
+      "category": "pricing",
+      "file": "src/registry/modules/42-pricing-usage-slider.tsx",
+      "component": "PricingUsageSlider",
+      "description": "A slider drives the displayed price for a usage-based product. Local interactive state, not part of the A-J catalog.",
+      "editable": { "heading": "A", "card": "E" }
+    },
+    {
+      "id": 43,
+      "name": "Pricing — Freemium Callout",
+      "category": "pricing",
+      "file": "src/registry/modules/43-pricing-freemium.tsx",
+      "component": "PricingFreemium",
+      "description": "Free vs. Pro, deliberately asymmetric — Pro is the visually obvious upgrade.",
+      "editable": { "heading": "A", "cards": "F (stagger of A)", "pro card hover": "I" }
+    },
+    {
+      "id": 44,
+      "name": "Pricing — Minimal Centered",
+      "category": "pricing",
+      "file": "src/registry/modules/44-pricing-minimal-centered.tsx",
+      "component": "PricingMinimalCentered",
+      "description": "No card, no border, no feature list — just a price and a CTA.",
+      "editable": { "price": "B", "body/cta": "F (stagger of A)" }
+    },
+    {
+      "id": 45,
+      "name": "Pricing — Testimonial Sidebar",
+      "category": "pricing",
+      "file": "src/registry/modules/45-pricing-testimonial-sidebar.tsx",
+      "component": "PricingTestimonialSidebar",
+      "description": "A single pricing card paired with a quote that reinforces the value.",
+      "editable": { "card": "A", "quote": "C" }
+    },
+    {
+      "id": 46,
+      "name": "CTA — Split with Visual",
+      "category": "cta",
+      "file": "src/registry/modules/46-cta-split-visual.tsx",
+      "component": "CtaSplitVisual",
+      "description": "Copy + CTA left, gradient visual right — more visual weight than module 12's plain banner.",
+      "editable": { "title": "A", "visual": "E" }
+    },
+    {
+      "id": 47,
+      "name": "CTA — Countdown Banner",
+      "category": "cta",
+      "file": "src/registry/modules/47-cta-countdown.tsx",
+      "component": "CtaCountdown",
+      "description": "A live countdown to a fixed offer deadline. The timer itself is local interactive state, not part of the A-J catalog.",
+      "editable": { "block": "G" }
+    },
+    {
+      "id": 48,
+      "name": "CTA — Two Choice",
+      "category": "cta",
+      "file": "src/registry/modules/48-cta-two-choice.tsx",
+      "component": "CtaTwoChoice",
+      "description": "Two audience-specific paths side by side instead of one generic CTA.",
+      "editable": { "heading": "A", "cards": "F (stagger of A)", "card hover": "I" }
+    },
+    {
+      "id": 49,
+      "name": "CTA — Testimonial Combo",
+      "category": "cta",
+      "file": "src/registry/modules/49-cta-testimonial-combo.tsx",
+      "component": "CtaTestimonialCombo",
+      "description": "A quote paired directly with the ask, so social proof and conversion happen in the same glance.",
+      "editable": { "block": "G" }
+    },
+    {
+      "id": 50,
+      "name": "CTA — Spotlight Banner",
+      "category": "cta",
+      "file": "src/registry/modules/50-cta-spotlight.tsx",
+      "component": "CtaSpotlight",
+      "description": "Dark closing section reusing the spotlight-glow treatment from hero module 17, scaled to a banner.",
+      "editable": { "title": "B", "body/cta": "F (stagger of A)" }
+    },
+    {
+      "id": 51,
+      "name": "CTA — Minimal Inline",
+      "category": "cta",
+      "file": "src/registry/modules/51-cta-minimal-inline.tsx",
+      "component": "CtaMinimalInline",
+      "description": "A single thin bar — one line of copy and a text link, no card or heavy padding.",
+      "editable": { "block": "A" }
+    },
+    {
+      "id": 52,
+      "name": "CTA — App Download",
+      "category": "cta",
+      "file": "src/registry/modules/52-cta-app-download.tsx",
+      "component": "CtaAppDownload",
+      "description": "Split closing section for a mobile app: copy + store badges left, phone mockup right.",
+      "editable": { "title": "A", "store badges": "F (stagger of A)", "phone": "E" }
+    },
+    {
+      "id": 53,
+      "name": "CTA — Contact Form",
+      "category": "cta",
+      "file": "src/registry/modules/53-cta-contact-form.tsx",
+      "component": "CtaContactForm",
+      "description": "A closing section with an inline contact form instead of a single button, for sales-assisted products.",
+      "editable": { "block": "A" }
+    },
+    {
+      "id": 54,
+      "name": "Footer — Minimal Single Row",
+      "category": "footer",
+      "file": "src/registry/modules/54-footer-minimal-row.tsx",
+      "component": "FooterMinimalRow",
+      "description": "Logo, inline links, and copyright in one row. No entrance animation by convention.",
+      "editable": {}
+    },
+    {
+      "id": 55,
+      "name": "Footer — Newsletter Row",
+      "category": "footer",
+      "file": "src/registry/modules/55-footer-newsletter.tsx",
+      "component": "FooterNewsletter",
+      "description": "An embedded email signup above the standard column layout. No entrance animation by convention.",
+      "editable": {}
+    },
+    {
+      "id": 56,
+      "name": "Footer — Mega with Social",
+      "category": "footer",
+      "file": "src/registry/modules/56-footer-mega-social.tsx",
+      "component": "FooterMegaSocial",
+      "description": "Larger 5-column footer with a social icon row. No entrance animation by convention.",
+      "editable": {}
+    },
+    {
+      "id": 57,
+      "name": "Footer — Centered Simple",
+      "category": "footer",
+      "file": "src/registry/modules/57-footer-centered-simple.tsx",
+      "component": "FooterCenteredSimple",
+      "description": "Logo, links, and copyright all centered, for a quieter editorial close. No entrance animation by convention.",
+      "editable": {}
+    },
+    {
+      "id": 58,
+      "name": "Footer — App Download",
+      "category": "footer",
+      "file": "src/registry/modules/58-footer-app-download.tsx",
+      "component": "FooterAppDownload",
+      "description": "Store badges get top billing above the usual link columns. No entrance animation by convention.",
+      "editable": {}
+    },
+    {
+      "id": 59,
+      "name": "Footer — Dark",
+      "category": "footer",
+      "file": "src/registry/modules/59-footer-dark.tsx",
+      "component": "FooterDark",
+      "description": "Dark-background variant of the multi-column footer, for pages that close on a dark note. No entrance animation by convention.",
+      "editable": {}
+    },
+    {
+      "id": 60,
+      "name": "Footer — CTA Strip",
+      "category": "footer",
+      "file": "src/registry/modules/60-footer-cta-strip.tsx",
+      "component": "FooterCtaStrip",
+      "description": "A closing ask built into the top of the footer, for pages that skip a separate CTA module. No entrance animation by convention.",
+      "editable": {}
+    },
+    {
+      "id": 61,
+      "name": "Footer — Brand + Tagline",
+      "category": "footer",
+      "file": "src/registry/modules/61-footer-brand-tagline.tsx",
+      "component": "FooterBrandTagline",
+      "description": "A bigger brand mark and mission statement above the link columns. No entrance animation by convention.",
+      "editable": {}
+    },
+    {
+      "id": 62,
+      "name": "Footer — Sitemap",
+      "category": "footer",
+      "file": "src/registry/modules/62-footer-sitemap.tsx",
+      "component": "FooterSitemap",
+      "description": "Dense 6-column footer for large sites with a lot to link to. No entrance animation by convention.",
+      "editable": {}
     }
   ]
 }

@@ -62,6 +62,7 @@ import FooterDark from "@/registry/modules/59-footer-dark";
 import FooterCtaStrip from "@/registry/modules/60-footer-cta-strip";
 import FooterBrandTagline from "@/registry/modules/61-footer-brand-tagline";
 import FooterSitemap from "@/registry/modules/62-footer-sitemap";
+import HeroIlluminatedGlow from "@/registry/modules/63-hero-illuminated-glow";
 
 /**
  * The full id → component lookup for every module in src/registry/modules.json.
@@ -130,6 +131,7 @@ export const MODULE_COMPONENTS: Record<number, ElementType> = {
   60: FooterCtaStrip,
   61: FooterBrandTagline,
   62: FooterSitemap,
+  63: HeroIlluminatedGlow,
 };
 
 /** The label bar + module pairing used on every /demo category page. */

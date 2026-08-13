@@ -559,6 +559,15 @@
       "component": "FooterSitemap",
       "description": "Dense 6-column footer for large sites with a lot to link to. No entrance animation by convention.",
       "editable": {}
+    },
+    {
+      "id": 63,
+      "name": "Hero — Illuminated Glow",
+      "category": "hero",
+      "file": "src/registry/modules/63-hero-illuminated-glow.tsx",
+      "component": "HeroIlluminatedGlow",
+      "description": "Full-viewport black hero with warm/cool blurred glow blobs fading in behind centered copy, and a neon text-shadow glow on the highlighted headline line. Adapted from 21st.dev's Illuminated Hero.",
+      "editable": { "title": "B", "background glow": "custom load-in blobs (--animate-glow-in), see file", "body/cta group": "F (stagger of A)" }
     }
   ]
 }

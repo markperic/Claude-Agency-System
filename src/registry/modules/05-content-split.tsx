@@ -13,7 +13,13 @@ export default function ContentSplit() {
   return (
     <section className="bg-white px-6 py-24">
       <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 lg:grid-cols-2">
-        <ScrollReveal effect="E" className="order-2 aspect-4/3 w-full rounded-2xl bg-gradient-to-br from-zinc-100 to-zinc-200 lg:order-1" />
+        <ScrollReveal effect="E" className="order-2 aspect-4/3 w-full overflow-hidden rounded-2xl lg:order-1">
+          <img
+            src="https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=1200&h=900&fit=crop"
+            alt="Website wireframe sketched out in a notebook"
+            className="h-full w-full object-cover"
+          />
+        </ScrollReveal>
 
         <div className="order-1 lg:order-2">
           <ScrollReveal effect="A" as="p" className="mb-4 text-sm font-medium tracking-wide text-zinc-500 uppercase">

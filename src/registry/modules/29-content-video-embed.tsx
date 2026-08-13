@@ -3,7 +3,7 @@ import { Play } from "lucide-react";
 
 /**
  * Module 29 — Content, Video Embed
- * Standalone centered video placeholder with a play button on Effect I
+ * Standalone centered video thumbnail (Pexels placeholder photo) with a play button on Effect I
  * (hover lift). Heading on A, frame scales in on E.
  */
 export default function ContentVideoEmbed() {
@@ -20,8 +20,14 @@ export default function ContentVideoEmbed() {
 
         <ScrollReveal
           effect="E"
-          className="relative mt-12 aspect-video w-full overflow-hidden rounded-2xl bg-gradient-to-br from-zinc-200 to-zinc-300 shadow-sm"
+          className="relative mt-12 aspect-video w-full overflow-hidden rounded-2xl shadow-sm"
         >
+          <img
+            src="https://images.pexels.com/photos/34804005/pexels-photo-34804005/free-photo-of-laptop-displaying-coding-and-data-analysis-interface.jpeg?auto=compress&cs=tinysrgb&w=1200&h=675&fit=crop"
+            alt="Laptop showing a code and data-analysis interface"
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+          <div className="absolute inset-0 bg-zinc-950/20" />
           <div className="absolute inset-0 flex items-center justify-center">
             <HoverLift as="button" className="flex h-16 w-16 items-center justify-center rounded-full bg-white shadow-lg">
               <Play className="ml-1 h-6 w-6 fill-zinc-950 text-zinc-950" />

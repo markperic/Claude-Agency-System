@@ -39,6 +39,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# raw/licensed source assets (Freepik etc.) — optimized output lives in public/
+/images
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

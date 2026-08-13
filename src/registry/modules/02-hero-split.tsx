@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 
 /**
  * Module 02 — Hero, Split with Visual
- * Two-column hero: copy + CTA on the left, a visual placeholder on the right.
+ * Two-column hero: copy + CTA on the left, a Pexels placeholder photo on the right.
  * Title effect: A (Fade Up). Visual effect: E (Scale In), slightly delayed.
  */
 export default function HeroSplit() {
@@ -43,7 +43,13 @@ export default function HeroSplit() {
           </Reveal>
         </div>
 
-        <ScrollReveal effect="E" className="aspect-4/3 w-full rounded-2xl bg-gradient-to-br from-zinc-100 to-zinc-200" />
+        <ScrollReveal effect="E" className="aspect-4/3 w-full overflow-hidden rounded-2xl">
+          <img
+            src="https://images.pexels.com/photos/1128207/pexels-photo-1128207.jpeg?auto=compress&cs=tinysrgb&w=1200&h=900&fit=crop"
+            alt="Laptop open on a minimal desk by a window"
+            className="h-full w-full object-cover"
+          />
+        </ScrollReveal>
       </div>
     </section>
   );

@@ -4,8 +4,8 @@ import { ArrowRight, Play } from "lucide-react";
 /**
  * Module 24 — Hero, Device Split with Play Button
  * Split hero: copy + CTA left, a browser-window mockup right with a
- * gradient "video" placeholder and a centered play button on Effect I
- * (hover lift). Visual scales in on Effect E.
+ * Pexels placeholder photo standing in for the video frame, and a
+ * centered play button on Effect I (hover lift). Visual scales in on Effect E.
  */
 export default function HeroDeviceSplit() {
   return (
@@ -49,8 +49,14 @@ export default function HeroDeviceSplit() {
             <span className="h-2.5 w-2.5 rounded-full bg-zinc-300" />
             <span className="h-2.5 w-2.5 rounded-full bg-zinc-300" />
           </div>
-          <div className="relative flex aspect-video items-center justify-center bg-gradient-to-br from-zinc-100 to-zinc-300">
-            <HoverLift as="button" className="flex h-16 w-16 items-center justify-center rounded-full bg-white shadow-lg">
+          <div className="relative flex aspect-video items-center justify-center">
+            <img
+              src="https://images.pexels.com/photos/106344/pexels-photo-106344.jpeg?auto=compress&cs=tinysrgb&w=1200&h=675&fit=crop"
+              alt="Analytics dashboard displayed on a tablet"
+              className="absolute inset-0 h-full w-full object-cover"
+            />
+            <div className="absolute inset-0 bg-zinc-950/10" />
+            <HoverLift as="button" className="relative flex h-16 w-16 items-center justify-center rounded-full bg-white shadow-lg">
               <Play className="ml-1 h-6 w-6 fill-zinc-950 text-zinc-950" />
             </HoverLift>
           </div>

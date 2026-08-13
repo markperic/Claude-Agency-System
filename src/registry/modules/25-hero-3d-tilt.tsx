@@ -69,11 +69,17 @@ export default function Hero3DTilt() {
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
             style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-            className="aspect-4/3 w-full rounded-2xl border border-zinc-200 bg-gradient-to-br from-zinc-100 to-zinc-200 shadow-xl"
+            className="relative aspect-4/3 w-full overflow-hidden rounded-2xl border border-zinc-200 shadow-xl"
           >
-            <div style={{ transform: "translateZ(40px)" }} className="flex h-full flex-col justify-end p-8">
-              <div className="h-3 w-2/3 rounded bg-zinc-400/60" />
-              <div className="mt-2 h-3 w-1/2 rounded bg-zinc-400/40" />
+            <img
+              src="https://images.pexels.com/photos/7449894/pexels-photo-7449894.jpeg?auto=compress&cs=tinysrgb&w=1200&h=900&fit=crop"
+              alt="Minimal skincare product bottles on a studio set"
+              className="absolute inset-0 h-full w-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/70 via-transparent to-transparent" />
+            <div style={{ transform: "translateZ(40px)" }} className="relative flex h-full flex-col justify-end p-8">
+              <div className="h-3 w-2/3 rounded bg-white/80" />
+              <div className="mt-2 h-3 w-1/2 rounded bg-white/50" />
             </div>
           </motion.div>
         </div>

@@ -11,38 +11,43 @@ import { cn } from "@/lib/utils";
  * One large image + copy card at a time, stepped through with prev/next
  * controls and dot pagination. Local carousel state, not part of the A–J
  * catalog — same pattern as module 28's tabs. Adapted from 21st.dev's
- * Carousel Card (abishek1512): stock photo URLs swapped for this repo's
- * usual gradient placeholders, and lorem ipsum swapped for real copy, so a
- * client project can drop real images straight into the placeholder divs.
+ * Carousel Card (abishek1512): lorem ipsum swapped for real copy, and the
+ * source's stock photos swapped for Pexels placeholders — real photos
+ * rather than this catalog's usual gradient div, per module 65's precedent.
  */
 const CARDS = [
   {
     id: 1,
-    gradient: "from-zinc-100 to-zinc-200",
+    image: "https://images.pexels.com/photos/1419925/pexels-photo-1419925.jpeg?auto=compress&cs=tinysrgb&w=900&h=675&fit=crop",
+    alt: "Overhead view of a desk with a keyboard and phone",
     content:
       "Every page starts the same way: pick modules by number, not by describing a layout from scratch. Module 2 for the hero, module 5 for the pitch, module 9 for pricing — each one already responsive, already on-brand, already tested against the rest of the catalog.",
   },
   {
     id: 2,
-    gradient: "from-zinc-200 to-zinc-300",
+    image: "https://images.pexels.com/photos/23496662/pexels-photo-23496662.jpeg?auto=compress&cs=tinysrgb&w=900&h=675&fit=crop",
+    alt: "Team reviewing color swatches around a table",
     content:
       "Clients sign off on a wireframe built from real, working sections instead of a static mockup — so the thing they approve is the thing that ships. No gap between the comp and the code, no surprises when the page goes live.",
   },
   {
     id: 3,
-    gradient: "from-zinc-100 to-zinc-300",
+    image: "https://images.pexels.com/photos/940299/pexels-photo-940299.jpeg?auto=compress&cs=tinysrgb&w=900&h=675&fit=crop",
+    alt: "Minimal product bottle photographed in a studio",
     content:
       "Ten named animation effects, used consistently everywhere instead of invented per section. A hero on Effect B and a feature grid on Effect F still feel like they belong to the same product, because they're pulling from the same small vocabulary.",
   },
   {
     id: 4,
-    gradient: "from-zinc-200 to-zinc-200",
+    image: "https://images.pexels.com/photos/6803550/pexels-photo-6803550.jpeg?auto=compress&cs=tinysrgb&w=900&h=675&fit=crop",
+    alt: "Dark, moody home office desk setup",
     content:
       "Nothing here is a one-off. A module built for one client project is just as usable on the next one — swap the copy, the colors, the images, and the section still holds together the way it was designed to.",
   },
   {
     id: 5,
-    gradient: "from-zinc-100 to-zinc-200",
+    image: "https://images.pexels.com/photos/5483188/pexels-photo-5483188.jpeg?auto=compress&cs=tinysrgb&w=900&h=675&fit=crop",
+    alt: "Laptop on a desk overlooking a city skyline",
     content:
       "The catalog isn't fixed at fifteen or sixty sections — it grows as new patterns get built, numbered, and added to the manifest. Every module added this month is available to every project started next month.",
   },
@@ -73,7 +78,9 @@ export default function ContentCarouselCard() {
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
               className="grid overflow-hidden rounded-3xl bg-white shadow-sm ring-1 ring-zinc-200 sm:grid-cols-2"
             >
-              <div className={cn("aspect-4/3 bg-gradient-to-br sm:aspect-auto", card.gradient)} />
+              <div className="aspect-4/3 overflow-hidden sm:aspect-auto">
+                <img src={card.image} alt={card.alt} className="h-full w-full object-cover" />
+              </div>
               <div className="flex flex-col justify-center p-8 sm:p-10">
                 <p className="text-sm font-medium text-zinc-400">
                   {String(card.id).padStart(2, "0")} / {String(CARDS.length).padStart(2, "0")}

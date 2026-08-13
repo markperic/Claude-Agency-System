@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 
 /**
  * Module 46 — CTA, Split with Visual
- * Copy + CTA left, gradient visual right — a closing section with more
+ * Copy + CTA left, a Pexels placeholder photo right — a closing section with more
  * visual weight than the plain banner (module 12). Effect: A on copy, E on
  * the visual.
  */
@@ -34,7 +34,13 @@ export default function CtaSplitVisual() {
           </Reveal>
         </div>
 
-        <ScrollReveal effect="E" className="aspect-4/3 w-full rounded-2xl bg-gradient-to-br from-zinc-100 to-zinc-200" />
+        <ScrollReveal effect="E" className="aspect-4/3 w-full overflow-hidden rounded-2xl">
+          <img
+            src="https://images.pexels.com/photos/36765627/pexels-photo-36765627.jpeg?auto=compress&cs=tinysrgb&w=1200&h=900&fit=crop"
+            alt="Two designers reviewing color swatches and prints"
+            className="h-full w-full object-cover"
+          />
+        </ScrollReveal>
       </div>
     </section>
   );

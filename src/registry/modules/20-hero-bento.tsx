@@ -3,8 +3,8 @@ import { ArrowRight } from "lucide-react";
 
 /**
  * Module 20 — Hero, Bento Product Grid
- * Split hero: copy + CTA left, a bento-style grid of gradient tiles right,
- * standing in for a product screenshot mosaic. Tiles stagger in on scale
+ * Split hero: copy + CTA left, a bento-style grid of Pexels placeholder
+ * photos right, standing in for a product screenshot mosaic. Tiles stagger in on scale
  * (Effect F wrapping Effect E children).
  */
 export default function HeroBento() {
@@ -44,12 +44,27 @@ export default function HeroBento() {
         </div>
 
         <StaggerGroup className="grid grid-cols-2 grid-rows-2 gap-4">
-          <ScrollReveal
-            effect="E"
-            className="col-span-2 aspect-2/1 rounded-2xl bg-gradient-to-br from-zinc-100 to-zinc-200"
-          />
-          <ScrollReveal effect="E" className="aspect-square rounded-2xl bg-gradient-to-br from-zinc-200 to-zinc-300" />
-          <ScrollReveal effect="E" className="aspect-square rounded-2xl bg-gradient-to-br from-zinc-100 to-zinc-200" />
+          <ScrollReveal effect="E" className="col-span-2 aspect-2/1 overflow-hidden rounded-2xl">
+            <img
+              src="https://images.pexels.com/photos/265101/pexels-photo-265101.jpeg?auto=compress&cs=tinysrgb&w=1200&h=600&fit=crop"
+              alt="Creative studio desk with a cactus and laptop"
+              className="h-full w-full object-cover"
+            />
+          </ScrollReveal>
+          <ScrollReveal effect="E" className="aspect-square overflow-hidden rounded-2xl">
+            <img
+              src="https://images.pexels.com/photos/36123565/pexels-photo-36123565/free-photo-of-modern-workspace-with-laptop-and-books-on-desk.jpeg?auto=compress&cs=tinysrgb&w=800&h=800&fit=crop"
+              alt="Modern workspace with a laptop and books"
+              className="h-full w-full object-cover"
+            />
+          </ScrollReveal>
+          <ScrollReveal effect="E" className="aspect-square overflow-hidden rounded-2xl">
+            <img
+              src="https://images.pexels.com/photos/1181473/pexels-photo-1181473.jpeg?auto=compress&cs=tinysrgb&w=800&h=800&fit=crop"
+              alt="Person working at a desktop monitor"
+              className="h-full w-full object-cover"
+            />
+          </ScrollReveal>
         </StaggerGroup>
       </div>
     </section>

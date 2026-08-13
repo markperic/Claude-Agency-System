@@ -8,9 +8,10 @@ import { Reveal } from "@/registry/lib/motion-variants";
  * Module 16 — Hero, Macbook Scroll Reveal
  * A tall sticky section: a laptop mockup "opens" (lid rotateX) and its
  * screen content scales up as the page scrolls past. Recreates the classic
- * Aceternity Macbook-scroll effect from scratch with motion's scroll hooks —
- * no image asset, the screen is a built-in gradient mock UI like the rest
- * of this catalog's placeholders. Title effect: B (Fade In).
+ * Aceternity Macbook-scroll effect from scratch with motion's scroll hooks.
+ * The screen shows a real website mockup image (public/mockup-website-hero.webp
+ * — a licensed Freepik/Magnific template, cropped to just the browser frame
+ * with the source's watermark removed). Title effect: B (Fade In).
  */
 export default function HeroMacbookScroll() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -50,17 +51,13 @@ export default function HeroMacbookScroll() {
             </div>
             <motion.div
               style={{ scale: screenScale, opacity: screenOpacity }}
-              className="aspect-video w-full overflow-hidden rounded-b-sm bg-gradient-to-br from-zinc-100 via-white to-zinc-200"
+              className="aspect-video w-full overflow-hidden rounded-b-sm"
             >
-              <div className="flex h-full flex-col gap-3 p-6">
-                <div className="h-3 w-1/3 rounded bg-zinc-300" />
-                <div className="h-3 w-1/2 rounded bg-zinc-200" />
-                <div className="mt-4 grid flex-1 grid-cols-3 gap-3">
-                  <div className="rounded-lg bg-zinc-200/70" />
-                  <div className="rounded-lg bg-zinc-200/70" />
-                  <div className="rounded-lg bg-zinc-200/70" />
-                </div>
-              </div>
+              <img
+                src="/mockup-website-hero.webp"
+                alt="Website mockup: a travel landing page with a hero photo and booking panel"
+                className="h-full w-full object-cover object-top"
+              />
             </motion.div>
           </motion.div>
           <div className="mx-auto h-3 w-full max-w-2xl rounded-b-2xl bg-zinc-300 shadow-lg" />

@@ -50,7 +50,7 @@
     {
       "id": 6,
       "name": "Stats Row",
-      "category": "social-proof",
+      "category": "stats",
       "file": "src/registry/modules/06-stats-row.tsx",
       "component": "StatsRow",
       "description": "3–4 large numbers with labels on a dark background.",
@@ -86,7 +86,7 @@
     {
       "id": 10,
       "name": "FAQ Accordion",
-      "category": "content",
+      "category": "faqs",
       "file": "src/registry/modules/10-faq-accordion.tsx",
       "component": "FaqAccordion",
       "description": "Expandable question list.",
@@ -95,7 +95,7 @@
     {
       "id": 11,
       "name": "Team Grid",
-      "category": "content",
+      "category": "team",
       "file": "src/registry/modules/11-team-grid.tsx",
       "component": "TeamGrid",
       "description": "Photo, name, role — repeated in a 4-column grid.",
@@ -140,7 +140,7 @@
     {
       "id": 16,
       "name": "Hero — Macbook Scroll Reveal",
-      "category": "hero",
+      "category": "showcase",
       "file": "src/registry/modules/16-hero-macbook-scroll.tsx",
       "component": "HeroMacbookScroll",
       "description": "Tall sticky section: a laptop mockup opens and its screen scales in as you scroll past. Recreated from scratch with motion's scroll hooks, inspired by Aceternity's Macbook Scroll.",
@@ -320,7 +320,7 @@
     {
       "id": 36,
       "name": "Social Proof — Single Powerful Stat",
-      "category": "social-proof",
+      "category": "stats",
       "file": "src/registry/modules/36-social-big-stat.tsx",
       "component": "SocialBigStat",
       "description": "One dramatic full-width number with a supporting line, distinct from module 06's 3-up stats row.",
@@ -473,7 +473,7 @@
     {
       "id": 53,
       "name": "CTA — Contact Form",
-      "category": "cta",
+      "category": "forms",
       "file": "src/registry/modules/53-cta-contact-form.tsx",
       "component": "CtaContactForm",
       "description": "A closing section with an inline contact form instead of a single button, for sales-assisted products.",

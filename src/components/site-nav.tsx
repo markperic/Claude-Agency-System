@@ -17,19 +17,22 @@ const LINKS = [
  * blurred), the look popularized by Aceternity-style navbars, rebuilt here
  * in plain Tailwind rather than pulling in their component.
  *
- * Eight links (Home + seven categories) fit inline at desktop width (lg+);
- * below that — tablet and mobile — the link row collapses behind a
- * hamburger button that opens a stacked dropdown under the pill.
+ * Fourteen links (Home + thirteen categories) is more than a fixed-width
+ * pill can promise to fit even at xl+, so the inline row also scrolls
+ * horizontally (hidden scrollbar) as a safety net — it won't visually
+ * break even if a future category pushes it past the available width.
+ * Below xl — tablet and mobile — the row collapses behind a hamburger
+ * button that opens a stacked dropdown under the pill instead.
  */
 export function SiteNav() {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="relative bg-white px-6 pt-6">
-      <nav className="mx-auto flex max-w-4xl items-center justify-between gap-6 rounded-full border border-zinc-200 bg-white/80 px-6 py-3 shadow-sm backdrop-blur-md">
+    <div className="relative px-6 pt-6">
+      <nav className="mx-auto flex max-w-6xl items-center justify-between gap-6 rounded-full border border-zinc-200 bg-white/80 px-6 py-3 shadow-sm backdrop-blur-md">
         <span className="shrink-0 text-sm font-semibold tracking-tight text-zinc-950">Claude Agency System</span>
 
-        <div className="hidden items-center gap-5 text-sm font-medium lg:flex">
+        <div className="hidden min-w-0 items-center gap-5 overflow-x-auto text-sm font-medium [scrollbar-width:none] xl:flex [&::-webkit-scrollbar]:hidden">
           {LINKS.map((link) => (
             <Link key={link.href} href={link.href} className="shrink-0 text-zinc-600 transition-colors hover:text-zinc-950">
               {link.label}
@@ -42,15 +45,15 @@ export function SiteNav() {
           onClick={() => setOpen((v) => !v)}
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
-          className="flex h-8 w-8 shrink-0 items-center justify-center text-zinc-600 transition-colors hover:text-zinc-950 lg:hidden"
+          className="flex h-8 w-8 shrink-0 items-center justify-center text-zinc-600 transition-colors hover:text-zinc-950 xl:hidden"
         >
           {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
       </nav>
 
       {open && (
-        <div className="mx-auto mt-2 max-w-4xl px-6 lg:hidden">
-          <div className="flex flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm">
+        <div className="mx-auto mt-2 max-w-6xl px-6 xl:hidden">
+          <div className="flex max-h-[70vh] flex-col overflow-y-auto rounded-2xl border border-zinc-200 bg-white shadow-sm">
             {LINKS.map((link) => (
               <Link
                 key={link.href}

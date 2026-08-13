@@ -1,12 +1,14 @@
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import modulesData from "@/registry/modules.json";
+import { SiteNav } from "@/components/site-nav";
 import { ModuleRow } from "./module-registry";
 
 /**
- * Shared shell for every /demo category route (hero, content, social-proof,
- * pricing, cta, footer): filters the catalog by category, sorts by id, and
- * renders each module with its label bar via ModuleRow.
+ * Shared shell for every /demo category route (see src/registry/categories.ts
+ * for the full list): filters the catalog by category, sorts by id, and
+ * renders each module with its label bar via ModuleRow. Categories with no
+ * modules yet (like Utility) render an empty-state message instead.
  */
 export function CategoryModulesPage({
   category,
@@ -22,7 +24,8 @@ export function CategoryModulesPage({
     .sort((a, b) => a.id - b.id);
 
   return (
-    <main>
+    <main className="bg-white">
+      <SiteNav />
       <div className="border-b border-zinc-200 bg-white px-6 py-16 text-center">
         <Link
           href="/"
@@ -38,9 +41,13 @@ export function CategoryModulesPage({
         <p className="mx-auto mt-3 max-w-xl text-zinc-600">{description}</p>
       </div>
 
-      {mods.map((mod) => (
-        <ModuleRow key={mod.id} id={mod.id} name={mod.name} category={mod.category} />
-      ))}
+      {mods.length === 0 ? (
+        <p className="px-6 py-16 text-center text-sm text-zinc-500">
+          No modules here yet — check back once one&apos;s been added to this category.
+        </p>
+      ) : (
+        mods.map((mod) => <ModuleRow key={mod.id} id={mod.id} name={mod.name} category={mod.category} />)
+      )}
     </main>
   );
 }

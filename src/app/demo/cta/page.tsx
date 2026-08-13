@@ -5,7 +5,7 @@ export default function CtaCategoryPage() {
     <CategoryModulesPage
       category="cta"
       title="Calls to action"
-      description="Closing banners and signup forms for the bottom of a page."
+      description="Closing banners for the bottom of a page. The contact-form variant moved to Forms."
     />
   );
 }

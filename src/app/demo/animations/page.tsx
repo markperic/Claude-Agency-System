@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { SiteNav } from "@/components/site-nav";
 import AnimationCatalog from "../animation-catalog";
 
 export default function AnimationsPage() {
   return (
-    <main>
+    <main className="bg-zinc-950">
+      <SiteNav />
       <div className="border-b border-white/10 bg-zinc-950 px-6 pt-8">
         <Link
           href="/"

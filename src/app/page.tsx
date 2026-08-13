@@ -29,7 +29,7 @@ export default function Home() {
             Module &amp; animation catalog
           </h1>
           <p className="mx-auto mt-3 max-w-xl text-zinc-600">
-            {modulesData.modules.length} modules across seven categories, plus every
+            {modulesData.modules.length} modules across {CATEGORIES.length} categories, plus every
             animation effect from A to J shown on its own. Pick a category to browse.
           </p>
         </div>

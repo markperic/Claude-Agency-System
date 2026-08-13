@@ -25,7 +25,7 @@ including a title on Effect B (module 5) and scroll-linked parallax images
 src/registry/
   modules/            numbered, self-contained marketing sections
   modules.json         the catalog Claude Code reads to resolve "module N"
-  categories.ts         the seven category list shared by the nav and homepage
+  categories.ts         the category list shared by the nav and homepage
   lib/motion-variants.tsx   the A–J animation effect system, shared by every module
 src/app/page.tsx       homepage — the catalog index
 src/app/example        worked example composing modules into a page

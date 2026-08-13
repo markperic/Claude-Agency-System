@@ -25,7 +25,7 @@ import Footer from "@/registry/modules/15-footer";
  */
 export default function ExamplePage() {
   return (
-    <main>
+    <main className="bg-white">
       <SiteNav />
 
       <HeroSplit />

@@ -29,7 +29,7 @@ const PANELS = [
   { id: 5, label: "Skyline", image: "https://picsum.photos/id/1044/900/1200" },
 ];
 
-const EASE = [0.22, 1, 0.36, 1];
+const EASE = [0.22, 1, 0.36, 1] as const;
 const TILT = 8;
 
 export default function GalleryAccordion() {

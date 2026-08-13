@@ -25,7 +25,7 @@ export function CategoryModulesPage({
     <main>
       <div className="border-b border-zinc-200 bg-white px-6 py-16 text-center">
         <Link
-          href="/demo"
+          href="/"
           className="mb-6 inline-flex items-center gap-1.5 text-sm font-medium text-zinc-500 hover:text-zinc-800"
         >
           <ArrowLeft className="h-4 w-4" />

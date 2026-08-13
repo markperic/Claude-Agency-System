@@ -36,7 +36,8 @@ Claude can resolve every part of that sentence to something concrete:
 - "scroll animation on the images" → Effect H (Scroll Parallax), already wired
   into module 14's `<ParallaxImage>` wrappers
 
-See `src/app/page.tsx` for a worked example assembling nine modules this way.
+See `src/app/example/page.tsx` for a worked example assembling nine modules
+this way; the homepage itself (`src/app/page.tsx`) is the catalog index.
 
 ## Adding a new module
 

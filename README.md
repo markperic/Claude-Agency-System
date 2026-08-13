@@ -13,19 +13,22 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) — the homepage
-(`src/app/page.tsx`) is a working example assembling nine of the fifteen
-starter modules end to end, including a title on Effect B (module 5) and
-scroll-linked parallax images (module 14).
+Open [http://localhost:3000](http://localhost:3000) — the homepage is the
+catalog index, linking out to every module category. `src/app/example`
+is a working example assembling nine modules into a full page end to end,
+including a title on Effect B (module 5) and scroll-linked parallax images
+(module 14).
 
 ## What's here
 
 ```
 src/registry/
-  modules/            15 numbered, self-contained marketing sections
+  modules/            numbered, self-contained marketing sections
   modules.json         the catalog Claude Code reads to resolve "module N"
+  categories.ts         the seven category list shared by the nav and homepage
   lib/motion-variants.tsx   the A–J animation effect system, shared by every module
-src/app/page.tsx       worked example composing modules into a page
+src/app/page.tsx       homepage — the catalog index
+src/app/example        worked example composing modules into a page
 MODULE-LIBRARY.md      how the system works, how to extend it
 CLAUDE.md              project instructions Claude Code loads automatically
 ```
@@ -37,10 +40,11 @@ React animation library formerly known as Framer Motion) · TypeScript.
 
 This repo is meant to be the reusable base, not a one-off site. The usual
 pattern: start a new project from this one (clone, or use it as a template),
-strip `src/app/page.tsx` back to a blank page, then build the client's actual
-pages by telling Claude Code which modules to use, in what order, with which
-effects — see the worked example in MODULE-LIBRARY.md. Grow the catalog over
-time as you build; new modules benefit every future project.
+replace `src/app/page.tsx` with the client's actual homepage, then build the
+rest of their pages by telling Claude Code which modules to use, in what
+order, with which effects — see the worked example at `src/app/example`.
+Grow the catalog over time as you build; new modules benefit every future
+project.
 
 ## Deploying
 

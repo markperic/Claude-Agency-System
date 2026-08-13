@@ -586,6 +586,15 @@
       "component": "GalleryAccordion",
       "description": "A row of panels where the active one expands and reveals its label while the rest compress, grey out, and tilt away in 3D. Hover or arrow-key through them. Adapted from ReactBits' AccordionGallery, rebuilt on Motion instead of GSAP.",
       "editable": { "heading": "A", "panels": "custom hover-driven flexGrow/rotate/parallax via Motion, see file" }
+    },
+    {
+      "id": 66,
+      "name": "Hero — Image Stream",
+      "category": "hero",
+      "file": "src/registry/modules/66-hero-image-stream.tsx",
+      "component": "HeroImageStream",
+      "description": "Two rails of image cards ride from far behind the screen toward the viewer on pure CSS 3D perspective, forming a continuous corridor. Adapted from 21st.dev's Image Stream Hero.",
+      "editable": { "title": "B", "images": "custom CSS-keyframe corridor (no JS animation loop), see file" }
     }
   ]
 }

@@ -65,6 +65,7 @@ import FooterSitemap from "@/registry/modules/62-footer-sitemap";
 import HeroIlluminatedGlow from "@/registry/modules/63-hero-illuminated-glow";
 import ContentCarouselCard from "@/registry/modules/64-content-carousel-card";
 import GalleryAccordion from "@/registry/modules/65-gallery-accordion";
+import HeroImageStream from "@/registry/modules/66-hero-image-stream";
 
 /**
  * The full id → component lookup for every module in src/registry/modules.json.
@@ -136,6 +137,7 @@ export const MODULE_COMPONENTS: Record<number, ElementType> = {
   63: HeroIlluminatedGlow,
   64: ContentCarouselCard,
   65: GalleryAccordion,
+  66: HeroImageStream,
 };
 
 /** The label bar + module pairing used on every /demo category page. */

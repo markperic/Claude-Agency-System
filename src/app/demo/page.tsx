@@ -5,7 +5,8 @@ import { SiteNav } from "@/components/site-nav";
 
 const CATEGORIES: { slug: string; title: string; description: string }[] = [
   { slug: "hero", title: "Hero sections", description: "Opening sections — the first thing a visitor sees." },
-  { slug: "content", title: "Content sections", description: "Feature grids, content splits, FAQs, galleries." },
+  { slug: "content", title: "Content sections", description: "Feature grids, content splits, FAQs, carousels." },
+  { slug: "galleries", title: "Galleries", description: "Image-forward sections for showing off a body of work." },
   { slug: "social-proof", title: "Social proof", description: "Logos, stats, testimonials, team grids." },
   { slug: "pricing", title: "Pricing sections", description: "Tiered plan comparisons." },
   { slug: "cta", title: "Calls to action", description: "Closing banners and signup forms." },
@@ -34,7 +35,7 @@ export default function DemoPage() {
             Module &amp; animation demo
           </h1>
           <p className="mx-auto mt-3 max-w-xl text-zinc-600">
-            {modulesData.modules.length} modules across six categories, plus every
+            {modulesData.modules.length} modules across seven categories, plus every
             animation effect from A to J shown on its own. Pick a category to browse.
           </p>
         </div>

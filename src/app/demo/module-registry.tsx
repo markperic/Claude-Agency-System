@@ -63,6 +63,8 @@ import FooterCtaStrip from "@/registry/modules/60-footer-cta-strip";
 import FooterBrandTagline from "@/registry/modules/61-footer-brand-tagline";
 import FooterSitemap from "@/registry/modules/62-footer-sitemap";
 import HeroIlluminatedGlow from "@/registry/modules/63-hero-illuminated-glow";
+import ContentCarouselCard from "@/registry/modules/64-content-carousel-card";
+import GalleryAccordion from "@/registry/modules/65-gallery-accordion";
 
 /**
  * The full id → component lookup for every module in src/registry/modules.json.
@@ -132,6 +134,8 @@ export const MODULE_COMPONENTS: Record<number, ElementType> = {
   61: FooterBrandTagline,
   62: FooterSitemap,
   63: HeroIlluminatedGlow,
+  64: ContentCarouselCard,
+  65: GalleryAccordion,
 };
 
 /** The label bar + module pairing used on every /demo category page. */

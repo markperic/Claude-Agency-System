@@ -568,6 +568,24 @@
       "component": "HeroIlluminatedGlow",
       "description": "Full-viewport black hero with warm/cool blurred glow blobs fading in behind centered copy, and a neon text-shadow glow on the highlighted headline line. Adapted from 21st.dev's Illuminated Hero.",
       "editable": { "title": "B", "background glow": "custom load-in blobs (--animate-glow-in), see file", "body/cta group": "F (stagger of A)" }
+    },
+    {
+      "id": 64,
+      "name": "Content — Carousel Card",
+      "category": "content",
+      "file": "src/registry/modules/64-content-carousel-card.tsx",
+      "component": "ContentCarouselCard",
+      "description": "One large image + copy card at a time, stepped through with prev/next controls and dot pagination. Local carousel state, not part of the A-J catalog. Adapted from 21st.dev's Carousel Card.",
+      "editable": { "heading": "A", "cards": "custom carousel state (AnimatePresence crossfade), see file" }
+    },
+    {
+      "id": 65,
+      "name": "Gallery — Accordion",
+      "category": "galleries",
+      "file": "src/registry/modules/65-gallery-accordion.tsx",
+      "component": "GalleryAccordion",
+      "description": "A row of panels where the active one expands and reveals its label while the rest compress, grey out, and tilt away in 3D. Hover or arrow-key through them. Adapted from ReactBits' AccordionGallery, rebuilt on Motion instead of GSAP.",
+      "editable": { "heading": "A", "panels": "custom hover-driven flexGrow/rotate/parallax via Motion, see file" }
     }
   ]
 }

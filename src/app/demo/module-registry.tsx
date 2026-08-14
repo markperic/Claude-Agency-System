@@ -69,6 +69,7 @@ import HeroImageStream from "@/registry/modules/66-hero-image-stream";
 import HeroContainerScroll from "@/registry/modules/67-hero-container-scroll";
 import GalleryMorphSlider from "@/registry/modules/68-gallery-morph-slider";
 import GalleryDome from "@/registry/modules/69-gallery-dome";
+import ShowcaseSplitFlap from "@/registry/modules/70-showcase-split-flap";
 
 /**
  * The full id → component lookup for every module in src/registry/modules.json.
@@ -144,6 +145,7 @@ export const MODULE_COMPONENTS: Record<number, ElementType> = {
   67: HeroContainerScroll,
   68: GalleryMorphSlider,
   69: GalleryDome,
+  70: ShowcaseSplitFlap,
 };
 
 /** The label bar + module pairing used on every /demo category page. */

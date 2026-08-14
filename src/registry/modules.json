@@ -622,6 +622,15 @@
       "component": "GalleryDome",
       "description": "A wraparound sphere of image tiles built from CSS 3D transforms. Drag to rotate with flick inertia; click a tile to open it into a centered full-size view. Adapted from a community DomeGallery component, its drag gesture rebuilt on plain pointer events instead of @use-gesture/react.",
       "editable": { "heading": "A", "sphere": "custom CSS 3D transforms + imperative open/close DOM choreography, see file" }
+    },
+    {
+      "id": 70,
+      "name": "Showcase — Split-Flap Display",
+      "category": "showcase",
+      "file": "src/registry/modules/70-showcase-split-flap.tsx",
+      "component": "ShowcaseSplitFlap",
+      "description": "An airport/train-station departures-board effect: tiles mechanically flip through a few random characters before landing on each message, cycling through a status-message list on a loop. Adapted from a community SplitFlapText component.",
+      "editable": { "heading": "A", "board": "custom flip-cycle text array, see file" }
     }
   ]
 }

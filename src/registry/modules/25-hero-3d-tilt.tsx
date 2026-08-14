@@ -1,8 +1,10 @@
 "use client";
 
 import { type MouseEvent } from "react";
+import Image from "next/image";
 import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
 import { Reveal } from "@/registry/lib/motion-variants";
+import { PLACEHOLDER_IMAGES } from "@/registry/lib/placeholder-images";
 import { ArrowRight } from "lucide-react";
 
 /**
@@ -71,10 +73,12 @@ export default function Hero3DTilt() {
             style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
             className="relative aspect-4/3 w-full overflow-hidden rounded-2xl border border-zinc-200 shadow-xl"
           >
-            <img
-              src="https://images.pexels.com/photos/7449894/pexels-photo-7449894.jpeg?auto=compress&cs=tinysrgb&w=1200&h=900&fit=crop"
-              alt="Minimal skincare product bottles on a studio set"
-              className="absolute inset-0 h-full w-full object-cover"
+            <Image
+              src={PLACEHOLDER_IMAGES.wallpaperPortrait01.src}
+              alt={PLACEHOLDER_IMAGES.wallpaperPortrait01.alt}
+              fill
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              className="object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/70 via-transparent to-transparent" />
             <div style={{ transform: "translateZ(40px)" }} className="relative flex h-full flex-col justify-end p-8">

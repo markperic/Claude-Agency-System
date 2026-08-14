@@ -1,7 +1,9 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import { motion, useScroll, useSpring, useTransform } from "motion/react";
+import { PLACEHOLDER_IMAGES } from "@/registry/lib/placeholder-images";
 
 /**
  * Module 67 — Hero, Container Scroll Reveal
@@ -47,11 +49,13 @@ export default function HeroContainerScroll() {
             style={{ rotateX: rotate, scale }}
             className="mx-auto rounded-[30px] border-4 border-zinc-400 bg-zinc-300 p-2 shadow-2xl md:p-4"
           >
-            <div className="h-[20rem] w-full overflow-hidden rounded-2xl bg-zinc-100 md:h-[30rem]">
-              <img
-                src="https://images.pexels.com/photos/106344/pexels-photo-106344.jpeg?auto=compress&cs=tinysrgb&w=1600&h=1000&fit=crop"
-                alt="Product preview"
-                className="h-full w-full object-cover"
+            <div className="relative h-[20rem] w-full overflow-hidden rounded-2xl bg-zinc-100 md:h-[30rem]">
+              <Image
+                src={PLACEHOLDER_IMAGES.landscape10.src}
+                alt={PLACEHOLDER_IMAGES.landscape10.alt}
+                fill
+                sizes="(min-width: 1024px) 900px, 100vw"
+                className="object-cover"
               />
             </div>
           </motion.div>

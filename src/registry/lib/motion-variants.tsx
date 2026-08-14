@@ -153,7 +153,7 @@ export function ParallaxImage({
   const y = useTransform(scrollYProgress, [0, 1], [-strength, strength]);
   return (
     <div ref={ref} className={cn("overflow-hidden", className)}>
-      <motion.div style={{ y }} className="h-full w-full">
+      <motion.div style={{ y }} className="relative h-full w-full">
         {children}
       </motion.div>
     </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import { motion, useScroll, useSpring, useTransform } from "motion/react";
 import { Reveal } from "@/registry/lib/motion-variants";
 
@@ -57,12 +58,14 @@ export default function HeroMacbookScroll() {
             </div>
             <motion.div
               style={{ scale: screenScale, opacity: screenOpacity }}
-              className="aspect-video w-full overflow-hidden rounded-b-sm"
+              className="relative aspect-video w-full overflow-hidden rounded-b-sm"
             >
-              <img
+              <Image
                 src="/mockup-website-hero.webp"
                 alt="Website mockup: a travel landing page with a hero photo and booking panel"
-                className="h-full w-full object-cover object-top"
+                fill
+                sizes="(min-width: 1024px) 672px, 100vw"
+                className="object-cover object-top"
               />
             </motion.div>
           </motion.div>

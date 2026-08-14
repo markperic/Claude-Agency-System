@@ -1,4 +1,6 @@
+import Image from "next/image";
 import { ScrollReveal } from "@/registry/lib/motion-variants";
+import { PLACEHOLDER_IMAGES } from "@/registry/lib/placeholder-images";
 
 /**
  * Module 05 — Content Split, Image Right
@@ -13,11 +15,13 @@ export default function ContentSplit() {
   return (
     <section className="bg-white px-6 py-24">
       <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 lg:grid-cols-2">
-        <ScrollReveal effect="E" className="order-2 aspect-4/3 w-full overflow-hidden rounded-2xl lg:order-1">
-          <img
-            src="https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=1200&h=900&fit=crop"
-            alt="Website wireframe sketched out in a notebook"
-            className="h-full w-full object-cover"
+        <ScrollReveal effect="E" className="relative order-2 aspect-4/3 w-full overflow-hidden rounded-2xl lg:order-1">
+          <Image
+            src={PLACEHOLDER_IMAGES.landscape03.src}
+            alt={PLACEHOLDER_IMAGES.landscape03.alt}
+            fill
+            sizes="(min-width: 1024px) 50vw, 100vw"
+            className="object-cover"
           />
         </ScrollReveal>
 

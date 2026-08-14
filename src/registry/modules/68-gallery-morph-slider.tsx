@@ -5,6 +5,7 @@ import { Mesh, Program, Renderer, Texture, Triangle, type OGLRenderingContext } 
 import { animate, type AnimationPlaybackControlsWithThen, type Easing } from "motion/react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Reveal } from "@/registry/lib/motion-variants";
+import { PLACEHOLDER_IMAGES } from "@/registry/lib/placeholder-images";
 
 /**
  * Module 68 — Gallery, Morph Slider
@@ -30,22 +31,10 @@ import { Reveal } from "@/registry/lib/motion-variants";
 type MorphItem = { image: string; caption: string };
 
 const ITEMS: MorphItem[] = [
-  {
-    image: "https://images.pexels.com/photos/2081184/pexels-photo-2081184.jpeg?auto=compress&cs=tinysrgb&w=1600",
-    caption: "Brand Identity",
-  },
-  {
-    image: "https://images.pexels.com/photos/3747070/pexels-photo-3747070.jpeg?auto=compress&cs=tinysrgb&w=1600",
-    caption: "Web Design",
-  },
-  {
-    image: "https://images.pexels.com/photos/3062948/pexels-photo-3062948.jpeg?auto=compress&cs=tinysrgb&w=1600",
-    caption: "Product Photography",
-  },
-  {
-    image: "https://images.pexels.com/photos/265101/pexels-photo-265101.jpeg?auto=compress&cs=tinysrgb&w=1600",
-    caption: "Motion Design",
-  },
+  { image: PLACEHOLDER_IMAGES.wallpaper02.src, caption: "Brand Identity" },
+  { image: PLACEHOLDER_IMAGES.wallpaper03.src, caption: "Web Design" },
+  { image: PLACEHOLDER_IMAGES.wallpaper05.src, caption: "Product Photography" },
+  { image: PLACEHOLDER_IMAGES.wallpaper06.src, caption: "Motion Design" },
 ];
 
 const MODE = 0; // melt — see TRANSITIONS in the original source for ripple(1)/shear(2)/swirl(3)

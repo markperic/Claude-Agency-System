@@ -1,4 +1,6 @@
+import Image from "next/image";
 import { Reveal, ScrollReveal } from "@/registry/lib/motion-variants";
+import { PLACEHOLDER_IMAGES } from "@/registry/lib/placeholder-images";
 import { ArrowRight } from "lucide-react";
 
 /**
@@ -34,11 +36,13 @@ export default function CtaSplitVisual() {
           </Reveal>
         </div>
 
-        <ScrollReveal effect="E" className="aspect-4/3 w-full overflow-hidden rounded-2xl">
-          <img
-            src="https://images.pexels.com/photos/36765627/pexels-photo-36765627.jpeg?auto=compress&cs=tinysrgb&w=1200&h=900&fit=crop"
-            alt="Two designers reviewing color swatches and prints"
-            className="h-full w-full object-cover"
+        <ScrollReveal effect="E" className="relative aspect-4/3 w-full overflow-hidden rounded-2xl">
+          <Image
+            src={PLACEHOLDER_IMAGES.landscape08.src}
+            alt={PLACEHOLDER_IMAGES.landscape08.alt}
+            fill
+            sizes="(min-width: 1024px) 50vw, 100vw"
+            className="object-cover"
           />
         </ScrollReveal>
       </div>

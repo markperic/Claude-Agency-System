@@ -1,8 +1,10 @@
 "use client";
 
 import { useState, type KeyboardEvent } from "react";
+import Image from "next/image";
 import { motion } from "motion/react";
 import { ScrollReveal } from "@/registry/lib/motion-variants";
+import { PLACEHOLDER_IMAGES } from "@/registry/lib/placeholder-images";
 
 /**
  * Module 65 — Gallery, Accordion
@@ -11,22 +13,22 @@ import { ScrollReveal } from "@/registry/lib/motion-variants";
  * focus + arrow keys) to make it active. Adapted from ReactBits'
  * AccordionGallery — rebuilt on Motion instead of GSAP so it shares this
  * repo's one animation engine rather than adding a second. Photo URLs are
- * ReactBits' own demo images (picsum.photos), kept as real photos rather
- * than this catalog's usual gradient placeholder, since the panel's
- * color/greyscale toggle is the point and doesn't read on a flat gradient.
- * The 3D rotation and the rounded/clipped corners are deliberately split
- * across a parent/child pair — Chrome fails to clip border-radius on an
- * element that also carries a 3D transform, so rotateY lives on the outer
- * div and overflow-hidden + rounded-2xl live on an untransformed child.
- * Local interactive state, not part of the A–J catalog (same as module
- * 25's mouse-tilt card).
+ * local placeholders (see src/registry/lib/placeholder-images.ts), kept as
+ * real photos rather than this catalog's usual gradient placeholder, since
+ * the panel's color/greyscale toggle is the point and doesn't read on a
+ * flat gradient. The 3D rotation and the rounded/clipped corners are
+ * deliberately split across a parent/child pair — Chrome fails to clip
+ * border-radius on an element that also carries a 3D transform, so rotateY
+ * lives on the outer div and overflow-hidden + rounded-2xl live on an
+ * untransformed child. Local interactive state, not part of the A–J
+ * catalog (same as module 25's mouse-tilt card).
  */
 const PANELS = [
-  { id: 1, label: "Canyon", image: "https://picsum.photos/id/1015/900/1200" },
-  { id: 2, label: "Ridgeline", image: "https://picsum.photos/id/1018/900/1200" },
-  { id: 3, label: "Falls", image: "https://picsum.photos/id/1039/900/1200" },
-  { id: 4, label: "Harbour", image: "https://picsum.photos/id/1043/900/1200" },
-  { id: 5, label: "Skyline", image: "https://picsum.photos/id/1044/900/1200" },
+  { id: 1, label: "Canyon", image: PLACEHOLDER_IMAGES.portrait03.src },
+  { id: 2, label: "Ridgeline", image: PLACEHOLDER_IMAGES.portrait07.src },
+  { id: 3, label: "Falls", image: PLACEHOLDER_IMAGES.portrait09.src },
+  { id: 4, label: "Harbour", image: PLACEHOLDER_IMAGES.landscape03.src },
+  { id: 5, label: "Skyline", image: PLACEHOLDER_IMAGES.landscape06.src },
 ];
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -79,7 +81,14 @@ export default function GalleryAccordion() {
                     transition={{ duration: 0.6, ease: EASE }}
                     className="absolute -inset-x-10 inset-y-0"
                   >
-                    <img src={panel.image} alt={panel.label} draggable={false} className="h-full w-full object-cover select-none" />
+                    <Image
+                      src={panel.image}
+                      alt={panel.label}
+                      draggable={false}
+                      fill
+                      sizes="20vw"
+                      className="object-cover select-none"
+                    />
                   </motion.div>
                   <motion.div
                     aria-hidden

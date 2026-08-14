@@ -1,4 +1,6 @@
+import Image from "next/image";
 import { ScrollReveal, StaggerGroup } from "@/registry/lib/motion-variants";
+import { PLACEHOLDER_IMAGES } from "@/registry/lib/placeholder-images";
 import { CheckCircle2 } from "lucide-react";
 
 /**
@@ -17,11 +19,13 @@ export default function ContentChecklistSplit() {
   return (
     <section className="bg-white px-6 py-24">
       <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 lg:grid-cols-2">
-        <ScrollReveal effect="E" className="aspect-4/3 w-full overflow-hidden rounded-2xl lg:order-1">
-          <img
-            src="https://images.pexels.com/photos/8117466/pexels-photo-8117466.jpeg?auto=compress&cs=tinysrgb&w=1200&h=900&fit=crop"
-            alt="Creative team collaborating around a table"
-            className="h-full w-full object-cover"
+        <ScrollReveal effect="E" className="relative aspect-4/3 w-full overflow-hidden rounded-2xl lg:order-1">
+          <Image
+            src={PLACEHOLDER_IMAGES.landscape14.src}
+            alt={PLACEHOLDER_IMAGES.landscape14.alt}
+            fill
+            sizes="(min-width: 1024px) 50vw, 100vw"
+            className="object-cover"
           />
         </ScrollReveal>
 

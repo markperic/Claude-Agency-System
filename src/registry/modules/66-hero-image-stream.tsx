@@ -1,8 +1,10 @@
 "use client";
 
 import * as React from "react";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { Reveal } from "@/registry/lib/motion-variants";
+import { PLACEHOLDER_IMAGES } from "@/registry/lib/placeholder-images";
 import { ArrowRight } from "lucide-react";
 
 /**
@@ -216,14 +218,7 @@ export function ImageStreamHero({
                   }}
                 >
                   {img ? (
-                    <img
-                      src={img.src}
-                      alt={img.alt ?? ""}
-                      loading="lazy"
-                      decoding="async"
-                      className="h-full w-full object-cover"
-                      draggable={false}
-                    />
+                    <Image src={img.src} alt={img.alt ?? ""} fill sizes="20vw" className="object-cover" draggable={false} />
                   ) : null}
                 </div>
               );
@@ -238,26 +233,11 @@ export function ImageStreamHero({
 }
 
 const IMAGES: StreamImage[] = [
-  {
-    src: "https://images.pexels.com/photos/35658181/pexels-photo-35658181.jpeg?auto=compress&cs=tinysrgb&w=900",
-    alt: "Silhouette of a woman against a vibrant ocean sunset",
-  },
-  {
-    src: "https://images.pexels.com/photos/34340727/pexels-photo-34340727.jpeg?auto=compress&cs=tinysrgb&w=900",
-    alt: "Silhouette of a man against a vibrant sunset sky",
-  },
-  {
-    src: "https://images.pexels.com/photos/15784889/pexels-photo-15784889.jpeg?auto=compress&cs=tinysrgb&w=900",
-    alt: "Double-exposure portrait blended with a cloudy sky and city skyline",
-  },
-  {
-    src: "https://images.pexels.com/photos/15784886/pexels-photo-15784886.jpeg?auto=compress&cs=tinysrgb&w=900",
-    alt: "Double-exposure profile portrait blended with a rooftop cityscape",
-  },
-  {
-    src: "https://images.pexels.com/photos/904276/pexels-photo-904276.jpeg?auto=compress&cs=tinysrgb&w=900",
-    alt: "Portrait of a man surrounded by bursts of colorful powder",
-  },
+  PLACEHOLDER_IMAGES.portrait01,
+  PLACEHOLDER_IMAGES.portrait04,
+  PLACEHOLDER_IMAGES.wallpaperPortrait02,
+  PLACEHOLDER_IMAGES.wallpaperPortrait03,
+  PLACEHOLDER_IMAGES.wallpaperPortrait04,
 ];
 
 export default function HeroImageStream() {

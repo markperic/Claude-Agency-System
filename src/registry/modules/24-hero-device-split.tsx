@@ -1,4 +1,6 @@
+import Image from "next/image";
 import { Reveal, ScrollReveal, HoverLift } from "@/registry/lib/motion-variants";
+import { PLACEHOLDER_IMAGES } from "@/registry/lib/placeholder-images";
 import { ArrowRight, Play } from "lucide-react";
 
 /**
@@ -50,10 +52,12 @@ export default function HeroDeviceSplit() {
             <span className="h-2.5 w-2.5 rounded-full bg-zinc-300" />
           </div>
           <div className="relative flex aspect-video items-center justify-center">
-            <img
-              src="https://images.pexels.com/photos/106344/pexels-photo-106344.jpeg?auto=compress&cs=tinysrgb&w=1200&h=675&fit=crop"
-              alt="Analytics dashboard displayed on a tablet"
-              className="absolute inset-0 h-full w-full object-cover"
+            <Image
+              src={PLACEHOLDER_IMAGES.landscape11.src}
+              alt={PLACEHOLDER_IMAGES.landscape11.alt}
+              fill
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              className="object-cover"
             />
             <div className="absolute inset-0 bg-zinc-950/10" />
             <HoverLift as="button" className="relative flex h-16 w-16 items-center justify-center rounded-full bg-white shadow-lg">

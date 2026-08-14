@@ -1,7 +1,9 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, type CSSProperties } from "react";
+import Image from "next/image";
 import { Reveal } from "@/registry/lib/motion-variants";
+import { PLACEHOLDER_IMAGES } from "@/registry/lib/placeholder-images";
 
 /**
  * Module 69 — Gallery, Dome
@@ -25,18 +27,18 @@ type GalleryImage = { src: string; alt: string };
 type DomeItem = { x: number; y: number; sizeX: number; sizeY: number; src: string; alt: string };
 
 const IMAGES: GalleryImage[] = [
-  { src: "https://images.pexels.com/photos/2081184/pexels-photo-2081184.jpeg?auto=compress&cs=tinysrgb&w=600&h=600&fit=crop", alt: "Triangular skylight casting light across a stairwell" },
-  { src: "https://images.pexels.com/photos/3747070/pexels-photo-3747070.jpeg?auto=compress&cs=tinysrgb&w=600&h=600&fit=crop", alt: "Laptop on a desk in front of an industrial-style window" },
-  { src: "https://images.pexels.com/photos/3062948/pexels-photo-3062948.jpeg?auto=compress&cs=tinysrgb&w=600&h=600&fit=crop", alt: "Minimal white architectural interior" },
-  { src: "https://images.pexels.com/photos/265101/pexels-photo-265101.jpeg?auto=compress&cs=tinysrgb&w=600&h=600&fit=crop", alt: "Creative studio desk with a cactus and laptop" },
-  { src: "https://images.pexels.com/photos/106344/pexels-photo-106344.jpeg?auto=compress&cs=tinysrgb&w=600&h=600&fit=crop", alt: "Analytics dashboard displayed on a tablet" },
-  { src: "https://images.pexels.com/photos/7449894/pexels-photo-7449894.jpeg?auto=compress&cs=tinysrgb&w=600&h=600&fit=crop", alt: "Minimal skincare product bottles on a studio set" },
-  { src: "https://images.pexels.com/photos/1128207/pexels-photo-1128207.jpeg?auto=compress&cs=tinysrgb&w=600&h=600&fit=crop", alt: "Laptop open on a minimal desk by a window" },
-  { src: "https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=600&h=600&fit=crop", alt: "Website wireframe sketched out in a notebook" },
-  { src: "https://images.pexels.com/photos/35658181/pexels-photo-35658181.jpeg?auto=compress&cs=tinysrgb&w=600&h=600&fit=crop", alt: "Silhouette of a woman against a vibrant ocean sunset" },
-  { src: "https://images.pexels.com/photos/34340727/pexels-photo-34340727.jpeg?auto=compress&cs=tinysrgb&w=600&h=600&fit=crop", alt: "Silhouette of a man against a vibrant sunset sky" },
-  { src: "https://images.pexels.com/photos/15784889/pexels-photo-15784889.jpeg?auto=compress&cs=tinysrgb&w=600&h=600&fit=crop", alt: "Double-exposure portrait blended with a cloudy sky and city skyline" },
-  { src: "https://images.pexels.com/photos/36765627/pexels-photo-36765627.jpeg?auto=compress&cs=tinysrgb&w=600&h=600&fit=crop", alt: "Two designers reviewing color swatches and prints" },
+  PLACEHOLDER_IMAGES.landscape01,
+  PLACEHOLDER_IMAGES.landscape02,
+  PLACEHOLDER_IMAGES.landscape03,
+  PLACEHOLDER_IMAGES.landscape05,
+  PLACEHOLDER_IMAGES.landscape09,
+  PLACEHOLDER_IMAGES.landscape12,
+  PLACEHOLDER_IMAGES.landscape13,
+  PLACEHOLDER_IMAGES.portrait02,
+  PLACEHOLDER_IMAGES.portrait05,
+  PLACEHOLDER_IMAGES.portrait06,
+  PLACEHOLDER_IMAGES.portrait07,
+  PLACEHOLDER_IMAGES.portrait09,
 ];
 
 const SEGMENTS = 35;
@@ -590,7 +592,7 @@ export default function GalleryDome() {
                       onClick={onTileClick}
                     >
                       <div className="dome-item__image">
-                        <img src={it.src} draggable={false} alt={it.alt} />
+                        <Image src={it.src} draggable={false} alt={it.alt} fill sizes="140px" />
                       </div>
                     </div>
                   );

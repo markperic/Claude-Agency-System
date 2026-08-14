@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useScroll, useTransform } from "motion/react";
+import { motion, useScroll, useSpring, useTransform } from "motion/react";
 import { Reveal } from "@/registry/lib/motion-variants";
 
 /**
@@ -9,6 +9,11 @@ import { Reveal } from "@/registry/lib/motion-variants";
  * A tall sticky section: a laptop mockup "opens" (lid rotateX) and its
  * screen content scales up as the page scrolls past. Recreates the classic
  * Aceternity Macbook-scroll effect from scratch with motion's scroll hooks.
+ * scrollYProgress is run through useSpring before driving any transform —
+ * without it, a fast flick/fast programmatic scroll can leave the derived
+ * opacity/scale values stuck on a stale (pre-jump) DOM write, since Motion
+ * only re-flushes style on the next frame that value changes. The spring
+ * keeps ticking every frame until it settles, which self-corrects that.
  * The screen shows a real website mockup image (public/mockup-website-hero.webp
  * — a licensed Freepik/Magnific template, cropped to just the browser frame
  * with the source's watermark removed). Title effect: B (Fade In).
@@ -19,11 +24,12 @@ export default function HeroMacbookScroll() {
     target: containerRef,
     offset: ["start start", "end end"],
   });
+  const smoothProgress = useSpring(scrollYProgress, { stiffness: 300, damping: 40, restDelta: 0.001 });
 
-  const lidRotate = useTransform(scrollYProgress, [0, 0.5], [-28, 0]);
-  const screenScale = useTransform(scrollYProgress, [0.3, 0.8], [0.85, 1]);
-  const screenOpacity = useTransform(scrollYProgress, [0.2, 0.45], [0, 1]);
-  const wrapScale = useTransform(scrollYProgress, [0, 0.5], [0.9, 1]);
+  const lidRotate = useTransform(smoothProgress, [0, 0.5], [-28, 0]);
+  const screenScale = useTransform(smoothProgress, [0.3, 0.8], [0.85, 1]);
+  const screenOpacity = useTransform(smoothProgress, [0.2, 0.45], [0, 1]);
+  const wrapScale = useTransform(smoothProgress, [0, 0.5], [0.9, 1]);
 
   return (
     <section ref={containerRef} className="relative h-[220vh] bg-white">

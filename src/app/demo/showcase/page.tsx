@@ -5,7 +5,7 @@ export default function ShowcaseCategoryPage() {
     <CategoryModulesPage
       category="showcase"
       title="Showcase"
-      description="Larger animated set pieces — starting with the scroll-linked Macbook reveal moved over from Hero."
+      description="Larger animated set pieces — scroll-linked reveals like the Macbook and Container Scroll modules."
     />
   );
 }

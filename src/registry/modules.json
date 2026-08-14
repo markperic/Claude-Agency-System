@@ -595,6 +595,15 @@
       "component": "HeroImageStream",
       "description": "Two rails of image cards ride from far behind the screen toward the viewer on pure CSS 3D perspective, forming a continuous corridor. Adapted from 21st.dev's Image Stream Hero.",
       "editable": { "title": "B", "images": "custom CSS-keyframe corridor (no JS animation loop), see file" }
+    },
+    {
+      "id": 67,
+      "name": "Hero — Container Scroll Reveal",
+      "category": "showcase",
+      "file": "src/registry/modules/67-hero-container-scroll.tsx",
+      "component": "HeroContainerScroll",
+      "description": "A rounded device frame tilts back in 3D perspective at rest, then straightens and scales up as the page scrolls past, revealing a product image inside. Adapted from Aceternity's Container Scroll Animation.",
+      "editable": { "title": "custom scroll-linked translateY, see file", "card": "custom scroll-linked rotateX/scale via Motion, see file" }
     }
   ]
 }

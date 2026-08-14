@@ -66,6 +66,7 @@ import HeroIlluminatedGlow from "@/registry/modules/63-hero-illuminated-glow";
 import ContentCarouselCard from "@/registry/modules/64-content-carousel-card";
 import GalleryAccordion from "@/registry/modules/65-gallery-accordion";
 import HeroImageStream from "@/registry/modules/66-hero-image-stream";
+import HeroContainerScroll from "@/registry/modules/67-hero-container-scroll";
 
 /**
  * The full id → component lookup for every module in src/registry/modules.json.
@@ -138,6 +139,7 @@ export const MODULE_COMPONENTS: Record<number, ElementType> = {
   64: ContentCarouselCard,
   65: GalleryAccordion,
   66: HeroImageStream,
+  67: HeroContainerScroll,
 };
 
 /** The label bar + module pairing used on every /demo category page. */

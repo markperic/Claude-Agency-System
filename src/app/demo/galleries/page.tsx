@@ -5,7 +5,7 @@ export default function GalleriesCategoryPage() {
     <CategoryModulesPage
       category="galleries"
       title="Galleries"
-      description="Image-forward sections built to show off a body of work — starting with a hover-driven accordion gallery, ReactBits-sourced and rebuilt on Motion."
+      description="Image-forward sections built to show off a body of work — a hover-driven accordion gallery, and a WebGL morph slider."
     />
   );
 }

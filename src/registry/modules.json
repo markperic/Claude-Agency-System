@@ -604,6 +604,15 @@
       "component": "HeroContainerScroll",
       "description": "A rounded device frame tilts back in 3D perspective at rest, then straightens and scales up as the page scrolls past, revealing a product image inside. Adapted from Aceternity's Container Scroll Animation.",
       "editable": { "title": "custom scroll-linked translateY, see file", "card": "custom scroll-linked rotateX/scale via Motion, see file" }
+    },
+    {
+      "id": 68,
+      "name": "Gallery — Morph Slider",
+      "category": "galleries",
+      "file": "src/registry/modules/68-gallery-morph-slider.tsx",
+      "component": "GalleryMorphSlider",
+      "description": "A WebGL image slider that crossfades slides through a shader-driven pixel displacement (a scrolling noise field warps one image apart as the next resolves) instead of a CSS crossfade. Drag or use the arrow controls. Adapted from a community ogl + GSAP MorphSlider component.",
+      "editable": { "heading": "A", "slides": "custom WebGL canvas driven by `motion/react`'s animate(), see file" }
     }
   ]
 }

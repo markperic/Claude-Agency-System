@@ -631,6 +631,24 @@
       "component": "ShowcaseSplitFlap",
       "description": "An airport/train-station departures-board effect: tiles mechanically flip through a few random characters before landing on each message, cycling through a status-message list on a loop. Adapted from a community SplitFlapText component.",
       "editable": { "heading": "A", "board": "custom flip-cycle text array, see file" }
+    },
+    {
+      "id": 71,
+      "name": "Gallery — Depth Carousel",
+      "category": "galleries",
+      "file": "src/registry/modules/71-gallery-depth-carousel.tsx",
+      "component": "GalleryDepthCarousel",
+      "description": "A stack of cards receding into a CSS 3D perspective, stepping the focused card forward on drag, scroll-wheel, arrow keys, or the prev/next controls while the rest fall back in depth, darken, and blur. Adapted from a community DepthCarousel component, its GSAP tween rebuilt on `motion/react`'s animate().",
+      "editable": { "heading": "A", "cards": "custom drag/wheel/keyboard-driven 3D transform carousel, see file" }
+    },
+    {
+      "id": 72,
+      "name": "Nav — Card Menu",
+      "category": "nav",
+      "file": "src/registry/modules/72-nav-card-menu.tsx",
+      "component": "NavCardMenu",
+      "description": "A collapsed pill nav that expands downward into a row of colored, themed link cards, then collapses back on toggle. Adapted from a community CardNav component, its GSAP timeline rebuilt on `motion/react`'s animate() (per-card delay for the stagger, `.then()` for the close callback).",
+      "editable": { "heading": "A", "logo": "text wordmark, see file", "cards": "custom measured expand/collapse + stagger via motion/react's animate(), see file" }
     }
   ]
 }

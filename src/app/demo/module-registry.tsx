@@ -70,6 +70,8 @@ import HeroContainerScroll from "@/registry/modules/67-hero-container-scroll";
 import GalleryMorphSlider from "@/registry/modules/68-gallery-morph-slider";
 import GalleryDome from "@/registry/modules/69-gallery-dome";
 import ShowcaseSplitFlap from "@/registry/modules/70-showcase-split-flap";
+import GalleryDepthCarousel from "@/registry/modules/71-gallery-depth-carousel";
+import NavCardMenu from "@/registry/modules/72-nav-card-menu";
 
 /**
  * The full id → component lookup for every module in src/registry/modules.json.
@@ -146,6 +148,8 @@ export const MODULE_COMPONENTS: Record<number, ElementType> = {
   68: GalleryMorphSlider,
   69: GalleryDome,
   70: ShowcaseSplitFlap,
+  71: GalleryDepthCarousel,
+  72: NavCardMenu,
 };
 
 /** The label bar + module pairing used on every /demo category page. */

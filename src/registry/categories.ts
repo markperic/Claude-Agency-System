@@ -4,6 +4,7 @@
  * two never drift out of sync.
  */
 export const CATEGORIES: { slug: string; navLabel: string; title: string; description: string }[] = [
+  { slug: "nav", navLabel: "Nav", title: "Nav", description: "Site headers and floating navigation menus." },
   { slug: "hero", navLabel: "Hero", title: "Hero sections", description: "Opening sections — the first thing a visitor sees." },
   { slug: "content", navLabel: "Content", title: "Content sections", description: "Feature grids, content splits, carousels." },
   { slug: "galleries", navLabel: "Galleries", title: "Galleries", description: "Image-forward sections for showing off a body of work." },

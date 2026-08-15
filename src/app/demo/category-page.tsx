@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import modulesData from "@/registry/modules.json";
 import { SiteNav } from "@/components/site-nav";
+import { SiteFooter } from "@/components/site-footer";
 import { ModuleRow } from "./module-registry";
 
 /**
@@ -48,6 +49,7 @@ export function CategoryModulesPage({
       ) : (
         mods.map((mod) => <ModuleRow key={mod.id} id={mod.id} name={mod.name} category={mod.category} />)
       )}
+      <SiteFooter />
     </main>
   );
 }

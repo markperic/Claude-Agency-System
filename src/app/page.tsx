@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import modulesData from "@/registry/modules.json";
 import { SiteNav } from "@/components/site-nav";
+import { SiteFooter } from "@/components/site-footer";
 import { CATEGORIES } from "@/registry/categories";
 
 function countFor(slug: string) {
@@ -65,6 +66,7 @@ export default function Home() {
           </Link>
         </div>
       </div>
+      <SiteFooter />
     </main>
   );
 }

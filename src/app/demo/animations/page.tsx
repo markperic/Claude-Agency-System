@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { SiteNav } from "@/components/site-nav";
+import { SiteFooter } from "@/components/site-footer";
 import AnimationCatalog from "../animation-catalog";
 
 export default function AnimationsPage() {
@@ -17,6 +18,7 @@ export default function AnimationsPage() {
         </Link>
       </div>
       <AnimationCatalog />
+      <SiteFooter />
     </main>
   );
 }

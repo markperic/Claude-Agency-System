@@ -72,6 +72,11 @@ import GalleryDome from "@/registry/modules/69-gallery-dome";
 import ShowcaseSplitFlap from "@/registry/modules/70-showcase-split-flap";
 import GalleryDepthCarousel from "@/registry/modules/71-gallery-depth-carousel";
 import NavCardMenu from "@/registry/modules/72-nav-card-menu";
+import FooterBoxedPanel from "@/registry/modules/73-footer-boxed-panel";
+import FooterStatusConsole from "@/registry/modules/74-footer-status-console";
+import FooterBoldCard from "@/registry/modules/75-footer-bold-card";
+import FooterOversizedWordmark from "@/registry/modules/76-footer-oversized-wordmark";
+import FooterPhotoFrame from "@/registry/modules/77-footer-photo-frame";
 
 /**
  * The full id → component lookup for every module in src/registry/modules.json.
@@ -150,6 +155,11 @@ export const MODULE_COMPONENTS: Record<number, ElementType> = {
   70: ShowcaseSplitFlap,
   71: GalleryDepthCarousel,
   72: NavCardMenu,
+  73: FooterBoxedPanel,
+  74: FooterStatusConsole,
+  75: FooterBoldCard,
+  76: FooterOversizedWordmark,
+  77: FooterPhotoFrame,
 };
 
 /** The label bar + module pairing used on every /demo category page. */

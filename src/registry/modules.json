@@ -649,6 +649,51 @@
       "component": "NavCardMenu",
       "description": "A collapsed pill nav that expands downward into a row of colored, themed link cards, then collapses back on toggle. Adapted from a community CardNav component, its GSAP timeline rebuilt on `motion/react`'s animate() (per-card delay for the stagger, `.then()` for the close callback).",
       "editable": { "heading": "A", "logo": "text wordmark, see file", "cards": "custom measured expand/collapse + stagger via motion/react's animate(), see file" }
+    },
+    {
+      "id": 73,
+      "name": "Footer — Boxed Panel",
+      "category": "footer",
+      "file": "src/registry/modules/73-footer-boxed-panel.tsx",
+      "component": "FooterBoxedPanel",
+      "description": "A footer framed as its own bordered, rounded card rather than a full-width band — brand mark, nav column, mission statement, and socials on top, an inline newsletter field and legal row below. No entrance animation.",
+      "editable": {}
+    },
+    {
+      "id": 74,
+      "name": "Footer — Status Console",
+      "category": "footer",
+      "file": "src/registry/modules/74-footer-status-console.tsx",
+      "component": "FooterStatusConsole",
+      "description": "A dispatch-style newsletter panel — headline, signup, and topic tags on one side, a live status readout on the other — sits above the standard column footer. No entrance animation.",
+      "editable": {}
+    },
+    {
+      "id": 75,
+      "name": "Footer — Bold Color Card",
+      "category": "footer",
+      "file": "src/registry/modules/75-footer-bold-card.tsx",
+      "component": "FooterBoldCard",
+      "description": "A saturated gradient card carries the whole footer — brand, description, socials, and link columns — with the copyright line sitting outside it on the plain page background. No entrance animation.",
+      "editable": {}
+    },
+    {
+      "id": 76,
+      "name": "Footer — Oversized Wordmark",
+      "category": "footer",
+      "file": "src/registry/modules/76-footer-oversized-wordmark.tsx",
+      "component": "FooterOversizedWordmark",
+      "description": "A restrained top half — brand, tagline, bordered nav grid — gives way to an enormous, barely-there brand wordmark cropped off at the bottom edge. No entrance animation.",
+      "editable": {}
+    },
+    {
+      "id": 77,
+      "name": "Footer — Photo Frame",
+      "category": "footer",
+      "file": "src/registry/modules/77-footer-photo-frame.tsx",
+      "component": "FooterPhotoFrame",
+      "description": "A strip of environmental photography sits above a rounded dark panel like a card laid over a full-bleed photo — centered brand, a slim link row, socials, and a two-line meta readout in the legal row. No entrance animation.",
+      "editable": {}
     }
   ]
 }

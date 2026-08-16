@@ -5,7 +5,6 @@ import Image from "next/image";
 import { motion, useScroll, useTransform, useMotionTemplate, type MotionValue } from "motion/react";
 import { PLACEHOLDER_IMAGES } from "@/registry/lib/placeholder-images";
 import { useScrollValue } from "@/registry/lib/motion-variants";
-import { cn } from "@/lib/utils";
 
 const SLIDES = [
   PLACEHOLDER_IMAGES.landscape03,
@@ -245,19 +244,20 @@ export default function HeroCinematicCurtain({
           <ClosingFrame accent={accent} heading={zoomHeading} headingOpacity={zoomHeadingOpacity} decorative />
         </motion.div>
 
-        {/* Overlay chrome — corner marks, present only for the first beat */}
+        {/* Overlay chrome — edge marks, present only for the first beat */}
         <motion.div
           style={{ opacity: chromeOpacity }}
-          className={cn(
-            "pointer-events-none absolute inset-0 flex flex-col justify-between",
-            "p-6 text-[0.6875rem] font-bold uppercase leading-none tracking-[-0.02em] text-white md:p-8",
-          )}
+          className="pointer-events-none absolute inset-0 text-[0.6875rem] font-bold uppercase leading-none tracking-[-0.02em] text-white"
         >
-          <div className="flex items-start justify-between">
+          {/* Held at mid-height on the left and right edges, level with the
+              headline. Horizontal padding only: `-translate-y-1/2` offsets by
+              the element's own height, so vertical padding here would throw
+              the centring off by half of whatever it added. */}
+          <div className="absolute inset-x-0 top-1/2 flex -translate-y-1/2 items-center justify-between px-6 md:px-8">
             <span>{eyebrow}</span>
             <span className="hidden md:inline">Let&rsquo;s discuss &#8599;</span>
           </div>
-          <div className="flex items-end justify-between">
+          <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-6 md:p-8">
             <span>Scroll</span>
             <span>01 &mdash; Introduction</span>
           </div>

@@ -6,7 +6,7 @@ import { ScrollReveal, StaggerGroup } from "@/registry/lib/motion-variants";
  */
 const STATS = [
   { value: "300+", label: "Modules to choose from as the library grows" },
-  { value: "10", label: "Named animation effects, used consistently" },
+  { value: "11", label: "Named animation effects, used consistently" },
   { value: "1", label: "Codebase — no per-project rebuild of the basics" },
 ];
 

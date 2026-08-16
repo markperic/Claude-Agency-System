@@ -16,7 +16,7 @@ pricing table, and so on. Numbers are stable — module 5 is always Content
 Split, don't renumber existing entries when adding new ones (append instead).
 
 **Animation effects** — `src/registry/lib/motion-variants.tsx`, catalogued as
-`effectCatalog`. Ten named effects (A–J), each used consistently everywhere
+`effectCatalog`. Eleven named effects (A–K), each used consistently everywhere
 rather than one-off animations invented per component. Effects are either
 `entrance` (plays once, on load or on scroll-into-view), `scroll` (linked to
 scroll position, e.g. parallax), or `hover` (a micro-interaction, not an

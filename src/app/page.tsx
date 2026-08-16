@@ -1,11 +1,17 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import modulesData from "@/registry/modules.json";
+import pagesData from "@/registry/pages.json";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { CATEGORIES } from "@/registry/categories";
 
+const MODULE_CATEGORY_COUNT = CATEGORIES.filter((cat) => cat.slug !== "pages").length;
+
+// "pages" isn't a module category — it holds full compositions from
+// src/registry/pages.json, counted and labeled separately below.
 function countFor(slug: string) {
+  if (slug === "pages") return pagesData.pages.length;
   return modulesData.modules.filter((mod) => mod.category === slug).length;
 }
 
@@ -30,8 +36,9 @@ export default function Home() {
             Module &amp; animation catalog
           </h1>
           <p className="mx-auto mt-3 max-w-xl text-zinc-600">
-            {modulesData.modules.length} modules across {CATEGORIES.length} categories, plus every
-            animation effect from A to J shown on its own. Pick a category to browse.
+            {modulesData.modules.length} modules across {MODULE_CATEGORY_COUNT} categories, plus every
+            animation effect from A to K shown on its own, and full example pages assembled from
+            the catalog. Pick a category to browse.
           </p>
         </div>
 
@@ -43,7 +50,8 @@ export default function Home() {
               className="group rounded-2xl border border-zinc-200 p-6 transition-colors hover:border-zinc-300 hover:bg-zinc-50"
             >
               <p className="text-xs font-medium tracking-wide text-zinc-400 uppercase">
-                {countFor(cat.slug)} module{countFor(cat.slug) === 1 ? "" : "s"}
+                {countFor(cat.slug)} {cat.slug === "pages" ? "page" : "module"}
+                {countFor(cat.slug) === 1 ? "" : "s"}
               </p>
               <h2 className="mt-2 flex items-center gap-1.5 text-lg font-semibold text-zinc-950">
                 {cat.title}
@@ -57,12 +65,12 @@ export default function Home() {
             href="/demo/animations"
             className="group rounded-2xl border border-zinc-800 bg-zinc-950 p-6 transition-colors hover:bg-zinc-900"
           >
-            <p className="text-xs font-medium tracking-wide text-zinc-500 uppercase">10 effects</p>
+            <p className="text-xs font-medium tracking-wide text-zinc-500 uppercase">11 effects</p>
             <h2 className="mt-2 flex items-center gap-1.5 text-lg font-semibold text-white">
               Animation catalog
               <ArrowRight className="h-4 w-4 -translate-x-1 opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100" />
             </h2>
-            <p className="mt-1.5 text-sm text-zinc-400">Effects A–J, demonstrated live, with a replay control.</p>
+            <p className="mt-1.5 text-sm text-zinc-400">Effects A–K, demonstrated live — hover a card to play its effect.</p>
           </Link>
         </div>
       </div>

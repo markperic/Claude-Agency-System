@@ -64,6 +64,7 @@ export default function HeroMacbookScroll() {
                 src="/mockup-website-hero.webp"
                 alt="Website mockup: a travel landing page with a hero photo and booking panel"
                 fill
+                priority
                 sizes="(min-width: 1024px) 672px, 100vw"
                 className="object-cover object-top"
               />

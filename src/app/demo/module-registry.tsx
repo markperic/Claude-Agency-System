@@ -77,6 +77,14 @@ import FooterStatusConsole from "@/registry/modules/74-footer-status-console";
 import FooterBoldCard from "@/registry/modules/75-footer-bold-card";
 import FooterOversizedWordmark from "@/registry/modules/76-footer-oversized-wordmark";
 import FooterPhotoFrame from "@/registry/modules/77-footer-photo-frame";
+import ShowcaseScrollManifesto from "@/registry/modules/78-showcase-scroll-manifesto";
+import ShowcaseDualMarquee from "@/registry/modules/79-showcase-dual-marquee";
+import HeroStatementDark from "@/registry/modules/80-hero-statement-dark";
+import StatsBarChart from "@/registry/modules/81-stats-bar-chart";
+import ShowcaseBlurExit from "@/registry/modules/82-showcase-blur-exit";
+import ContentResourcesStack from "@/registry/modules/84-content-resources-stack";
+import CtaRotatingWordCloser from "@/registry/modules/85-cta-rotating-word";
+import NavScrollChapterPill from "@/registry/modules/86-nav-scroll-chapter-pill";
 
 /**
  * The full id → component lookup for every module in src/registry/modules.json.
@@ -160,6 +168,14 @@ export const MODULE_COMPONENTS: Record<number, ElementType> = {
   75: FooterBoldCard,
   76: FooterOversizedWordmark,
   77: FooterPhotoFrame,
+  78: ShowcaseScrollManifesto,
+  79: ShowcaseDualMarquee,
+  80: HeroStatementDark,
+  81: StatsBarChart,
+  82: ShowcaseBlurExit,
+  84: ContentResourcesStack,
+  85: CtaRotatingWordCloser,
+  86: NavScrollChapterPill,
 };
 
 /** The label bar + module pairing used on every /demo category page. */

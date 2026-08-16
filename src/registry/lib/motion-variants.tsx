@@ -3,7 +3,7 @@
 /**
  * The animation effect catalog for the module library.
  *
- * This is the "Effect A / Effect B" vocabulary referenced in registry/modules.json
+ * This is the "Effect A / Effect B" vocabulary (eleven effects, A-K) referenced in registry/modules.json
  * and in MODULE-LIBRARY.md. Every animated element in every numbered module pulls
  * its animation from here — nothing improvises its own one-off animation.
  *
@@ -22,7 +22,7 @@ import {
 } from "motion/react";
 import { cn } from "@/lib/utils";
 
-export type AnimationEffect = "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J";
+export type AnimationEffect = "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K";
 
 export const effectCatalog: Record<
   AnimationEffect,
@@ -38,41 +38,42 @@ export const effectCatalog: Record<
   H: { name: "Scroll Parallax", kind: "scroll", description: "The element (usually an image) drifts at a different speed than the page as you scroll past it." },
   I: { name: "Hover Lift", kind: "hover", description: "Micro-interaction: lifts 4px and scales to 102% on hover/tap. Use on cards and buttons, not on entrance." },
   J: { name: "Gradient Shimmer", kind: "entrance", description: "An animated gradient sweeps across the text on load. Reserve for one hero title per page — it's a lot if overused." },
+  K: { name: "Text Reveal (Split)", kind: "entrance", description: "Splits a heading into words that stagger in on load, each rising and fading. The 'expensive text reveal' look, built on Effect F's stagger rather than a separate text-splitting library. Use on at most one headline per page, same restraint as Effect J." },
 };
 
-export const variants: Record<Exclude<AnimationEffect, "H" | "I" | "J">, Variants> = {
+export const variants: Record<Exclude<AnimationEffect, "H" | "I" | "J" | "K">, Variants> = {
   A: {
     hidden: { opacity: 0, y: 24 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+    show: { opacity: 1, y: 0, transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] } },
   },
   B: {
     hidden: { opacity: 0 },
-    show: { opacity: 1, transition: { duration: 0.9, ease: "easeOut" } },
+    show: { opacity: 1, transition: { duration: 1.3, ease: "easeOut" } },
   },
   C: {
     hidden: { opacity: 0, x: -32 },
-    show: { opacity: 1, x: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+    show: { opacity: 1, x: 0, transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] } },
   },
   D: {
     hidden: { opacity: 0, x: 32 },
-    show: { opacity: 1, x: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+    show: { opacity: 1, x: 0, transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] } },
   },
   E: {
     hidden: { opacity: 0, scale: 0.92 },
-    show: { opacity: 1, scale: 1, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
+    show: { opacity: 1, scale: 1, transition: { duration: 0.75, ease: [0.22, 1, 0.36, 1] } },
   },
   F: {
     hidden: {},
-    show: { transition: { staggerChildren: 0.12, delayChildren: 0.05 } },
+    show: { transition: { staggerChildren: 0.16, delayChildren: 0.08 } },
   },
   G: {
     hidden: { opacity: 0, y: 24 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+    show: { opacity: 1, y: 0, transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] } },
   },
 };
 
 type RevealProps = MotionProps & {
-  effect?: Exclude<AnimationEffect, "H" | "I" | "J">;
+  effect?: Exclude<AnimationEffect, "H" | "I" | "J" | "K">;
   as?: ElementType;
   className?: string;
   children?: ReactNode;
@@ -167,10 +168,59 @@ export function HoverLift({ className, children, as = "div" }: { className?: str
     <MotionTag
       whileHover={{ y: -4, scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
-      transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
       className={className}
     >
       {children}
+    </MotionTag>
+  );
+}
+
+const splitWordContainer: Variants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.1, delayChildren: 0.06 } },
+};
+
+const splitWordItem: Variants = {
+  hidden: { opacity: 0, y: 12 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
+};
+
+/**
+ * Effect K — text reveal. Splits a plain-string heading into words that
+ * stagger in on load (or on scroll into view, with `viewport`). Use on at
+ * most one headline per page — same restraint as Effect J.
+ */
+export function SplitReveal({
+  as = "h2",
+  className,
+  children,
+  viewport = false,
+}: {
+  as?: ElementType;
+  className?: string;
+  children: string;
+  viewport?: boolean;
+}) {
+  const MotionTag = motion[as as "div"] ?? motion.div;
+  const words = children.split(" ");
+  return (
+    <MotionTag
+      initial="hidden"
+      {...(viewport
+        ? { whileInView: "show", viewport: { once: true, margin: "-80px" } }
+        : { animate: "show" })}
+      variants={splitWordContainer}
+      className={className}
+    >
+      {words.map((word, i) => (
+        <span key={i}>
+          <motion.span variants={splitWordItem} className="inline-block">
+            {word}
+          </motion.span>
+          {i < words.length - 1 ? " " : ""}
+        </span>
+      ))}
     </MotionTag>
   );
 }
@@ -181,7 +231,7 @@ export function ShimmerText({ className, children }: { className?: string; child
     <motion.span
       initial={{ backgroundPosition: "200% center" }}
       animate={{ backgroundPosition: "0% center" }}
-      transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 2.2, ease: [0.22, 1, 0.36, 1] }}
       className={cn(
         "bg-[linear-gradient(110deg,var(--foreground)_35%,var(--muted-foreground,#888)_50%,var(--foreground)_65%)] bg-[length:200%_100%] bg-clip-text text-transparent",
         className

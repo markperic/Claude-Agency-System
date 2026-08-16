@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { LenisProvider } from "@/registry/lib/lenis-provider";
 import "./globals.css";
 
 // Deliberately not using next/font/google here — a starter template
@@ -14,7 +15,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className="h-full antialiased">
-      <body className="min-h-full flex flex-col font-sans">{children}</body>
+      <body className="min-h-full flex flex-col font-sans">
+        <LenisProvider>{children}</LenisProvider>
+      </body>
     </html>
   );
 }

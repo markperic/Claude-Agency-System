@@ -7,7 +7,7 @@ import { Layers, Wand2, GitBranch } from "lucide-react";
  */
 const FEATURES = [
   { icon: Layers, title: "Numbered modules", body: "Every section is catalogued by number, so instructions like \"use module 5\" resolve to a real, specific component." },
-  { icon: Wand2, title: "Shared animation system", body: "One small set of named effects (A–J) used everywhere, instead of a one-off animation invented per section." },
+  { icon: Wand2, title: "Shared animation system", body: "One small set of named effects (A–K) used everywhere, instead of a one-off animation invented per section." },
   { icon: GitBranch, title: "Grows with the project", body: "Add new modules over time from your own designs or curated component sources — the catalog just gets deeper." },
 ];
 

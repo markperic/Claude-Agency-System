@@ -11,12 +11,15 @@
   --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
-  /* Shared animation utilities for hero modules (src/registry/modules/16-25).
-     Not part of the lettered A-J effect catalog (see motion-variants.tsx) —
-     these are CSS-driven background/decoration loops, registered here the
-     same way Tailwind registers its own built-ins like animate-spin. */
+  /* Shared animation utilities used across modules (originally added for the
+     hero modules, src/registry/modules/16-25; also used by showcase modules
+     like 78-79). Not part of the lettered A-K effect catalog (see
+     motion-variants.tsx) — these are CSS-driven background/decoration loops,
+     registered here the same way Tailwind registers its own built-ins like
+     animate-spin. */
   --animate-aurora: aurora 14s ease-in-out infinite alternate;
   --animate-marquee: marquee 28s linear infinite;
+  --animate-marquee-reverse: marquee-reverse 32s linear infinite;
   --animate-beam-drift: beam-drift 9s ease-in-out infinite alternate;
   --animate-border-spin: border-spin 3.5s linear infinite;
   --animate-glow-in: glow-in 1.1s ease-in-out forwards;
@@ -36,6 +39,11 @@
 @keyframes marquee {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
+}
+
+@keyframes marquee-reverse {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
 }
 
 @keyframes beam-drift {

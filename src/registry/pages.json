@@ -1,0 +1,10 @@
+{
+  "pages": [
+    {
+      "slug": "design-manifesto",
+      "title": "Real Design Wins",
+      "href": "/examples/design-manifesto",
+      "description": "A full page assembled from the module catalog, replicating realfood.gov's structure reskinned to a design-agency manifesto — dark statement hero with a pinned zoom-to-fullscreen video, scroll-gated animated stats, a scroll color-fill punctuation statement, a scroll-scrubbed manifesto reveal, a scroll-gated overlapping resources stack, FAQs, and a rotating coverflow closer."
+    }
+  ]
+}

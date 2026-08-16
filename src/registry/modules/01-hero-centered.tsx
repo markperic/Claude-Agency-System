@@ -1,10 +1,10 @@
-import { Reveal, StaggerGroup } from "@/registry/lib/motion-variants";
+import { Reveal, SplitReveal, StaggerGroup } from "@/registry/lib/motion-variants";
 import { ArrowRight } from "lucide-react";
 
 /**
  * Module 01 — Hero, Centered
  * A single-column hero: eyebrow, headline, subhead, two CTAs. No image.
- * Title effect: B (Fade In). Body/CTA group: F (Stagger) of Effect A children.
+ * Title effect: K (Text Reveal, Split). Body/CTA group: F (Stagger) of Effect A children.
  */
 export default function HeroCentered() {
   return (
@@ -14,9 +14,9 @@ export default function HeroCentered() {
           For growing teams
         </Reveal>
 
-        <Reveal effect="B" as="h1" className="text-balance text-4xl font-semibold tracking-tight text-zinc-950 sm:text-6xl">
+        <SplitReveal as="h1" className="text-balance text-4xl font-semibold tracking-tight text-zinc-950 sm:text-6xl">
           Ship a site your clients actually love
-        </Reveal>
+        </SplitReveal>
 
         <StaggerGroup className="mt-8 flex flex-col items-center gap-8">
           <Reveal effect="A" as="p" className="max-w-xl text-lg text-zinc-600">

@@ -18,4 +18,5 @@ export const CATEGORIES: { slug: string; navLabel: string; title: string; descri
   { slug: "faqs", navLabel: "FAQs", title: "FAQs", description: "Expandable question lists." },
   { slug: "utility", navLabel: "Utility", title: "Utility", description: "404s, success states, thank-you pages, and other one-off utility screens." },
   { slug: "footer", navLabel: "Footer", title: "Footers", description: "Site-wide navigation and legal links." },
+  { slug: "pages", navLabel: "Pages", title: "Pages", description: "Full example pages assembled from the module catalog." },
 ];

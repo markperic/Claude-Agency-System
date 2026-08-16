@@ -9,7 +9,7 @@
       "file": "src/registry/modules/01-hero-centered.tsx",
       "component": "HeroCentered",
       "description": "Single-column hero: eyebrow, headline, subhead, two CTAs, no image.",
-      "editable": { "title": "B", "body/cta group": "F (stagger of A)" }
+      "editable": { "title": "K", "body/cta group": "F (stagger of A)" }
     },
     {
       "id": 2,
@@ -694,6 +694,78 @@
       "component": "FooterPhotoFrame",
       "description": "A strip of environmental photography sits above a rounded dark panel like a card laid over a full-bleed photo — centered brand, a slim link row, socials, and a two-line meta readout in the legal row. No entrance animation.",
       "editable": {}
+    },
+    {
+      "id": 78,
+      "name": "Showcase — Scroll Reveal Manifesto",
+      "category": "showcase",
+      "file": "src/registry/modules/78-showcase-scroll-manifesto.tsx",
+      "component": "ShowcaseScrollManifesto",
+      "description": "A pinned full-bleed statement over a photo where the text fills in word-by-word, continuously tracking scroll position (not a one-time entrance) — a few key words highlight in an accent color as they land. Bold display font, swappable in registry/lib/display-font.ts.",
+      "editable": { "eyebrow": "A", "words/emphasis": "custom scroll-scrubbed word array, see file", "background image": "landscape04, swap in file" }
+    },
+    {
+      "id": 79,
+      "name": "Showcase — Dual Scroll Marquee",
+      "category": "showcase",
+      "file": "src/registry/modules/79-showcase-dual-marquee.tsx",
+      "component": "ShowcaseDualMarquee",
+      "description": "Two oversized text rows loop continuously in opposite directions, one mixing in photo chips from the library, with an added scroll-linked drift on top of the idle loop so both rows visibly react as you scroll past. Bold display font, swappable in registry/lib/display-font.ts.",
+      "editable": { "row text": "custom phrase arrays, see file", "chip images": "custom PlaceholderImage array, see file" }
+    },
+    {
+      "id": 80,
+      "name": "Hero — Statement Dark",
+      "category": "hero",
+      "file": "src/registry/modules/80-hero-statement-dark.tsx",
+      "component": "HeroStatementDark",
+      "description": "A flat, austere dark hero: eyebrow, huge two-line statement on Effect K, subhead paragraph, no CTA buttons. The click-to-play video facade beneath it lives in its own pinned section — it zooms to near-fullscreen and loses its rounded corners, then holds pinned so there's real dwell time to watch it before it releases and scrolls away. Reuses module 29's YouTube-facade pattern and video ID.",
+      "editable": { "eyebrow": "A", "title": "K", "subhead": "A", "video id": "constant, see file" }
+    },
+    {
+      "id": 81,
+      "name": "Stats — Animated Bar Chart",
+      "category": "stats",
+      "file": "src/registry/modules/81-stats-bar-chart.tsx",
+      "component": "StatsBarChart",
+      "description": "Dark section, three columns whose fill grows from the bottom the moment each scrolls into view, staggered per column, with a big percentage label inside each bar and a caption below.",
+      "editable": { "eyebrow/heading": "A", "stats array": "custom, see file" }
+    },
+    {
+      "id": 82,
+      "name": "Showcase — Blur Exit Statement",
+      "category": "showcase",
+      "file": "src/registry/modules/82-showcase-blur-exit.tsx",
+      "component": "ShowcaseBlurExit",
+      "description": "A pinned full-screen statement that fades in, holds, then blurs and scales up as the section scrolls past — a punctuation moment between bigger sections. Bespoke scroll wiring, not part of the A-K catalog.",
+      "editable": { "statement text": "custom, see file" }
+    },
+    {
+      "id": 84,
+      "name": "Content — Resources Stack",
+      "category": "content",
+      "file": "src/registry/modules/84-content-resources-stack.tsx",
+      "component": "ContentResourcesStack",
+      "description": "A 'Playbook' section: intro paragraph and real internal links in a sticky left column, a tightly overlapping fan of cards on the right that fade/rise/rotate in with a shared stagger (Effect F-style) and then stay put together. Bespoke stagger variant, not part of the A-K catalog.",
+      "editable": { "eyebrow/heading/links": "A", "cards array": "custom, see file" }
+    },
+    {
+      "id": 85,
+      "name": "CTA — Rotating Word Closer",
+      "category": "cta",
+      "file": "src/registry/modules/85-cta-rotating-word.tsx",
+      "component": "CtaRotatingWordCloser",
+      "description": "A playful closer: 'Design Real' / a 3-up coverflow carousel (dimmed prev/next images flanking a sharp raised center image) that cycles on a timer / '[word] Systems.' beneath, plus a small credit line. Effect B on the static lines.",
+      "editable": { "lines": "B", "rotation array": "custom {image, word} pairs, see file" }
+    },
+    {
+      "id": 86,
+      "name": "Nav — Scroll Chapter Pill",
+      "category": "nav",
+      "file": "src/registry/modules/86-nav-scroll-chapter-pill.tsx",
+      "component": "NavScrollChapterPill",
+      "description": "A floating pill that relabels itself as you scroll, tracking whichever named chapter section is centered in the viewport via IntersectionObserver; hamburger opens a jump-link dropdown of all chapters. Host page must give each chapter section a matching id attribute.",
+      "editable": { "chapters array": "custom, see file — ids must match the host page's section ids" }
     }
   ]
 }

@@ -3,7 +3,9 @@
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 
-const CHAPTERS = [
+export type Chapter = { id: string; label: string };
+
+const DEFAULT_CHAPTERS: Chapter[] = [
   { id: "state-of-design", label: "State Of Design" },
   { id: "the-solution", label: "The Solution" },
   { id: "manifesto", label: "The Manifesto" },
@@ -26,15 +28,20 @@ const CHAPTERS = [
  * pinned at `top-6` for the rest of the page once its own flow position
  * would otherwise scroll above the fold, so no extra "become visible"
  * logic is needed. The host page must give each chapter section a
- * matching `id` attribute (see the ids above) for this to have anything
- * to track.
+ * matching `id` attribute for this to have anything to track — pass a
+ * `chapters` array to match whatever ids that page uses; the default above
+ * is the set used by the "Real Design Wins" example page.
  */
-export default function NavScrollChapterPill() {
+export default function NavScrollChapterPill({
+  chapters = DEFAULT_CHAPTERS,
+}: {
+  chapters?: Chapter[];
+} = {}) {
   const [active, setActive] = useState(0);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const elements = CHAPTERS.map((chapter) => document.getElementById(chapter.id)).filter((el): el is HTMLElement => el !== null);
+    const elements = chapters.map((chapter) => document.getElementById(chapter.id)).filter((el): el is HTMLElement => el !== null);
 
     const updateActive = () => {
       const threshold = window.innerHeight * 0.45;
@@ -48,13 +55,13 @@ export default function NavScrollChapterPill() {
     updateActive();
     window.addEventListener("scroll", updateActive, { passive: true });
     return () => window.removeEventListener("scroll", updateActive);
-  }, []);
+  }, [chapters]);
 
   return (
     <div className="sticky top-6 z-40 flex justify-center px-6">
       <div className="relative">
         <nav className="flex items-center gap-4 rounded-full border border-white/10 bg-zinc-950/80 px-5 py-2.5 text-sm font-medium text-white shadow-lg backdrop-blur-md">
-          <span>{CHAPTERS[active]?.label}</span>
+          <span>{chapters[active]?.label}</span>
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
@@ -68,7 +75,7 @@ export default function NavScrollChapterPill() {
 
         {open && (
           <div className="absolute top-full left-1/2 mt-2 w-56 -translate-x-1/2 overflow-hidden rounded-2xl border border-white/10 bg-zinc-950 shadow-lg">
-            {CHAPTERS.map((chapter, i) => (
+            {chapters.map((chapter, i) => (
               <a
                 key={chapter.id}
                 href={`#${chapter.id}`}

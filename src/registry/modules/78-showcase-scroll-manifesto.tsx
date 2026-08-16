@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform, type MotionValue } from "motion/react";
-import { ScrollReveal } from "@/registry/lib/motion-variants";
+import { ScrollReveal, useScrollValue } from "@/registry/lib/motion-variants";
 import { PLACEHOLDER_IMAGES } from "@/registry/lib/placeholder-images";
 import { displayFont } from "@/registry/lib/display-font";
 import { cn } from "@/lib/utils";
@@ -28,7 +28,7 @@ function RevealWord({
   range: [number, number];
   emphasize?: boolean;
 }) {
-  const opacity = useTransform(progress, range, [0.18, 1]);
+  const opacity = useScrollValue(progress, range, [0.18, 1]);
   const color = useTransform(progress, range, emphasize ? ["#52525b", "#a3e635"] : ["#52525b", "#ffffff"]);
   return (
     <motion.span style={{ opacity, color }} className="mr-[0.28em] inline-block">

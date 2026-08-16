@@ -17,6 +17,9 @@ import {
   motion,
   useScroll,
   useTransform,
+  useMotionValue,
+  useMotionValueEvent,
+  type MotionValue,
   type Variants,
   type MotionProps,
 } from "motion/react";
@@ -137,6 +140,36 @@ export function StaggerGroup({
       {children}
     </MotionTag>
   );
+}
+
+/**
+ * Scroll-mapped value that Motion will not hardware-offload. Use this instead
+ * of a bare `useTransform` whenever the result is bound to `opacity` on an
+ * element inside a pinned (`position: sticky`) frame.
+ *
+ * Why it exists: when a value traceable to `useScroll` is bound to an
+ * accelerable property, Motion compiles it into a native WAAPI animation
+ * driven by a `ViewTimeline` attached to the animated element. For a normal
+ * in-flow element that's a free performance win. For a child of a sticky
+ * frame it is silently wrong — the element is pinned, so its own progress
+ * through the viewport is not the section's scroll progress, and the two
+ * clocks drift apart. Transforms are unaffected (Motion keeps those on its
+ * own render loop), which is why the symptom is always "the fades are wrong
+ * but the movement is right".
+ *
+ * Re-emitting through a plain `useMotionValue` breaks the provenance chain,
+ * so Motion can no longer prove the value is scroll-derived and drives it on
+ * the normal render loop against the progress we actually asked for.
+ */
+export function useScrollValue<T extends string | number>(
+  source: MotionValue<number>,
+  input: number[],
+  output: T[],
+): MotionValue<T> {
+  const mapped = useTransform(source, input, output);
+  const detached = useMotionValue<T>(mapped.get());
+  useMotionValueEvent(mapped, "change", (latest) => detached.set(latest));
+  return detached;
 }
 
 /** Effect H — scroll parallax. Wrap an image (or any element) that should drift as the page scrolls past it. */

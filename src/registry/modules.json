@@ -765,7 +765,145 @@
       "file": "src/registry/modules/86-nav-scroll-chapter-pill.tsx",
       "component": "NavScrollChapterPill",
       "description": "A floating pill that relabels itself as you scroll, tracking whichever named chapter section is centered in the viewport via IntersectionObserver; hamburger opens a jump-link dropdown of all chapters. Host page must give each chapter section a matching id attribute.",
-      "editable": { "chapters array": "custom, see file — ids must match the host page's section ids" }
+      "editable": { "chapters prop": "array of {id, label}; ids must match the host page's section ids" }
+    },
+    {
+      "id": 87,
+      "name": "Hero — Cinematic Curtain",
+      "category": "hero",
+      "file": "src/registry/modules/87-hero-cinematic-curtain.tsx",
+      "component": "HeroCinematicCurtain",
+      "description": "A 520vh pinned opening sequence in six scrubbed beats: backdrop settles from a 1.12 zoom, headline lifts away, a hairline of accent colour draws out of the centre point on scaleY then wipes outward on scaleX to flood the frame, two stills reveal through expanding clip-paths (rectangle then diamond), a closing still scales up from zero under an accent tint with a centred heading, then splits down the middle and slides apart to uncover a light panel with a statement rising into it. Every beat runs off one shared scrollYProgress, so it rewinds exactly on scroll-up.",
+      "editable": {
+        "eyebrow": "Full-cycle advisory",
+        "headline": "newlines become separate lines",
+        "accent": "#7a0c07 — curtain colour and the closing frame's mix-blend-overlay tint",
+        "zoomHeading": "heading inside the closing frame; splits in half with it",
+        "revealLabel / revealStatement": "the light panel uncovered by the split",
+        "SLIDES array": "the three reveal stills, see file"
+      }
+    },
+    {
+      "id": 88,
+      "name": "Content — Drag Slider",
+      "category": "content",
+      "file": "src/registry/modules/88-content-drag-slider.tsx",
+      "component": "ContentDragSlider",
+      "description": "A label, an oversized statement, and a row of cards you drag sideways, with a spring-tracked DRAG tag following the cursor over the rail; a figures row closes the section. Uses Motion's drag=\"x\" with measured constraints rather than overflow scrolling, because the Lenis wrapper owns wheel events site-wide.",
+      "editable": {
+        "eyebrow": "About the practice",
+        "title": "Built on judgement, not inventory",
+        "CARDS array": "image, label, caption per card — see file",
+        "HONORS array": "figure/note pairs — see file"
+      }
+    },
+    {
+      "id": 89,
+      "name": "Stats — Column Scroller",
+      "category": "stats",
+      "file": "src/registry/modules/89-stats-column-scroller.tsx",
+      "component": "StatsColumnScroller",
+      "description": "A full-screen pinned section: three columns of oversized figures sit across the top of the frame aligned left/centre/right, and each advances to its next stat at a different scroll point so a round ripples across the frame. The standfirst and full-bleed backdrop change together, but only after a full round of column swaps completes. Edge-to-edge by design — no vignette, no inner scroll mask. Opacity routes through useScrollValue (pinned frame).",
+      "editable": {
+        "eyebrow": "By the numbers",
+        "COLUMNS array": "align + stats per column — see file",
+        "COLUMN_STEPS": "progress points at which each column advances",
+        "SCENE_STEPS / SCENES / BACKDROPS": "backdrop and standfirst changes"
+      }
+    },
+    {
+      "id": 90,
+      "name": "Gallery — Counter-Scroll Cases",
+      "category": "galleries",
+      "file": "src/registry/modules/90-gallery-counter-scroll-cases.tsx",
+      "component": "GalleryCounterScrollCases",
+      "description": "A 260vh pinned case index: two rows of numbered work slide past each other in opposite directions through the pin — Effect H's parallax logic on a horizontal axis, one row negative and one positive. Each row renders its items twice so neither end runs out of cards mid-travel.",
+      "editable": {
+        "title": "Selected work",
+        "eyebrow": "Case index",
+        "ROW_A / ROW_B arrays": "number, name, image per case — see file"
+      }
+    },
+    {
+      "id": 91,
+      "name": "Services — Title Rotator",
+      "category": "content",
+      "file": "src/registry/modules/91-services-title-rotator.tsx",
+      "component": "ServicesTitleRotator",
+      "description": "A services block shown one at a time: the headline rotates vertically line by line out of its own mask while the image panel crossfades in step and a counter reads 01 / 03. Advances on a 6s timer and on prev/next; interacting resets the timer rather than killing autoplay. Runs on its own clock — no pin, no useScroll.",
+      "editable": {
+        "eyebrow": "What we do",
+        "SERVICES array": "title lines, blurb, image per service — see file",
+        "AUTOPLAY_MS": "6000"
+      }
+    },
+    {
+      "id": 92,
+      "name": "Showcase — Perspective Expand",
+      "category": "showcase",
+      "file": "src/registry/modules/92-showcase-perspective-expand.tsx",
+      "component": "ShowcasePerspectiveExpand",
+      "description": "A 420vh pinned section where one image carries the whole transition: it starts as a small 3D-tilted card, rotates flat and grows to full bleed, then becomes the backdrop for an oversized headline revealing line by line out of its own mask, with a benefits list fading up underneath. Growth interpolates width/height inside calc() against --card-w/--card-h so the card's start size can vary per breakpoint and stays landscape on a phone.",
+      "editable": {
+        "eyebrow": "Why work with us",
+        "image": "the single expanding image",
+        "TITLE_LINES array": "one entry per headline line — see file",
+        "BENEFITS array": "label/note pairs — see file",
+        "--card-w / --card-h": "the card's start size, set per breakpoint on the card's className"
+      }
+    },
+    {
+      "id": 93,
+      "name": "Content — Sticky Split Scroller",
+      "category": "content",
+      "file": "src/registry/modules/93-content-sticky-split-scroller.tsx",
+      "component": "ContentStickySplitScroller",
+      "description": "A two-column section where the left column pins (label, oversized statement, standing CTA) while the right scrolls short blocks past it, alternating flush-left and flush-right. Built on plain CSS position:sticky plus Effect G per block rather than a scrubbed pin, because nothing here needs to reverse. Collapses to one stacked column below lg.",
+      "editable": {
+        "eyebrow": "Partnership",
+        "title": "The network is the product",
+        "ctaLabel / ctaHref": "Let's discuss / #contact",
+        "BLOCKS array": "label, optional figure, body, and left/right alignment per block — see file"
+      }
+    },
+    {
+      "id": 94,
+      "name": "Team — Split Slider",
+      "category": "team",
+      "file": "src/registry/modules/94-team-split-slider.tsx",
+      "component": "TeamSplitSlider",
+      "description": "A full-height split panel — portrait on one side, name and biography on the other — advanced with prev/next. Both halves swap on the same beat but travel in opposite vertical directions, so it reads as one card being turned over. Direction is tracked in state and passed to the variants as a custom value, so stepping backwards genuinely reverses the motion.",
+      "editable": {
+        "eyebrow": "The team",
+        "TEAM array": "name lines, role, bio, image per member — see file"
+      }
+    },
+    {
+      "id": 95,
+      "name": "Contact — Statement Form",
+      "category": "forms",
+      "file": "src/registry/modules/95-contact-statement-form.tsx",
+      "component": "ContactStatementForm",
+      "description": "A closing conversion block: an oversized statement revealed line by line on scroll, then a deliberately plain underline-only form with staggered field entry (Effect F) and a contact column alongside. Presentational only — fields carry names and labels but there is no submit handler, so the host page wires action/method or onSubmit to its own backend.",
+      "editable": {
+        "id": "contact — the anchor id",
+        "eyebrow": "Start a conversation",
+        "lines": "array of headline lines",
+        "note": "the reassurance line beside the form",
+        "FIELDS array": "name, label, placeholder, type per field — see file"
+      }
+    },
+    {
+      "id": 96,
+      "name": "Locations — Tabbed Panel",
+      "category": "content",
+      "file": "src/registry/modules/96-locations-tabbed-panel.tsx",
+      "component": "LocationsTabbedPanel",
+      "description": "A full-height office panel: tabs across the top, an oversized city name, a description, and a strip of supporting photographs over a backdrop that crossfades on tab change. Each location shows its own live local time, rendered client-only (blank during SSR) so the clock cannot cause a hydration mismatch.",
+      "editable": {
+        "eyebrow": "Where we work",
+        "LOCATIONS array": "city, IANA timeZone, building, blurb, backdrop, and four thumbs per location — see file"
+      }
     }
   ]
 }

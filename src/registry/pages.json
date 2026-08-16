@@ -5,6 +5,12 @@
       "title": "Real Design Wins",
       "href": "/examples/design-manifesto",
       "description": "A full page assembled from the module catalog, replicating realfood.gov's structure reskinned to a design-agency manifesto — dark statement hero with a pinned zoom-to-fullscreen video, scroll-gated animated stats, a scroll color-fill punctuation statement, a scroll-scrubbed manifesto reveal, a scroll-gated overlapping resources stack, FAQs, and a rotating coverflow closer."
+    },
+    {
+      "slug": "estate-agency",
+      "title": "Estate Agency",
+      "href": "/examples/estate-agency",
+      "description": "A wireframe of the scroll architecture high-end property agency sites use — a 520vh cinematic opening (a centre-drawn accent line that wipes into a colour flood, clip-path stills, then a tinted closing frame that splits down the middle to uncover a light panel), a drag-to-scroll about rail, three stat columns swapping on staggered scroll points, a counter-scrolling case index, an autoplaying services rotator, a 3D card that unfolds into a full-bleed statement, a sticky split partnership scroller, a split team slider, a statement contact form, and a tabbed locations panel with live local clocks."
     }
   ]
 }

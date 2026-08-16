@@ -85,6 +85,16 @@ import ShowcaseBlurExit from "@/registry/modules/82-showcase-blur-exit";
 import ContentResourcesStack from "@/registry/modules/84-content-resources-stack";
 import CtaRotatingWordCloser from "@/registry/modules/85-cta-rotating-word";
 import NavScrollChapterPill from "@/registry/modules/86-nav-scroll-chapter-pill";
+import HeroCinematicCurtain from "@/registry/modules/87-hero-cinematic-curtain";
+import ContentDragSlider from "@/registry/modules/88-content-drag-slider";
+import StatsColumnScroller from "@/registry/modules/89-stats-column-scroller";
+import GalleryCounterScrollCases from "@/registry/modules/90-gallery-counter-scroll-cases";
+import ServicesTitleRotator from "@/registry/modules/91-services-title-rotator";
+import ShowcasePerspectiveExpand from "@/registry/modules/92-showcase-perspective-expand";
+import ContentStickySplitScroller from "@/registry/modules/93-content-sticky-split-scroller";
+import TeamSplitSlider from "@/registry/modules/94-team-split-slider";
+import ContactStatementForm from "@/registry/modules/95-contact-statement-form";
+import LocationsTabbedPanel from "@/registry/modules/96-locations-tabbed-panel";
 
 /**
  * The full id → component lookup for every module in src/registry/modules.json.
@@ -176,6 +186,16 @@ export const MODULE_COMPONENTS: Record<number, ElementType> = {
   84: ContentResourcesStack,
   85: CtaRotatingWordCloser,
   86: NavScrollChapterPill,
+  87: HeroCinematicCurtain,
+  88: ContentDragSlider,
+  89: StatsColumnScroller,
+  90: GalleryCounterScrollCases,
+  91: ServicesTitleRotator,
+  92: ShowcasePerspectiveExpand,
+  93: ContentStickySplitScroller,
+  94: TeamSplitSlider,
+  95: ContactStatementForm,
+  96: LocationsTabbedPanel,
 };
 
 /** The label bar + module pairing used on every /demo category page. */

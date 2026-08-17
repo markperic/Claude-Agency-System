@@ -55,6 +55,16 @@ function Line({
  * Note the `overflow-hidden` sits on the sticky frame itself, never on the
  * section — an ancestor with `overflow-hidden` silently breaks
  * `position: sticky`.
+ *
+ * `overflow-anchor: none` on the section is not cosmetic. Animating the card's
+ * width/height is a real layout change every frame, so this section emits a
+ * continuous stream of layout shifts (measured: ~0.42 across one pass). Scroll
+ * anchoring is enabled by default, and its whole job is to correct scrollTop
+ * when laid-out content moves — so it will keep nudging scroll position inside
+ * a section that is deliberately relaying out on every frame, while Lenis is
+ * simultaneously easing toward its own target. The two writers fight, which is
+ * the mechanism behind an intermittent "scroll won't progress here". Opting
+ * this subtree out of anchoring leaves Lenis as the only writer.
  */
 export default function ShowcasePerspectiveExpand({
   eyebrow = "Why work with us",
@@ -84,12 +94,16 @@ export default function ShowcasePerspectiveExpand({
   // Beat 2 — the frame darkens so the type has somewhere to sit.
   const scrimOpacity = useScrollValue(scrollYProgress, [0.24, 0.38], [0, 0.62]);
 
-  // Beat 4 — benefits arrive after the last headline line has landed.
-  const listOpacity = useScrollValue(scrollYProgress, [0.76, 0.88], [0, 1]);
-  const listY = useTransform(scrollYProgress, [0.76, 0.88], [28, 0]);
+  // Beat 4 — benefits arrive after the last headline line has landed, and run
+  // out at 0.97 rather than 0.88. The pin holds for the section's full 420vh
+  // whatever the beats do, so ending early leaves a stretch of scrolling where
+  // the screen is pinned and nothing at all changes — which reads as the page
+  // having seized rather than as a deliberate hold.
+  const listOpacity = useScrollValue(scrollYProgress, [0.84, 0.97], [0, 1]);
+  const listY = useTransform(scrollYProgress, [0.84, 0.97], [28, 0]);
 
   return (
-    <section ref={ref} className="relative h-[420vh] bg-[#0a0a0a]">
+    <section ref={ref} className="relative h-[420vh] bg-[#0a0a0a] [overflow-anchor:none]">
       <div className="sticky top-0 flex h-screen items-center justify-center overflow-hidden [perspective:1400px]">
         {/* Beat 1 — the expanding card */}
         <motion.div
@@ -116,7 +130,7 @@ export default function ShowcasePerspectiveExpand({
                 key={line}
                 text={line}
                 progress={scrollYProgress}
-                range={[0.34 + i * 0.08, 0.46 + i * 0.08]}
+                range={[0.34 + i * 0.09, 0.48 + i * 0.09]}
               />
             ))}
           </h2>

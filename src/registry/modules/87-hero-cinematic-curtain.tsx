@@ -160,7 +160,7 @@ export default function HeroCinematicCurtain({
   const chromeOpacity = useScrollValue(scrollYProgress, [0.2, 0.3], [1, 0]);
 
   return (
-    <section ref={ref} className="relative h-[520vh] bg-black">
+    <section ref={ref} className="relative h-[440vh] bg-black [overflow-anchor:none]">
       <div className="sticky top-0 h-screen overflow-hidden bg-black">
         {/* Beat 1 — backdrop */}
         <motion.div style={{ scale: bgScale, y: bgY }} className="absolute inset-0">

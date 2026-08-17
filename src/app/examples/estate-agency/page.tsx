@@ -54,7 +54,7 @@ export default function EstateAgencyPage() {
       <SiteNav />
 
       <HeroCinematicCurtain />
-      <NavScrollChapterPill chapters={CHAPTERS} />
+      <NavScrollChapterPill chapters={CHAPTERS} mobileAlign="end" />
 
       <div id="about">
         <ContentDragSlider />

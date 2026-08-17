@@ -764,7 +764,7 @@
       "category": "nav",
       "file": "src/registry/modules/86-nav-scroll-chapter-pill.tsx",
       "component": "NavScrollChapterPill",
-      "description": "A floating pill that relabels itself as you scroll, tracking whichever named chapter section is centered in the viewport via IntersectionObserver; hamburger opens a jump-link dropdown of all chapters. Host page must give each chapter section a matching id attribute.",
+      "description": "A floating pill that relabels itself as you scroll, tracking the current chapter by scanning the named sections on each scroll and keeping the last one whose top edge has crossed a line near the top of the viewport — deliberately a scan rather than IntersectionObserver, which would lose the label once you scroll past the final chapter; hamburger opens a jump-link dropdown of all chapters. Host page must give each chapter section a matching id attribute. Optional mobileAlign=\"end\" parks the pill in the top-right corner below sm, for pages where a centred pill would sit on top of full-bleed pinned content.",
       "editable": { "chapters prop": "array of {id, label}; ids must match the host page's section ids" }
     },
     {
@@ -773,7 +773,7 @@
       "category": "hero",
       "file": "src/registry/modules/87-hero-cinematic-curtain.tsx",
       "component": "HeroCinematicCurtain",
-      "description": "A 520vh pinned opening sequence in six scrubbed beats: backdrop settles from a 1.12 zoom, headline lifts away, a hairline of accent colour draws out of the centre point on scaleY then wipes outward on scaleX to flood the frame, two stills reveal through expanding clip-paths (rectangle then diamond), a closing still scales up from zero under an accent tint with a centred heading, then splits down the middle and slides apart to uncover a light panel with a statement rising into it. Every beat runs off one shared scrollYProgress, so it rewinds exactly on scroll-up.",
+      "description": "A 440vh pinned opening sequence in six scrubbed beats: backdrop settles from a 1.12 zoom, headline lifts away, a hairline of accent colour draws out of the centre point on scaleY then wipes outward on scaleX to flood the frame, two stills reveal through expanding clip-paths (rectangle then diamond), a closing still scales up from zero under an accent tint with a centred heading, then splits down the middle and slides apart to uncover a light panel with a statement rising into it. Every beat runs off one shared scrollYProgress, so it rewinds exactly on scroll-up.",
       "editable": {
         "eyebrow": "Full-cycle advisory",
         "headline": "newlines become separate lines",

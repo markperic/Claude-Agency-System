@@ -10,7 +10,7 @@
       "slug": "estate-agency",
       "title": "Estate Agency",
       "href": "/examples/estate-agency",
-      "description": "A wireframe of the scroll architecture high-end property agency sites use — a 520vh cinematic opening (a centre-drawn accent line that wipes into a colour flood, clip-path stills, then a tinted closing frame that splits down the middle to uncover a light panel), a drag-to-scroll about rail, three stat columns swapping on staggered scroll points, a counter-scrolling case index, an autoplaying services rotator, a 3D card that unfolds into a full-bleed statement, a sticky split partnership scroller, a split team slider, a statement contact form, and a tabbed locations panel with live local clocks."
+      "description": "A wireframe of the scroll architecture high-end property agency sites use — a 440vh cinematic opening (a centre-drawn accent line that wipes into a colour flood, clip-path stills, then a tinted closing frame that splits down the middle to uncover a light panel), a drag-to-scroll about rail, three stat columns swapping on staggered scroll points, a counter-scrolling case index, an autoplaying services rotator, a 3D card that unfolds into a full-bleed statement, a sticky split partnership scroller, a split team slider, a statement contact form, and a tabbed locations panel with live local clocks."
     }
   ]
 }

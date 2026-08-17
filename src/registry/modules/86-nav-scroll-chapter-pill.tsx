@@ -31,11 +31,20 @@ const DEFAULT_CHAPTERS: Chapter[] = [
  * matching `id` attribute for this to have anything to track — pass a
  * `chapters` array to match whatever ids that page uses; the default above
  * is the set used by the "Real Design Wins" example page.
+ *
+ * `mobileAlign="end"` parks the pill in the top-right corner below `sm` and
+ * leaves it centred from `sm` up. Centred is right on a page whose sections
+ * start below the fold, but over a full-bleed pinned section the pill sits on
+ * top of the content — on a phone it lands squarely on module 92's headline.
+ * Clearing it by pushing that content down costs ~128px of a viewport the
+ * headline already fills, so the pill moves instead.
  */
 export default function NavScrollChapterPill({
   chapters = DEFAULT_CHAPTERS,
+  mobileAlign = "center",
 }: {
   chapters?: Chapter[];
+  mobileAlign?: "center" | "end";
 } = {}) {
   const [active, setActive] = useState(0);
   const [open, setOpen] = useState(false);
@@ -58,7 +67,11 @@ export default function NavScrollChapterPill({
   }, [chapters]);
 
   return (
-    <div className="sticky top-6 z-40 flex justify-center px-6">
+    <div
+      className={`sticky top-6 z-40 flex px-6 sm:justify-center ${
+        mobileAlign === "end" ? "justify-end" : "justify-center"
+      }`}
+    >
       <div className="relative">
         <nav className="flex items-center gap-4 rounded-full border border-white/10 bg-zinc-950/80 px-5 py-2.5 text-sm font-medium text-white shadow-lg backdrop-blur-md">
           <span>{chapters[active]?.label}</span>
@@ -74,7 +87,11 @@ export default function NavScrollChapterPill({
         </nav>
 
         {open && (
-          <div className="absolute top-full left-1/2 mt-2 w-56 -translate-x-1/2 overflow-hidden rounded-2xl border border-white/10 bg-zinc-950 shadow-lg">
+          <div
+            className={`absolute top-full mt-2 w-56 overflow-hidden rounded-2xl border border-white/10 bg-zinc-950 shadow-lg sm:left-1/2 sm:right-auto sm:-translate-x-1/2 ${
+              mobileAlign === "end" ? "right-0" : "left-1/2 -translate-x-1/2"
+            }`}
+          >
             {chapters.map((chapter, i) => (
               <a
                 key={chapter.id}

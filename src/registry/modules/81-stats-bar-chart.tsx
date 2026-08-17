@@ -33,11 +33,15 @@ import { ScrollReveal } from "@/registry/lib/motion-variants";
  * that 18vh on entry. The trade is 18vh of dark below the bar labels while
  * pinned, which reads as bottom margin because the content is bottom-heavy.
  *
- * The trim is `sm`-gated because below `sm` the bars stack into one column
- * and the content is already taller than the viewport — with `justify-end`
- * the excess overflows out of the *top* of the frame, so shortening the frame
- * there pushes the heading further up behind the section above rather than
- * closing any gap. The heading
+ * All of that is `sm`-gated, because below `sm` the pin itself is wrong.
+ * The bars stack into one column and the content runs taller than the
+ * viewport, so there is nothing a pin can hold still: with `justify-end` the
+ * excess overflowed out of the *top* of the frame and took the eyebrow and
+ * heading with it, leaving a phone reader three bars and no title. Below `sm`
+ * the section is therefore unpinned and auto-height, and the content simply
+ * flows. The bars still fill off the same `scrollYProgress` — the mapping
+ * never required a pin, only scroll range — so they animate and reverse there
+ * exactly as they do on desktop, just over a shorter span. The heading
  * is sized in container-query width units (`cqw`, against the
  * `[container-type:inline-size]` wrapper) rather than fixed breakpoint
  * sizes, so it always spans the full width of its container edge-to-edge
@@ -47,23 +51,44 @@ import { ScrollReveal } from "@/registry/lib/motion-variants";
  * lines instead, since a one-line fit at phone widths would force the text
  * down to an illegibly small size.
  */
-const STATS: { value: number; height: string; label: string; range: [number, number] }[] = [
-  { value: 55, height: "h-40", label: "of small business sites run on an unmodified template", range: [0.06, 0.32] },
-  { value: 78, height: "h-56", label: "of visitors say design quality shapes how much they trust a brand", range: [0.38, 0.64] },
-  { value: 92, height: "h-72", label: "of designers say deadlines force them to skip craft", range: [0.7, 0.96] },
+const STATS: { value: number; height: number; label: string; range: [number, number] }[] = [
+  { value: 55, height: 160, label: "of small business sites run on an unmodified template", range: [0.06, 0.32] },
+  { value: 78, height: 224, label: "of visitors say design quality shapes how much they trust a brand", range: [0.38, 0.64] },
+  { value: 92, height: 288, label: "of designers say deadlines force them to skip craft", range: [0.7, 0.96] },
 ];
 
+/**
+ * The percentage label is a sibling of the growing fill, not a child of it.
+ * Nesting it inside meant it inherited the fill's `scaleY` and squashed flat
+ * as the bar grew — correct-looking only at the two ends of the range, and
+ * only ever seen intact because a finished bar sits at scaleY 1. Riding the
+ * top edge of the fill is the effect we want, so the label translates by the
+ * same amount the fill's top edge moves — `(1 - scaleY) * height` — which
+ * tracks it exactly without inheriting the distortion. At scaleY 0 that
+ * translation parks it a full bar-height down, past the container's
+ * `overflow-hidden`, so an unfilled bar shows no label, same as before.
+ * Heights are numbers rather than Tailwind classes because the offset needs
+ * the pixel value; none of them varied by breakpoint anyway.
+ */
 function Bar({ stat, scrollYProgress }: { stat: (typeof STATS)[number]; scrollYProgress: MotionValue<number> }) {
   const scaleY = useTransform(scrollYProgress, stat.range, [0, 1]);
+  const labelY = useTransform(scaleY, (v) => (1 - v) * stat.height);
   return (
     <div className="flex flex-col">
-      <div className={`relative w-full ${stat.height} overflow-hidden rounded-t-xl bg-white/5`}>
+      <div
+        style={{ height: stat.height }}
+        className="relative w-full overflow-hidden rounded-t-xl bg-white/5"
+      >
         <motion.div
           style={{ scaleY, transformOrigin: "bottom" }}
-          className="absolute inset-0 flex items-start justify-center bg-lime-400 pt-4"
+          className="absolute inset-0 bg-lime-400"
+        />
+        <motion.span
+          style={{ y: labelY }}
+          className="absolute inset-x-0 top-0 pt-4 text-center text-3xl font-bold text-zinc-950"
         >
-          <span className="text-3xl font-bold text-zinc-950">{stat.value}%</span>
-        </motion.div>
+          {stat.value}%
+        </motion.span>
       </div>
       <p className="mt-4 text-sm text-zinc-400">{stat.label}</p>
     </div>
@@ -75,8 +100,8 @@ export default function StatsBarChart() {
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
 
   return (
-    <section ref={ref} className="relative h-[190vh] bg-zinc-950">
-      <div className="sticky top-0 flex h-screen flex-col justify-end px-6 pb-20 sm:h-[82vh] sm:pb-28">
+    <section ref={ref} className="relative bg-zinc-950 sm:h-[190vh]">
+      <div className="flex flex-col px-6 py-24 sm:sticky sm:top-0 sm:h-[82vh] sm:justify-end sm:py-0 sm:pb-28">
         <div className="mx-auto w-full max-w-5xl [container-type:inline-size]">
           <ScrollReveal effect="A" as="p" className="mb-3 text-sm font-medium tracking-wide text-zinc-500 uppercase">
             The state of design

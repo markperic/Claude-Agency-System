@@ -728,7 +728,7 @@
       "category": "stats",
       "file": "src/registry/modules/81-stats-bar-chart.tsx",
       "component": "StatsBarChart",
-      "description": "Dark section, three columns whose fill grows from the bottom the moment each scrolls into view, staggered per column, with a big percentage label inside each bar and a caption below.",
+      "description": "Dark section, three columns whose fill grows from the bottom, each gated to its own slice of the pinned section's scroll progress rather than triggered on enter, so they fill strictly by scroll distance and reverse cleanly on scroll-up. A big percentage label rides the top edge of each fill, with a caption below. Pinned from sm up; below sm the section unpins and flows, since the stacked single-column content is taller than a phone viewport.",
       "editable": { "eyebrow/heading": "A", "stats array": "custom, see file" }
     },
     {

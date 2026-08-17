@@ -28,7 +28,7 @@ export default function DesignManifestoPage() {
     <main>
       <SiteNav />
       <HeroStatementDark />
-      <NavScrollChapterPill />
+      <NavScrollChapterPill mobileAlign="end" />
 
       <div id="state-of-design">
         <StatsBarChart />

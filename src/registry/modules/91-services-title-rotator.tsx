@@ -49,8 +49,12 @@ export default function ServicesTitleRotator({
   const [index, setIndex] = useState(0);
   const [tick, setTick] = useState(0);
 
-  const go = useCallback((next: number) => {
-    setIndex((prev) => (next + SERVICES.length) % SERVICES.length);
+  // Takes a direction, not a target index. The updater has to derive the next
+  // slide from `prev` for the wrap to be correct under batching — computing it
+  // from a captured `index` at the callsite means two clicks in one batch both
+  // read the same starting slide and the second is lost.
+  const go = useCallback((direction: number) => {
+    setIndex((prev) => (prev + direction + SERVICES.length) % SERVICES.length);
     setTick((t) => t + 1);
   }, []);
 
@@ -111,7 +115,7 @@ export default function ServicesTitleRotator({
             <div className="flex shrink-0 gap-2">
               <button
                 type="button"
-                onClick={() => go(index - 1)}
+                onClick={() => go(-1)}
                 aria-label="Previous service"
                 className="rounded-full border border-white/25 px-5 py-2.5 text-[0.625rem] font-bold uppercase tracking-[0.08em] transition-colors hover:border-white hover:bg-white hover:text-black"
               >
@@ -119,7 +123,7 @@ export default function ServicesTitleRotator({
               </button>
               <button
                 type="button"
-                onClick={() => go(index + 1)}
+                onClick={() => go(1)}
                 aria-label="Next service"
                 className="rounded-full border border-white/25 px-5 py-2.5 text-[0.625rem] font-bold uppercase tracking-[0.08em] transition-colors hover:border-white hover:bg-white hover:text-black"
               >

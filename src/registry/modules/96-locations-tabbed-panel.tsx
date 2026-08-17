@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useRef, useState, useSyncExternalStore } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
 import { PLACEHOLDER_IMAGES } from "@/registry/lib/placeholder-images";
@@ -46,23 +46,52 @@ const LOCATIONS: Location[] = [
   },
 ];
 
-/** Local wall-clock for a location, so the panel reads as staffed right now. */
+/**
+ * Local wall-clock for a location, so the panel reads as staffed right now.
+ *
+ * A ticking clock is an external store, so it subscribes to one rather than
+ * writing state from an effect. The effect version had to seed the first value
+ * with a synchronous `setState`, which renders once and then immediately
+ * schedules a second render — the cascade `react-hooks/set-state-in-effect`
+ * warns about, paid once per location on mount.
+ *
+ * The third argument is the server snapshot: it returns null, so the clock is
+ * blank in the SSR output and stays blank through hydration, then fills on the
+ * first client read. Same "empty until mounted" behaviour as before, and still
+ * deliberate — the value is clock-dependent, so rendering a real time during
+ * SSR would guarantee a mismatch.
+ *
+ * `getSnapshot` caches per whole second because React may call it more than
+ * once in a pass and compares results with `Object.is`; formatting fresh on
+ * every call would hand back a different string if a pass straddled a second
+ * boundary, which React flags as an uncached snapshot.
+ */
 function LocalClock({ timeZone }: { timeZone: string }) {
-  const [time, setTime] = useState<string | null>(null);
+  const cache = useRef<{ key: string; value: string } | null>(null);
 
-  useEffect(() => {
-    const format = () =>
-      new Intl.DateTimeFormat("en-GB", {
-        timeZone,
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        hour12: false,
-      }).format(new Date());
-    setTime(format());
-    const id = setInterval(() => setTime(format()), 1000);
+  const subscribe = useCallback((onStoreChange: () => void) => {
+    const id = setInterval(onStoreChange, 1000);
     return () => clearInterval(id);
+  }, []);
+
+  const getSnapshot = useCallback(() => {
+    const key = `${timeZone}@${Math.floor(Date.now() / 1000)}`;
+    if (cache.current?.key !== key) {
+      cache.current = {
+        key,
+        value: new Intl.DateTimeFormat("en-GB", {
+          timeZone,
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: false,
+        }).format(new Date()),
+      };
+    }
+    return cache.current.value;
   }, [timeZone]);
+
+  const time = useSyncExternalStore(subscribe, getSnapshot, () => null);
 
   // Renders empty on the server and on first paint, then fills in — the value
   // is clock-dependent, so rendering it during SSR would guarantee a mismatch.

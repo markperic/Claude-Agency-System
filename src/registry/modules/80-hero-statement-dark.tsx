@@ -13,14 +13,19 @@ import { Play } from "lucide-react";
  * pattern (thumbnail from YouTube's own CDN, iframe only mounted on click)
  * and its same video ID, just restyled dark.
  *
- * The video sits in its own pinned section (`h-[250vh]` + `sticky`, the
+ * The video sits in its own pinned section (`h-[200vh]` + `sticky`, the
  * same pin technique modules 78/82/83 use): as you scroll, it zooms up and
  * loses its rounded corners over the first ~35% of that section's scroll
  * range, then HOLDS at full size, pinned in the viewport, for the
- * remaining ~65% — so there's real dwell time to actually watch it at
+ * remainder of the pin — so there's real dwell time to actually watch it at
  * near-fullscreen before it releases and scrolls away, matching the
  * reference site's hero video rather than a plain scale-in-place that
- * scrolls past immediately. Bespoke scroll wiring, not part of the A-K
+ * scrolls past immediately. That dwell is the point, but note what sets its
+ * length: the pin lasts `height - 100vh`, while the zoom consumes 35% of
+ * `height`, so the static stretch grows twice as fast as the section does.
+ * At 250vh it ran past a full viewport of unchanging video, which stopped
+ * reading as dwell and started reading as dead space ahead of the next
+ * section. Keep the zoom's share below the pin's share when retuning. Bespoke scroll wiring, not part of the A-K
  * catalog, same reasoning as those other modules. The sticky video
  * container stays centered (`items-center`), but the video itself starts
  * pulled up via a `y` transform — closing the gap between the hero copy
@@ -66,7 +71,7 @@ export default function HeroStatementDark() {
         </div>
       </section>
 
-      <section ref={videoSectionRef} className="relative h-[250vh] bg-zinc-950">
+      <section ref={videoSectionRef} className="relative h-[200vh] bg-zinc-950">
         <div className="sticky top-0 flex h-screen items-center justify-center px-6">
           <motion.div
             style={{ scale: videoScale, borderRadius: videoRadius, y: videoY }}

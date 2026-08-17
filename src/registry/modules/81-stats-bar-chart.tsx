@@ -22,7 +22,22 @@ import { ScrollReveal } from "@/registry/lib/motion-variants";
  * background, shrinking the frame's own height doesn't help (the same
  * amount of emptiness just shows up outside the frame instead of inside
  * it) — the fix has to move the content itself, not the frame, so the
- * slack collects above the heading instead of below the bars. The heading
+ * slack collects above the heading instead of below the bars.
+ *
+ * That holds while the section is pinned, but not on the way in. Bottom
+ * anchoring puts the whole slack above the heading, so as this section
+ * rises into view the reader crosses all of it before reaching any content
+ * — arriving from module 80's video, that band is the first thing they see.
+ * Hence `sm:h-[82vh]` rather than a flat `h-screen`: the frame is what
+ * positions the bottom-anchored content, so trimming it lifts the content by
+ * that 18vh on entry. The trade is 18vh of dark below the bar labels while
+ * pinned, which reads as bottom margin because the content is bottom-heavy.
+ *
+ * The trim is `sm`-gated because below `sm` the bars stack into one column
+ * and the content is already taller than the viewport — with `justify-end`
+ * the excess overflows out of the *top* of the frame, so shortening the frame
+ * there pushes the heading further up behind the section above rather than
+ * closing any gap. The heading
  * is sized in container-query width units (`cqw`, against the
  * `[container-type:inline-size]` wrapper) rather than fixed breakpoint
  * sizes, so it always spans the full width of its container edge-to-edge
@@ -60,8 +75,8 @@ export default function StatsBarChart() {
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
 
   return (
-    <section ref={ref} className="relative h-[210vh] bg-zinc-950">
-      <div className="sticky top-0 flex h-screen flex-col justify-end px-6 pb-20 sm:pb-28">
+    <section ref={ref} className="relative h-[190vh] bg-zinc-950">
+      <div className="sticky top-0 flex h-screen flex-col justify-end px-6 pb-20 sm:h-[82vh] sm:pb-28">
         <div className="mx-auto w-full max-w-5xl [container-type:inline-size]">
           <ScrollReveal effect="A" as="p" className="mb-3 text-sm font-medium tracking-wide text-zinc-500 uppercase">
             The state of design

@@ -46,6 +46,7 @@ export default function NavSplitCurtain({
   trailingOpacity = 0.5,
   openLabel = "Menu",
   closeLabel = "Close",
+  trailingLink,
   footer,
 }: {
   links?: CurtainLink[];
@@ -57,6 +58,17 @@ export default function NavSplitCurtain({
   trailingOpacity?: number;
   openLabel?: string;
   closeLabel?: string;
+  /**
+   * Small link parked opposite the toggle — a way out of a template page and
+   * back to the host site. Styled as a pill like the toggle rather than as bare
+   * text, because it has to stay legible over whatever the page background
+   * happens to be *and* over the curtain once that is closed.
+   *
+   * Pass `icon` for the circular form, which matches the toggle exactly and
+   * keeps the corner quiet; `label` is still required and becomes the accessible
+   * name. Without an icon it falls back to a text pill.
+   */
+  trailingLink?: { href: string; label: string; icon?: ReactNode };
   /** Optional row pinned to the bottom of the curtain — socials, a phone number. */
   footer?: ReactNode;
 } = {}) {
@@ -128,6 +140,18 @@ export default function NavSplitCurtain({
           />
         </span>
       </button>
+
+      {trailingLink && (
+        <a
+          href={trailingLink.href}
+          aria-label={trailingLink.icon ? trailingLink.label : undefined}
+          className={`fixed right-[var(--gutter,1.5rem)] top-[var(--gutter,1.5rem)] z-[70] flex h-12 items-center justify-center rounded-full bg-[color:var(--nav-surface,rgb(9_9_11_/_0.8))] text-[color:var(--nav-text,#fff)] shadow-lg backdrop-blur-md transition-transform hover:scale-105 ${
+            trailingLink.icon ? "w-12" : "px-5 text-xs font-semibold uppercase tracking-[0.14em]"
+          }`}
+        >
+          {trailingLink.icon ?? trailingLink.label}
+        </a>
+      )}
 
       <AnimatePresence>
         {open && (

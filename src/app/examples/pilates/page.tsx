@@ -13,6 +13,8 @@ import {
   ZoomStatement,
 } from "./sections";
 import NavSplitCurtain from "@/registry/modules/98-nav-split-curtain";
+import { SiteFooter } from "@/components/site-footer";
+import { House } from "lucide-react";
 import { TOKENS } from "./content";
 import { anton, clashGrotesk } from "@/fonts";
 
@@ -76,61 +78,73 @@ export const metadata = {
  */
 export default function PilatesExamplePage() {
   return (
-    <main
-      className={`${anton.variable} ${clashGrotesk.variable}`}
-      style={
-        {
-          "--bone": TOKENS.bone,
-          "--ink": TOKENS.ink,
-          "--pine": TOKENS.pine,
-          "--rose": TOKENS.rose,
-          "--blush": TOKENS.blush,
-          // The page's one edge inset. Anything anchored to a viewport edge —
-          // the hero lockup, the nav, the footer marquee — insets by this and
-          // nothing else, so a block sitting in a corner reads as the same
-          // distance from both edges instead of inheriting whatever padding
-          // its own container happened to carry. Scales with the viewport but
-          // stops growing on wide displays, where a proportional gutter starts
-          // to look like a margin.
-          "--gutter": "clamp(1.25rem, 2.5vw, 2.75rem)",
-          // Module 86's palette hooks. Rose is the one surface that holds up
-          // against all three page backgrounds — it reads on bone, on blush and
-          // on pine — which a pill has to do on a page whose sections alternate
-          // underneath it.
-          // Pine, not rose, because the pill has to read against two different
-          // grounds: bone while the page is closed, and the rose curtain while
-          // it is open. A rose pill disappears into its own curtain.
-          "--nav-surface": TOKENS.pine,
-          "--nav-panel": TOKENS.rose,
-          "--nav-text": "#fff",
-          "--nav-muted": "rgb(255 255 255 / 0.65)",
-          "--nav-border": "rgb(255 255 255 / 0.28)",
-          "--nav-rule": "rgb(255 255 255 / 0.12)",
-          "--nav-hover": "rgb(255 255 255 / 0.1)",
-          // Resolves to the self-hosted, fingerprinted Anton emitted by
-          // next/font/local, with its own fallback chain behind it.
-          "--font-display": "var(--font-anton)",
-          // Text face for everything that is not display type. Set on the page
-          // root rather than the app layout so the rest of the module catalog
-          // keeps its own system stack.
-          fontFamily: "var(--font-body)",
-          backgroundColor: TOKENS.bone,
-          color: TOKENS.ink,
-        } as CSSProperties
-      }
-    >
-      <NavSplitCurtain links={CHAPTERS.map(({ id, label }) => ({ href: `#${id}`, label }))} />
-      <HeroSequence />
-      <StackingCards />
-      <ZoomStatement />
-      <ReasoningCarousel />
-      <SplitTransition />
-      <Team />
-      <Process />
-      <WhyUs />
-      <StillBand />
-      <Faq />
-      <Footer />
-    </main>
+    <>
+      <main
+        className={`${anton.variable} ${clashGrotesk.variable}`}
+        style={
+          {
+            "--bone": TOKENS.bone,
+            "--ink": TOKENS.ink,
+            "--pine": TOKENS.pine,
+            "--rose": TOKENS.rose,
+            "--blush": TOKENS.blush,
+            // The page's one edge inset. Anything anchored to a viewport edge —
+            // the hero lockup, the nav, the footer marquee — insets by this and
+            // nothing else, so a block sitting in a corner reads as the same
+            // distance from both edges instead of inheriting whatever padding
+            // its own container happened to carry. Scales with the viewport but
+            // stops growing on wide displays, where a proportional gutter starts
+            // to look like a margin.
+            "--gutter": "clamp(1.25rem, 2.5vw, 2.75rem)",
+            // Palette hooks for the nav (module 98, and module 86 if it is ever
+            // swapped back in — both read the same --nav-* names).
+            //
+            // Pine, not rose, because the pill has to read against two different
+            // grounds: bone while the page is closed, and the rose curtain while
+            // it is open. A rose pill disappears into its own curtain.
+            "--nav-surface": TOKENS.pine,
+            "--nav-panel": TOKENS.rose,
+            "--nav-text": "#fff",
+            "--nav-muted": "rgb(255 255 255 / 0.65)",
+            "--nav-border": "rgb(255 255 255 / 0.28)",
+            "--nav-rule": "rgb(255 255 255 / 0.12)",
+            "--nav-hover": "rgb(255 255 255 / 0.1)",
+            // Resolves to the self-hosted, fingerprinted Anton emitted by
+            // next/font/local, with its own fallback chain behind it.
+            "--font-display": "var(--font-anton)",
+            // Text face for everything that is not display type. Set on the page
+            // root rather than the app layout so the rest of the module catalog
+            // keeps its own system stack.
+            fontFamily: "var(--font-body)",
+            backgroundColor: TOKENS.bone,
+            color: TOKENS.ink,
+          } as CSSProperties
+        }
+      >
+        <NavSplitCurtain
+          links={CHAPTERS.map(({ id, label }) => ({ href: `#${id}`, label }))}
+          trailingLink={{ href: "/", label: "Home", icon: <House className="h-[18px] w-[18px]" /> }}
+        />
+        <HeroSequence />
+        <StackingCards />
+        <ZoomStatement />
+        <ReasoningCarousel />
+        <SplitTransition />
+        <Team />
+        <Process />
+        <WhyUs />
+        <StillBand />
+        <Faq />
+        <Footer />
+      </main>
+
+      {/* Site chrome, deliberately outside <main>. The template's palette,
+          --gutter and Clash Grotesk are all set as inherited values on that
+          element, so a SiteFooter inside it would pick up the studio's body
+          face and stop matching the footer on every other page. No SiteNav to
+          match it: this page carries its own (module 98), and two navigations
+          on one page is one too many. */}
+      <SiteFooter />
+    </>
   );
 }

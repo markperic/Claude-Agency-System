@@ -764,9 +764,11 @@
       "category": "nav",
       "file": "src/registry/modules/86-nav-scroll-chapter-pill.tsx",
       "component": "NavScrollChapterPill",
-      "description": "A floating pill that relabels itself as you scroll, tracking the current chapter by scanning the named sections on each scroll and keeping the last one whose top edge has crossed a line near the top of the viewport — deliberately a scan rather than IntersectionObserver, which would lose the label once you scroll past the final chapter; hamburger opens a jump-link dropdown of all chapters. Host page must give each chapter section a matching id attribute. Optional mobileAlign=\"end\" parks the pill in the top-right corner below sm, for pages where a centred pill would sit on top of full-bleed pinned content.",
+      "description": "A floating pill that relabels itself as you scroll, tracking the current chapter by scanning the named sections on each scroll and keeping the last one whose top edge has crossed a line near the top of the viewport — deliberately a scan rather than IntersectionObserver, which would lose the label once you scroll past the final chapter; hamburger opens a jump-link dropdown of all chapters. Host page must give each chapter section a matching id attribute. Optional mobileAlign=\"end\" parks the pill in the top-right corner below sm, for pages where a centred pill would sit on top of full-bleed pinned content. Optional position=\"fixed\" floats it over the page instead of reserving a line of flow, for pages whose first section is a full-bleed pinned stage. Colours read from CSS custom properties with the dark defaults as fallbacks, so a themed page can restyle it without forking.",
       "editable": { "chapters prop": "array of {id, label}; ids must match the host page's section ids",
-        "stickyTop": "CSS length the pill parks at; raise it clear of a site header that also sticks to the top (the example pages pass 3.25rem)" }
+        "stickyTop": "CSS length the pill parks at; raise it clear of a site header that also sticks to the top (the example pages pass 3.25rem)",
+        "position": "\"sticky\" (default, sits in normal flow) or \"fixed\" (floats over the page, costs no layout)",
+        "--nav-* custom properties": "set --nav-surface / --nav-text / --nav-muted / --nav-border / --nav-rule / --nav-panel / --nav-hover on any ancestor to theme the pill and its dropdown" }
     },
     {
       "id": 87,
@@ -921,6 +923,18 @@
         "contained": "renders the overlay absolute inside a bounded frame instead of fixed over the viewport",
         "BACKDROP_LAYERS": "the three panel colours; the last is the surface the links sit on — see file"
       }
+    },
+    {
+      "id": 98,
+      "name": "Nav — Split Curtain",
+      "category": "nav",
+      "file": "src/registry/modules/98-nav-split-curtain.tsx",
+      "component": "NavSplitCurtain",
+      "description": "A circular pill that opens a full-screen menu built from two halves closing in from either side. The half carrying the links is opaque so the type always has solid ground; the other is translucent, leaving the page legible behind it, so the menu reads as laid over the site rather than replacing it. The split is not down the middle: the link panel is sized to its own content (w-max plus a gutter each side) and the translucent panel takes the remainder, so no more of the page is covered than the words need — about 19% solid at 1920 and 43% on a phone. The two are flex siblings because that remainder has to be computed by layout, the content width not being knowable in CSS; they still slide in on x, which is a transform and so does not feed back into it. The link list sizes itself from its own length against 70vh, since a size that suits six links overflows at eleven. Stops Lenis while open via window.__lenis — overflow:hidden does not hold a Lenis page still. Esc closes.",
+      "editable": { "links prop": "array of {label, href}; hash hrefs are routed through Lenis by LenisProvider",
+        "trailingOpacity": "opacity of the half without the links, default 0.5; the link side stays opaque because opacity applies to a whole subtree and would take the type down with it",
+        "footer": "optional node pinned bottom-left — socials, a phone number",
+        "--nav-* custom properties": "--nav-panel (both halves), --nav-text (links), --nav-surface (pill), --nav-muted (footer)" }
     }
   ]
 }

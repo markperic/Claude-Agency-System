@@ -96,6 +96,7 @@ import TeamSplitSlider from "@/registry/modules/94-team-split-slider";
 import ContactStatementForm from "@/registry/modules/95-contact-statement-form";
 import LocationsTabbedPanel from "@/registry/modules/96-locations-tabbed-panel";
 import NavKineticOverlay from "@/registry/modules/97-nav-kinetic-overlay";
+import NavSplitCurtain from "@/registry/modules/98-nav-split-curtain";
 
 /**
  * The full id → component lookup for every module in src/registry/modules.json.
@@ -212,6 +213,7 @@ export const MODULE_COMPONENTS: Record<number, ComponentType> = {
   95: ContactStatementForm,
   96: LocationsTabbedPanel,
   97: NavKineticOverlay,
+  98: NavSplitCurtain,
 };
 
 /** The label bar + module pairing used on every /demo category page. */

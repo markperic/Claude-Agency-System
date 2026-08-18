@@ -3,6 +3,19 @@
 import { useEffect, type ReactNode } from "react";
 import Lenis from "lenis";
 
+declare global {
+  interface Window {
+    /**
+     * The live Lenis instance. Published because Lenis owns scroll position:
+     * anything that needs the page to hold still — a full-screen menu, a modal
+     * — cannot do it with `overflow: hidden`, which Lenis ignores, and needs
+     * `stop()`/`start()` instead. Undefined under reduced motion, where Lenis
+     * is never constructed and native scroll applies, so always optional-chain.
+     */
+    __lenis?: Lenis;
+  }
+}
+
 /**
  * App-wide inertial smooth scroll. Mounted once at the root layout — not
  * per-page. Skips Lenis entirely when the user prefers reduced motion,
@@ -38,12 +51,23 @@ import Lenis from "lenis";
  * on the deployed site and not on a warm dev server: optimized images arriving
  * late and a webfont swapping in both re-flow content height, and both are
  * cache-dependent, so it comes and goes.
+ *
+ * Same-page anchor links are routed through Lenis rather than left to the
+ * browser. A native hash jump moves the document instantly while Lenis keeps
+ * animating toward its own target, so the two disagree about where the page
+ * is: Motion's scroll-linked sections read a position Lenis has not caught up
+ * to and freeze part-way through their scrubbed animation until the next wheel
+ * event resyncs them. Landing on a pinned section from a nav link is exactly
+ * the case that exposes it. Delegated from the document so links rendered
+ * later — by any module, at any depth — are covered without registering
+ * anything of their own.
  */
 export function LenisProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const lenis = new Lenis({ autoRaf: true, allowNestedScroll: true });
+    window.__lenis = lenis;
     const remeasure = () => lenis.resize();
 
     const observer = new ResizeObserver(remeasure);
@@ -56,10 +80,40 @@ export function LenisProvider({ children }: { children: ReactNode }) {
     window.addEventListener("load", remeasure);
     document.fonts?.ready.then(remeasure).catch(() => {});
 
+    const onAnchorClick = (event: MouseEvent) => {
+      // Leave anything the browser should own: modified clicks (open in a new
+      // tab), non-primary buttons, and handlers that already claimed the event.
+      if (event.defaultPrevented || event.button !== 0) return;
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+
+      const anchor = (event.target as Element | null)?.closest?.("a");
+      const href = anchor?.getAttribute("href");
+      // `#` alone is the idiom for a placeholder link with no destination.
+      if (!anchor || !href || !href.startsWith("#") || href === "#") return;
+      if (anchor.target && anchor.target !== "_self") return;
+
+      const target = document.getElementById(decodeURIComponent(href.slice(1)));
+      if (!target) return;
+
+      event.preventDefault();
+      // A number, not the element. Passing the element let Lenis resolve the
+      // offset itself and it landed ~370px past every target on the pilates
+      // page; the rect is measured here, at click time, against the live
+      // layout, and matches what `getBoundingClientRect` reports afterwards.
+      lenis.scrollTo(target.getBoundingClientRect().top + window.scrollY);
+      // Keep the URL shareable. pushState rather than assigning location.hash,
+      // which would trigger the native jump this exists to avoid.
+      history.pushState(null, "", href);
+    };
+
+    document.addEventListener("click", onAnchorClick);
+
     return () => {
       observer.disconnect();
       document.removeEventListener("load", remeasure, true);
       window.removeEventListener("load", remeasure);
+      document.removeEventListener("click", onAnchorClick);
+      delete window.__lenis;
       lenis.destroy();
     };
   }, []);

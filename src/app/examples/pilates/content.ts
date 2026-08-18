@@ -18,6 +18,12 @@ export const TOKENS = {
   bone: "#F7F3EC",
   ink: "#17150F",
   pine: "#14342A",
+  /**
+   * Pine lifted just off itself. Used where type needs to stay legible against
+   * the pine background while giving up the foreground — separated enough to
+   * read, close enough that it stops competing with whatever sits on top of it.
+   */
+  pineLift: "#2C5A4A",
   rose: "#D95B7F",
   blush: "#F3DCD6",
 };
@@ -65,8 +71,17 @@ export const PHOTOS = [
 export const CASTING = {
   /** Hero, seen on bone. */
   heroFront: [0, 7, 17],
-  /** Hero after the flip, seen on pine — brightest available. */
-  heroBack: [3, 2, 12],
+  /**
+   * Hero after the flip, seen on pine — brightest available.
+   *
+   * Ordered so the centre card, the one actually watched, turns over onto a
+   * different photographer's frame. It previously ran ahmet-kurt-1 to
+   * ahmet-kurt-4: same shoot, same subject, same crop, which read as the card
+   * mirroring itself rather than revealing anything. The flip machinery was
+   * never at fault. The outer two keep the ahmet-kurt frames, which no longer
+   * matters — they are dropped before the flip fires.
+   */
+  heroBack: [12, 2, 3],
   /** Team portraits on pine. */
   team: [6, 1, 14, 5],
   /** Carousel on bone; mid and dark crops give it depth. */
@@ -75,6 +90,12 @@ export const CASTING = {
   classes: [8, 13, 10, 4, 11, 16],
   /** Zoom backdrop, heavily knocked back over pine. */
   zoom: 1,
+  /**
+   * The split panels, multiplied into pine. Multiply only ever darkens, and
+   * pine is already dark, so this has to be one of the brightest crops in the
+   * set or the panels come back as flat near-black.
+   */
+  split: 2,
   /** Full-bleed rest band between 'Why here' and the FAQ; shown at full strength. */
   band: 3,
 };
@@ -83,9 +104,18 @@ export const STUDIO = {
   /** Used in prose ("At Forma we…"). The studio has a name; the wordmark doesn't have to be it. */
   name: "Forma",
   /** The giant hero lockup and the footer marquee. */
-  wordmark: "Pilates",
+  wordmark: "Pilates studio",
   eyebrow: "Reformer studio",
   heroLines: ["Strong", "body club"],
+  /**
+   * The pair of headlines that arrive either side of the slot after the flip.
+   * One word per line — the setting is a stack, not a sentence broken to fit,
+   * so each entry is a single word and the line breaks are the design.
+   */
+  heroAside: {
+    left: ["We", "bring", "the", "method,"],
+    right: ["you", "bring", "the", "work."],
+  },
 };
 
 
@@ -119,8 +149,10 @@ export const INSTRUCTORS = [
 
 /** The carousel beat between the zoom and the team. */
 export const REASONING = {
-  left: ["Train the", "thinking,"],
-  right: ["not just", "the body."],
+  /** One word per line, as the hero's side headlines are — the breaks are the
+   *  setting, not a sentence wrapped to fit. */
+  left: ["Let's", "change", "the", "mind,"],
+  right: ["not", "just", "the", "body."],
   body:
     "Understanding why a movement is programmed is what makes it transfer out of the studio. We teach the reasoning alongside the repetition.",
 };

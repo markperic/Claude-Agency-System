@@ -51,8 +51,22 @@ this way; the homepage itself (`src/app/page.tsx`) is the catalog index.
 3. Add an entry to `src/registry/modules.json` — name, category, file,
    component, description, and which named elements are meant to be adjusted
    (the `editable` map).
-4. That's it — no build step, no registry to publish to. It's just a file and
-   a manifest entry.
+4. Register it in `src/app/demo/module-registry.tsx` — import it and add the
+   `id: Component` mapping. The manifest and that lookup are separate, and
+   nothing checks they agree: a module listed in `modules.json` but missing
+   from the lookup renders as `undefined`, which fails `next build` at the
+   prerender step with "Element type is invalid" naming only the demo page.
+5. Give every prop a default, so the module renders bare. The demo pages mount
+   each module as `<Component />` with no props, and the lookup is typed
+   `ComponentType`, which admits none — a required prop is a type error at
+   build time. Follow module 86 or 98: default the data prop to a `DEFAULT_*`
+   const and put `= {}` on the destructured parameter.
+6. That's it — no build step, no registry to publish to. It's just a file, a
+   manifest entry and a lookup line.
+
+Run `npm run build` after adding one. Steps 4 and 5 both fail there and
+nowhere else — the dev server renders the example page perfectly while the
+production build cannot prerender `/demo/<category>`.
 
 Good sources to pull inspiration or starting markup from, if you're not
 designing from scratch: 21st.dev and its Magic MCP (large searchable React

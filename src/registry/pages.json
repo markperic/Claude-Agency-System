@@ -11,6 +11,12 @@
       "title": "Estate Agency",
       "href": "/examples/estate-agency",
       "description": "A wireframe of the scroll architecture high-end property agency sites use — a 440vh cinematic opening (a centre-drawn accent line that wipes into a colour flood, clip-path stills, then a tinted closing frame that splits down the middle to uncover a light panel), a drag-to-scroll about rail, three stat columns swapping on staggered scroll points, a counter-scrolling case index, an autoplaying services rotator, a 3D card that unfolds into a full-bleed statement, a sticky split partnership scroller, a split team slider, a statement contact form, and a tabbed locations panel with live local clocks."
+    },
+    {
+      "slug": "pilates",
+      "title": "Pilates Studio",
+      "href": "/examples/pilates",
+      "description": "A reformer studio template built as a sequence of pinned stages rather than a stack of blocks — a 328vh opening where three tilted cards converge behind one, the background turns bone to pine as the bottom-left lockup clears mid-screen, and the centre card flips onto a new frame before the whole slot lifts into the next section; a timetable where six cards fly in one at a time and land on a centre pile beside a scroll-lit class list; a statement that scales past the viewport edges without fading; an orbiting carousel between split one-word-per-line headlines; a two-panel split of blended full-bleed imagery that parts to reveal the method; portraits that rise and fan to cover a headline receding by colour rather than opacity; then a five-step process, a reasons grid, a parallax rest band, an FAQ and a wordmark marquee footer. Self-hosted Anton and Clash Grotesk via next/font/local, and module 98's split-curtain nav."
     }
   ]
 }

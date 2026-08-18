@@ -1,8 +1,8 @@
 "use client";
 
-import { useRef, useState, type ReactNode } from "react";
+import { useRef, useState, type CSSProperties, type ReactNode } from "react";
 import Image from "next/image";
-import { motion, useScroll, useTransform, type MotionValue } from "motion/react";
+import { easeIn, easeOut, motion, useScroll, useTransform, type MotionValue } from "motion/react";
 import { CASTING, CLASSES, FAQS, INSTRUCTORS, PHOTOS, PROCESS, REASONING, REASONS, STUDIO, TOKENS } from "./content";
 
 /**
@@ -36,6 +36,22 @@ import { CASTING, CLASSES, FAQS, INSTRUCTORS, PHOTOS, PROCESS, REASONING, REASON
  * set `font-black` — asking for 900 from a single-weight face makes the
  * browser synthesise a fake bold, which smears the stems at hero sizes.
  */
+/**
+ * The display setting for every title on this page.
+ *
+ * `leading-[0.85]` is not just tight tracking taste — it is what makes corner
+ * anchoring work. Anton's em box is 1.513em (79/22 ascent/descent at 1em)
+ * against a 0.85 line box, so the half-leading is negative and the baseline
+ * lands within a fraction of a pixel of the block's bottom edge. A DISPLAY
+ * block pinned with `bottom-[var(--gutter)]` therefore sits with its *baseline*
+ * on the gutter, which is what the eye measures — measured here at 25.4px
+ * bottom against 25.7px left. Anything that changes this leading breaks that
+ * equality and the corner lockups start looking low.
+ *
+ * The overshoot on round caps (O, C, U — about 0.12em) is left to spill below
+ * the baseline on purpose. Trimming it would push the flat-bottomed letters,
+ * which are what the eye actually reads the edge from, visibly high.
+ */
 const DISPLAY =
   "font-[family-name:var(--font-display)] font-normal uppercase leading-[0.85] tracking-[-0.015em]";
 
@@ -52,6 +68,21 @@ const DISPLAY =
  * scrolled, waits for itself to come into view, and never animates. The text
  * renders, occupies layout, and is simply never seen.
  */
+/**
+ * Regroups a one-word-per-line stack into two words per line.
+ *
+ * Both groupings get rendered and toggled by breakpoint rather than reflowed,
+ * because these lines are block spans, not wrapping text — there is no wrapping
+ * for CSS to redo, so a single grouping cannot serve both widths. Only the
+ * spans duplicate; the animated wrapper above them is shared, so the entrance
+ * still runs once.
+ */
+function pairUp(words: string[]): string[] {
+  const out: string[] = [];
+  for (let i = 0; i < words.length; i += 2) out.push(words.slice(i, i + 2).join(" "));
+  return out;
+}
+
 function RevealLine({
   children,
   delay = 0,
@@ -107,12 +138,19 @@ function FlipCard({
   back,
   x,
   scale,
+  rotate,
+  opacity,
   rotateY,
   className = "",
 }: {
   front: string;
   back: string;
-  x: MotionValue<string>;
+  /** Omitted by the centre card, which holds the middle of the slot. */
+  x?: MotionValue<string> | string;
+  /** In-plane tilt. Omitted by the centre card, which stays square. */
+  rotate?: MotionValue<number> | number;
+  /** Omitted by the centre card, which is never retired. */
+  opacity?: MotionValue<number> | number;
   scale: MotionValue<number> | number;
   rotateY: MotionValue<number>;
   className?: string;
@@ -121,7 +159,7 @@ function FlipCard({
     "absolute inset-0 overflow-hidden rounded-[24px] bg-black/5 [backface-visibility:hidden]";
 
   return (
-    <motion.div className={`absolute h-full ${className}`} style={{ x, scale }}>
+    <motion.div className={`absolute h-full ${className}`} style={{ x, scale, rotate, opacity }}>
       <div className="relative h-full aspect-[45/68] [transform-style:preserve-3d]">
         <motion.div
           className="absolute inset-0 [transform-style:preserve-3d]"
@@ -144,18 +182,41 @@ function FlipCard({
  * against it.
  *
  * Beats, as fractions of this section's own scroll:
- *   0.00–0.20  wordmark and headline travel up past the slot and leave
- *   0.20–0.34  the two outer cards converge to sit exactly behind the front one
- *   0.34–0.46  background turns bone → pine
- *   0.40–0.56  all three cards flip to their second image
- *   0.56–0.74  side headlines arrive at the edges
- *   0.80–1.00  the slot rises and leaves the frame
+ * The section is 328vh, down from 440vh. Every beat keeps the absolute scroll
+ * distance it had at 440vh — the fractions are scaled, not the pacing — and the
+ * 112vh came out of two pieces of nothing: a pause between the headlines
+ * landing and the exit starting, and the card's overtravel once it had already
+ * left the frame.
+ *
+ * Beats, as fractions of this section's own scroll:
+ *   0.00–0.214 the two outer cards converge to sit exactly behind the front one
+ *   0.00–0.188 wordmark travels up past the slot and leaves
+ *   0.00–0.456 the bottom-left lockup travels up past the slot and leaves
+ *   0.13–0.32  background turns bone → pine, as the lockup clears mid-screen
+ *      ~0.214  the outer cards are dropped as they finish hiding
+ *   0.27–0.48  the centre card flips to its second image
+ *   0.55–0.76  side headlines arrive at the edges
+ *   0.77–1.00  the slot lifts 30vh, still holding the upper frame as the
+ *              section's bottom edge arrives beneath it
+ *   0.77–1.00  the side headlines rise with it at half pace, swinging outward
+ *   0.88–0.99  the side headlines fade out behind it
  *
  * The cards sit above the type on z. The reference does the same, and it is
  * what makes the wordmark read as passing *behind* a solid object rather than
  * the two competing for the same plane. Type is separately kept clear of the
  * slot horizontally — the side headlines are capped at 30% width against a
  * slot that is 32vw wide and centred — so nothing ever actually collides.
+ *
+ * The first two beats deliberately overlap, and their easings are the reason
+ * the lockup is never occluded on its way up. Geometry forces it: the lockup
+ * rests only ~2vh below the outer cards' bottom edge, so under linear motion it
+ * enters their band almost the instant scrolling starts, long before any
+ * convergence could clear it. So the two curves are shaped against each other —
+ * the cards pull in on an ease-out (most of the travel spent in the first
+ * third of the beat, clearing the lockup's column early) while the lockup
+ * leaves on an ease-in (barely moving at first, giving the cards their head
+ * start). Swapping either for a linear ramp puts the cards back on top of the
+ * type for the opening ~10% of the section.
  */
 export function HeroSequence() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -164,17 +225,27 @@ export function HeroSequence() {
     offset: ["start start", "end end"],
   });
 
+  /* The turn starts at 0.10 because that is where the lockup clears the middle
+     of the screen — measured, not chosen: resting at 75vh and rising on the
+     ease-in below, its top crosses 60vh at p=0.088, 55vh at 0.103 and 50vh at
+     0.117. The old 0.34 left a long dead scroll after the type had gone. */
   const background = useTransform(
     scrollYProgress,
-    [0, 0.34, 0.46, 1],
+    [0, 0.134, 0.322, 1],
     [TOKENS.bone, TOKENS.bone, TOKENS.pine, TOKENS.pine],
   );
 
   // Type leaves first.
-  const wordmarkY = useTransform(scrollYProgress, [0, 0.2], ["0vh", "-78vh"]);
-  const wordmarkOpacity = useTransform(scrollYProgress, [0.12, 0.2], [1, 0]);
-  const headlineY = useTransform(scrollYProgress, [0, 0.34], ["70vh", "-80vh"]);
-  const headlineOpacity = useTransform(scrollYProgress, [0.26, 0.34], [1, 0]);
+  const wordmarkY = useTransform(scrollYProgress, [0, 0.188], ["0vh", "-78vh"]);
+  // Gone before the background reaches pine. The wordmark is pine itself, so
+  // any overlap with the turn would have it dissolve into its own backdrop.
+  const wordmarkOpacity = useTransform(scrollYProgress, [0.08, 0.175], [1, 0]);
+  // Rests at 0 because the lockup is anchored to the bottom-left corner, not
+  // pushed down from the top. Same 150vh of travel as before, rebased.
+  const headlineY = useTransform(scrollYProgress, [0, 0.456], ["0vh", "-150vh"], { ease: easeIn });
+  // Travel still runs to 0.34 — that span is what the crossing above is
+  // measured against — but the fade is pulled forward to clear the turn.
+  const headlineOpacity = useTransform(scrollYProgress, [0.188, 0.322], [1, 0]);
 
   /* Outer cards: a touching row at rest, converging to concentric.
    *
@@ -183,56 +254,149 @@ export function HeroSequence() {
    * scale needs (50% + 37.5%) = 87.5% of travel for its inner edge to meet the
    * centre card's outer edge exactly. 86 leaves a hair of overlap so a
    * sub-pixel rounding gap can never open between them. */
-  const spread = useTransform(scrollYProgress, [0.2, 0.34], [1, 0]);
+  const spread = useTransform(scrollYProgress, [0, 0.214], [1, 0], { ease: easeOut });
   const outerLeftX = useTransform(spread, (v) => `calc(var(--card-spread) * ${-v})`);
   const outerRightX = useTransform(spread, (v) => `calc(var(--card-spread) * ${v})`);
-  const centreX = useTransform(scrollYProgress, [0, 1], ["0%", "0%"]);
+
+  /* The outer cards sit slightly off-square at rest, as the reference's do.
+     Driven by `spread` rather than by scroll directly, so the tilt unwinds on
+     exactly the same curve that pulls them in and is back to zero the moment
+     they land behind the centre card — where any residual angle would show as
+     a corner poking out from behind a card meant to be hiding them. Uneven
+     angles on purpose: a matched pair reads as a mistake, a mismatched one as
+     a hand. */
+  const outerLeftRotate = useTransform(spread, (v) => v * -3.2);
+  const outerRightRotate = useTransform(spread, (v) => v * 2.4);
+
+  /* The outer cards retire as they finish hiding. Keeping them mounted meant
+     they turned with the flip and rode along through the slot's exit, showing
+     at the edges as soon as the centre card moved off its own footprint.
+     Because `spread` is already 0 from 0.16 onward, this holds them at zero for
+     the rest of the section.
+   *
+   * Derived from `spread`, deliberately, rather than read off scrollYProgress
+   * over its own window. A plain `useTransform(scrollYProgress, [0.16, 0.19],
+   * [1, 0])` is simple enough that Motion hands it to the compositor as a
+   * ViewTimeline-backed WAAPI animation — and that accelerated effect does not
+   * clamp past its last keyframe: at timeline progress 0.275, well beyond the
+   * 0.19 stop and with fill "both", it still rendered opacity 0.105 while the
+   * inline style read 1. Values computed from another MotionValue stay on the
+   * main thread, where the clamp behaves. */
+  const outerOpacity = useTransform(spread, (v) => Math.min(1, v / 0.02));
 
   // All three flip together, very slightly staggered so it reads as one object
   // turning rather than three synchronised panels.
-  const flipFront = useTransform(scrollYProgress, [0.4, 0.56], [0, 180]);
-  const flipOuter = useTransform(scrollYProgress, [0.42, 0.58], [0, 180]);
+  const flipFront = useTransform(scrollYProgress, [0.268, 0.483], [0, 180]);
+  const flipOuter = useTransform(scrollYProgress, [0.296, 0.51], [0, 180]);
 
   // The slot leaves.
-  const slotY = useTransform(scrollYProgress, [0.8, 1], ["0vh", "-118vh"]);
-  const slotScale = useTransform(scrollYProgress, [0.8, 1], [1, 0.86]);
+  /* The exit begins the moment the side headlines have landed, rather than
+     after a pause, and the words fade out with the card rather than riding the
+     sticky release. Together with the shorter section that is what closes the
+     stretch of empty pine: the card clears the top around 0.91, the words are
+     gone by 0.95, and the pine ends 18vh later instead of 150vh later. */
+  /* Deliberately short. The card must still be in frame when the section's
+     bottom edge arrives, and that is a structural requirement, not a matter of
+     taste: anything that clears the frame early leaves a screenful of empty
+     pine that still has to scroll past before the next section can appear.
+     -118vh did it, and so did -76vh — matching page-scroll rate only meant the
+     card reached the top edge exactly as the boundary reached the fold, which
+     is still an empty screen.
+   *
+     At -30vh the card's bottom sits around 53vh at p=1, so it is holding the
+     upper half of the frame as the blush edge comes in beneath it. The card
+     then leaves because the page moves, not because of any transform of its
+     own, which is what makes the handover continuous. The ascent reads as a
+     lift into the next section rather than an exit from this one. */
+  const slotY = useTransform(scrollYProgress, [0.769, 1], ["0vh", "-30vh"]);
+  const slotScale = useTransform(scrollYProgress, [0.769, 1], [1, 0.86]);
 
-  const leftX = useTransform(scrollYProgress, [0.56, 0.74], ["-18%", "0%"]);
-  const leftOpacity = useTransform(scrollYProgress, [0.56, 0.74], [0, 1]);
-  const rightX = useTransform(scrollYProgress, [0.62, 0.8], ["18%", "0%"]);
-  const rightOpacity = useTransform(scrollYProgress, [0.62, 0.8], [0, 1]);
+  /* A main-thread passthrough of the section's progress.
+   *
+   * The two opacities below are shaped exactly like the transform Motion hands
+   * to the compositor as a ViewTimeline — and that accelerated path does not
+   * clamp past its last keyframe, so the words would creep back after the fade.
+   * Reading them off a derived value keeps them where the clamp works. */
+  const progress = useTransform(scrollYProgress, (v) => v);
+
+  const leftX = useTransform(scrollYProgress, [0.549, 0.703], ["-18%", "0%"]);
+  const leftOpacity = useTransform(progress, [0.549, 0.703, 0.88, 0.99], [0, 1, 1, 0]);
+  const rightX = useTransform(scrollYProgress, [0.604, 0.758], ["18%", "0%"]);
+  const rightOpacity = useTransform(progress, [0.604, 0.758, 0.88, 0.99], [0, 1, 1, 0]);
+
+  /* The words leave with the card but at roughly half its pace — 55vh against
+     the slot's 118vh over the same window. Moving together but not in lockstep
+     is what gives the exit depth: matched speeds read as one flat plane
+     sliding, and the type sitting still while the card climbs reads as the type
+     being forgotten.
+   *
+   * They also swing out as they go, each away from the centre, pivoting on the
+   * bottom outer corner so the top of the stack travels furthest. Small angles
+   * on purpose — this is a turn away from the reader on the way out, not a
+   * flourish. */
+  const sideExitY = useTransform(progress, [0.769, 1], ["0vh", "-15vh"]);
+  const leftExitRotate = useTransform(progress, [0.769, 1], [0, -7]);
+  const rightExitRotate = useTransform(progress, [0.769, 1], [0, 7]);
   const sideColor = useTransform(
     scrollYProgress,
-    [0, 0.46, 0.54, 1],
+    [0, 0.322, 0.43, 1],
     [TOKENS.rose, TOKENS.rose, TOKENS.blush, TOKENS.blush],
   );
 
   return (
-    <motion.section ref={sectionRef} className="relative h-[440vh]" style={{ backgroundColor: background }}>
-      <div className="sticky top-0 h-screen overflow-hidden" style={{ perspective: "1600px" }}>
+    <motion.section id="studio" ref={sectionRef} className="relative h-[328vh]" style={{ backgroundColor: background }}>
+      {/* --wordmark-size is shared rather than repeated: the slot hangs off the
+          wordmark's baseline, so both have to agree on the type size exactly. */}
+      <div
+        className="sticky top-0 h-screen overflow-hidden"
+        style={{ perspective: "1600px", "--wordmark-size": "clamp(2.5rem, 14.5vw, 20rem)" } as CSSProperties}
+      >
         {/* Type layer — below the cards on z. */}
         <motion.h1
-          /* Clamped, not raw vw. At 19vw the wordmark keeps growing past any
-             sensible size on a wide display — 486px on a 2560 screen — and the
-             card slot, which is sized in vh, does not grow with it, so the two
-             fall out of proportion. The cap freezes the relationship at roughly
-             what a 1400px window gives. */
-          className={`${DISPLAY} pointer-events-none absolute inset-x-0 top-[4vh] z-10 mx-auto max-w-[1500px] px-[2vw] text-center text-[clamp(2.5rem,19vw,16.5rem)] text-[color:var(--pine)]`}
-          style={{ y: wordmarkY, opacity: wordmarkOpacity, lineHeight: 0.98 }}
+          /* 14.5vw is derived from the reference, not picked: there the
+             wordmark spans ~79% of the viewport width. Measured in the browser,
+             "Pilates studio" sets to 5.466em in Anton, and 0.79 / 5.466 ≈ 0.145
+             em per vw. Re-derive this if the wordmark string changes — at two
+             words it is twice the em width of one, and the previous 29vw (sized
+             for "Pilates" alone at 2.73em) overflowed to 158% of the viewport.
+
+             The longer string is the point: same 79% of width spread over twice
+             the letters means a shorter cap height, so the slot crosses far
+             less of it and the word stays readable behind the cards.
+
+             Still clamped, because the slot is sized in vh and does not grow
+             with the width. 20rem holds the proportion out to ~2200px.
+
+             No max-width: capping the *box* while the font keeps growing only
+             overflows it into the parent's `overflow-hidden`. The font clamp is
+             what bounds this, not the box.
+
+             pt-[0.3em] is optical, and has to be em rather than vh. Anton's
+             ascent overflows a 0.9 line box by 0.303em, so the cap line lands
+             above the box top and `overflow-hidden` shears the letter tops off.
+             Padding pushes the content down without touching `transform`, which
+             Motion owns here for `y`. In em it survives any font-size. */
+          className={`${DISPLAY} pointer-events-none absolute inset-x-0 top-[2vh] z-10 px-[var(--gutter)] pt-[0.3em] text-center text-[length:var(--wordmark-size)] text-[color:var(--pine)]`}
+          style={{ y: wordmarkY, opacity: wordmarkOpacity, lineHeight: 0.9 }}
         >
           {STUDIO.wordmark}
         </motion.h1>
 
+        {/* The lockup sits in the bottom-left corner, inset by --gutter on both
+            axes. `left`/`bottom` rather than padding on a full-width box: the
+            old `inset-x-0` + `mx-auto max-w-7xl` centred the block, so its
+            distance from the left edge grew with the viewport and stopped
+            matching the distance from the bottom. */}
         <motion.div
-          className="pointer-events-none absolute inset-x-0 top-0 z-10 px-4 sm:px-8"
+          className="pointer-events-none absolute bottom-[var(--gutter)] left-[var(--gutter)] z-10"
           style={{ y: headlineY, opacity: headlineOpacity }}
         >
-          <div className="mx-auto max-w-7xl">
+          <div>
             <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--pine)]/60">
               {STUDIO.eyebrow}
             </p>
             {/* Capped so the setting can never reach the centred slot. */}
-            <h2 className={`${DISPLAY} text-[13vw] text-[color:var(--rose)] sm:max-w-[26vw] sm:text-[clamp(1.75rem,6.5vw,5.6rem)]`}>
+            <h2 className={`${DISPLAY} text-[13vw] text-[color:var(--rose)] sm:max-w-[26vw] sm:text-[clamp(1.75rem,calc(2rem_+_3.9vw),5.6rem)]`}>
               {STUDIO.heroLines.map((line) => (
                 <span key={line} className="block">
                   {line}
@@ -243,43 +407,133 @@ export function HeroSequence() {
         </motion.div>
 
         {/* Side headlines — also below the cards, and width-capped clear of them. */}
+        {/* Above and below the slot on mobile, either side of it from sm up.
+            Stacking them vertically is what lets the card grow — beside the
+            slot each aside needed 46% of the width, which capped the card at
+            whatever was left. */}
         <div className="pointer-events-none absolute inset-0 z-10 flex items-center px-4 sm:px-8">
-          <div className="mx-auto flex w-full max-w-[1500px] items-center justify-between">
+          <div className="mx-auto flex h-full w-full max-w-[1500px] flex-col justify-between pt-[calc(var(--gutter)_+_4.5rem)] pb-[7vh] sm:h-auto sm:flex-row sm:items-center sm:justify-between sm:py-0">
             <motion.h2
-              className={`${DISPLAY} max-w-[42%] text-[8.5vw] sm:max-w-[30%] sm:text-[clamp(1.5rem,6vw,5.2rem)]`}
-              style={{ x: leftX, opacity: leftOpacity, color: sideColor }}
+              /* Sized off the longest word rather than the longest line. Set
+                 one word per line, the widest thing here is "METHOD," at about
+                 3.7em in Anton, so the cap is what keeps it inside its column;
+                 four lines at 0.85 leading come to 3.4em of height, which is
+                 what keeps it inside the fold. */
+              className={`${DISPLAY} max-w-[80%] text-[13vw] sm:max-w-[34%] sm:text-[clamp(2rem,8vw,7rem)]`}
+              /* Overrides DISPLAY's 0.85 locally. Anton's caps are ~0.92em, so
+                 at 0.85 consecutive lines touch — fine for a two-line lockup,
+                 crowded for a four-line stack. 1.02 opens a ~0.1em gap.
+                 Set inline rather than as a second `leading-` class: both would
+                 be present and the winner would be decided by stylesheet order,
+                 not by the order written here. It also must not move into
+                 DISPLAY, where the 0.85 is what puts the corner lockup's
+                 baseline on the gutter. */
+              style={{
+                x: leftX,
+                y: sideExitY,
+                rotate: leftExitRotate,
+                transformOrigin: "left bottom",
+                opacity: leftOpacity,
+                color: sideColor,
+                lineHeight: 1.02,
+              }}
             >
-              We bring
-              <br />
-              the method,
+              <span className="block sm:hidden">
+                {pairUp(STUDIO.heroAside.left).map((line) => (
+                  <span key={line} className="block">
+                    {line}
+                  </span>
+                ))}
+              </span>
+              <span className="hidden sm:block">
+                {STUDIO.heroAside.left.map((line) => (
+                  <span key={line} className="block">
+                    {line}
+                  </span>
+                ))}
+              </span>
             </motion.h2>
             <motion.h2
-              className={`${DISPLAY} max-w-[42%] text-right text-[8.5vw] sm:max-w-[30%] sm:text-[clamp(1.5rem,6vw,5.2rem)]`}
-              style={{ x: rightX, opacity: rightOpacity, color: sideColor }}
+              className={`${DISPLAY} self-end max-w-[80%] text-right text-[13vw] sm:max-w-[34%] sm:self-auto sm:text-[clamp(2rem,8vw,7rem)]`}
+              style={{
+                x: rightX,
+                y: sideExitY,
+                rotate: rightExitRotate,
+                transformOrigin: "right bottom",
+                opacity: rightOpacity,
+                color: sideColor,
+                lineHeight: 1.02,
+              }}
             >
-              you bring
-              <br />
-              the work.
+              <span className="block sm:hidden">
+                {pairUp(STUDIO.heroAside.right).map((line) => (
+                  <span key={line} className="block">
+                    {line}
+                  </span>
+                ))}
+              </span>
+              <span className="hidden sm:block">
+                {STUDIO.heroAside.right.map((line) => (
+                  <span key={line} className="block">
+                    {line}
+                  </span>
+                ))}
+              </span>
             </motion.h2>
           </div>
         </div>
 
         {/* The slot: three concentric cards, above everything. */}
         <motion.div
-          className="absolute inset-0 z-20 flex items-center justify-center pb-[14vh]"
+          /* Plainly centred in the fold. The trade-off is deliberate: the slot
+             is sized in vh with a vw bound, while the wordmark above it is sized
+             in vw, so how much of the wordmark the cards cross is a function of
+             viewport aspect rather than a fixed amount — wider crops more. An
+             earlier version hung the slot off the wordmark's baseline to pin
+             that overlap at 35% everywhere, which held the number steady but
+             left the cards sitting high on a squarish viewport with dead space
+             beneath them. Centred reads better at the sizes that matter. */
+          className="absolute inset-0 z-20 flex items-center justify-center"
           style={{ y: slotY, scale: slotScale }}
         >
           {/* Height-driven so the slot keeps the reference's proportions on any
-              viewport; width follows from the 45:68 aspect. */}
-          {/* Height-driven so the slot keeps the reference's proportions on any
-              viewport; width follows from the 45:68 aspect. Sat above centre to
-              leave the lower third of the fold for the headline. */}
-          <div className="relative flex h-[38vh] max-h-[470px] items-center justify-center [--card-spread:58%] sm:h-[44vh] sm:[--card-spread:86%]">
+              viewport; width follows from the 45:68 aspect.
+
+              66vh matches the reference, where the centre card runs about 68%
+              of the fold. That is deliberately tall enough to cross the
+              wordmark: the cards are meant to occlude its middle letters while
+              the outer ones stay readable, which is the whole composition. The
+              earlier 44vh was too short to read as an overlap and too tall to
+              read as clearance, so it just looked like a collision.
+
+              The vw term is what stops the trio running off the sides. Height
+              alone is not enough: the cards are sized in vh but laid out
+              side by side, so on a squarish viewport a 66vh card is wide enough
+              that the spread overflows. The row spans cardW * (1 + 2 * spread),
+              and cardW is 45/68 of the height, so bounding the whole row to
+              ~78% of the width gives 66vh ≤ 43vw at the sm spread of 86%, and
+              ~92% of the width gives 52vh ≤ 64vw at the base spread of 58%.
+              Below those crossovers the width governs and the cards shrink to
+              fit rather than bleeding off.
+           *
+              The mobile numbers are the same calculation run the other way.
+              With the asides stacked above and below rather than beside, the
+              full width is free, so the limit should be height — but the row's
+              width is `2 x max(0.5, spread + 0.375) x cardWidth`, and at a 58%
+              spread that is 1.91x the card, which capped it well below the
+              space available. Dropping the spread to 18% makes the row only
+              1.11x the card, and height finally binds: 104vw crosses 52vh at
+              this aspect, so the card is as large as the gap between the two
+              asides allows. The cost is that the outer cards peek rather than
+              fan, which at phone width they effectively did anyway. */}
+          <div className="relative flex h-[min(52vh,104vw)] max-h-[720px] items-center justify-center [--card-spread:18%] sm:h-[min(66vh,43vw)] sm:[--card-spread:86%]">
             <FlipCard
               front={PHOTOS[CASTING.heroFront[1]]}
               back={PHOTOS[CASTING.heroBack[1]]}
               x={outerLeftX}
               scale={0.75}
+              rotate={outerLeftRotate}
+              opacity={outerOpacity}
               rotateY={flipOuter}
             />
             <FlipCard
@@ -287,12 +541,13 @@ export function HeroSequence() {
               back={PHOTOS[CASTING.heroBack[2]]}
               x={outerRightX}
               scale={0.75}
+              rotate={outerRightRotate}
+              opacity={outerOpacity}
               rotateY={flipOuter}
             />
             <FlipCard
               front={PHOTOS[CASTING.heroFront[0]]}
               back={PHOTOS[CASTING.heroBack[0]]}
-              x={centreX}
               scale={1}
               rotateY={flipFront}
             />
@@ -306,15 +561,37 @@ export function HeroSequence() {
 /* ---------------------------------------------------- 2. stacking cards */
 
 /**
- * One card flying in from the right and landing on the stack.
+ * When each card flies in, as a slice of the section's own scroll.
  *
- * Each card owns a slice of the parent's progress, and the slices overlap by
- * design — a card begins its run before the previous one has finished, so the
- * stack builds as a continuous motion instead of a queue of discrete arrivals.
+ * Cards and list rows both read from this, so the two can never disagree about
+ * when a card lands — the previous version keyed the rows off a separate
+ * hand-written range and they drifted apart whenever either was retuned.
  *
- * The landing offsets are computed from the card's distance either side of
- * centre, which keeps the finished stack symmetrical for any number of cards
- * rather than needing hand-tuned values per card.
+ * Windows overlap by design: a card starts its run well before the previous one
+ * has settled, so the pile builds as one continuous motion rather than a queue
+ * of discrete arrivals. `SPAN_END` leaves the last of the section clear so the
+ * finished stack holds for a beat before the section ends.
+ */
+const CARD_SPAN_END = 0.82;
+
+function cardWindow(index: number, total: number): [number, number] {
+  const step = CARD_SPAN_END / total;
+  const start = index * step;
+  return [start, Math.min(1, start + step * 1.9)];
+}
+
+/**
+ * One card flying in from the right and landing on the pile.
+ *
+ * Every card lands on the same spot in the centre of the screen, each on top of
+ * the last, rather than the deck arriving as a rigid row and collapsing
+ * afterwards. Landing in one place is what frees the left of the screen for the
+ * type — the old row needed the full width to hold six cards before it folded.
+ *
+ * The resting angle fans slightly from the card's distance either side of
+ * centre, so the pile reads as physical cards dropped on each other rather than
+ * one image with a hard edge. It is computed, so it stays symmetrical for any
+ * number of cards.
  */
 function StackCard({
   entry,
@@ -327,43 +604,28 @@ function StackCard({
   total: number;
   progress: MotionValue<number>;
 }) {
-  /*
-   * Three positions, in order: off to the right as an evenly spaced row, the
-   * row held in frame, then collapsed into the centre stack.
-   *
-   * Every card shares one entry offset, so the row travels as a rigid unit
-   * rather than each card arriving on its own schedule — that is what makes it
-   * read as one strip of cards sliding in rather than six independent
-   * animations. The even spacing comes from the card's distance either side of
-   * centre, so it holds for any number of cards.
-   *
-   * ROW_STEP is expressed in percent of the card's own width: 112 leaves a 12%
-   * gutter between neighbours.
-   */
-  const ROW_STEP = 112;
-  const ENTRY = 300;
+  const [start, end] = cardWindow(index, total);
 
-  const offsetFromCentre = index - (total - 1) / 2;
-  const rowX = offsetFromCentre * ROW_STEP;
-  const stackX = offsetFromCentre * 7;
+  /* Far enough right to be clear of the frame before its window opens — the
+     card is only off-screen because of this offset, not because it is unmounted,
+     so it must start beyond the viewport edge at every width. */
+  const ENTRY_X = 320;
+  const restRotate = (index - (total - 1) / 2) * 1.6;
 
-  const x = useTransform(
-    progress,
-    [0, 0.5, 0.64, 1],
-    [`${rowX + ENTRY}%`, `${rowX}%`, `${rowX}%`, `${stackX}%`],
-  );
+  const x = useTransform(progress, [start, end], [`${ENTRY_X}%`, "0%"]);
+  const rotate = useTransform(progress, [start, end], [9, restRotate]);
 
   return (
     <motion.article
-      className="absolute w-[62vw] max-w-[280px]"
-      style={{ x, zIndex: index }}
+      className="absolute w-[62vw] max-w-[330px]"
+      style={{ x, rotate, zIndex: index }}
     >
       <div className="relative aspect-[3/4] overflow-hidden rounded-[24px] bg-black/5 shadow-[0_24px_60px_rgba(0,0,0,0.18)]">
         <Image
           src={PHOTOS[CASTING.classes[index]]}
           alt=""
           fill
-          sizes="(max-width: 768px) 62vw, 280px"
+          sizes="(max-width: 768px) 62vw, 330px"
           className="object-cover"
         />
         <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 to-transparent p-5 pt-16">
@@ -385,12 +647,10 @@ function StackCard({
 }
 
 /**
- * One row of the class list, lit as its card crosses into frame.
+ * One row of the class list, lit as its own card flies in.
  *
- * The cards now travel as a single rigid row and all settle together, so there
- * is no per-card landing moment to key off any more. Instead each row lights
- * across the strip's travel in index order, which still reads as "this one,
- * now this one" while matching what the eye actually sees arriving.
+ * Reads `cardWindow` rather than carrying its own ranges, so a row can never
+ * light at a different moment than the card it names.
  */
 function ClassCue({
   title,
@@ -403,15 +663,14 @@ function ClassCue({
   total: number;
   progress: MotionValue<number>;
 }) {
-  const span = 0.5 / total;
-  const lit = index * span;
+  const [start, end] = cardWindow(index, total);
 
-  const opacity = useTransform(progress, [lit, lit + span], [0.28, 1]);
-  const x = useTransform(progress, [lit, lit + span], [-6, 0]);
+  const opacity = useTransform(progress, [start, end], [0.28, 1]);
+  const x = useTransform(progress, [start, end], [-8, 0]);
 
   return (
     <motion.li
-      className={`${DISPLAY} text-base leading-[1.6] text-[color:var(--pine)]`}
+      className={`${DISPLAY} text-[clamp(1.05rem,2.6vw,2.3rem)] leading-[1.32] text-[color:var(--pine)]`}
       style={{ opacity, x }}
     >
       {title}
@@ -427,26 +686,48 @@ export function StackingCards() {
     offset: ["start start", "end end"],
   });
 
-  const labelOpacity = useTransform(scrollYProgress, [0, 0.06, 0.95, 1], [0, 1, 1, 0]);
+  /* A main-thread passthrough, for the same reason the hero needs one: a
+     transform read straight off `scrollYProgress` is simple enough that Motion
+     hands it to the compositor as a ViewTimeline-backed animation, and that
+     accelerated path does not clamp past its final keyframe. Measured here, a
+     list row whose card had long since landed sat at opacity 0.37 instead of 1,
+     with its inline style still reading the initial 0.28. Everything in this
+     section reads from `progress` so nothing is eligible for that path. */
+  const progress = useTransform(scrollYProgress, (v) => v);
+
+  const labelOpacity = useTransform(progress, [0, 0.06, 0.95, 1], [0, 1, 1, 0]);
 
   return (
-    <section ref={sectionRef} className="relative h-[360vh] bg-[color:var(--blush)]">
+    <section id="classes" ref={sectionRef} className="relative h-[360vh] bg-[color:var(--blush)]">
       <div className="sticky top-0 flex h-screen items-center justify-center overflow-hidden">
         <motion.div
-          className="absolute left-4 top-[10vh] z-40 w-[min(34vw,420px)] sm:left-8"
+          /* Dropped to 18vh so the eyebrow clears the fixed nav pill, which sits
+             at --gutter from the top and would otherwise crowd it.
+           *
+             The width is measured against the pile rather than set as a flat
+             fraction of the viewport. The cards land centred at 330px wide, so
+             the pile's left edge sits 180px left of centre — 165px of half-width
+             plus the ~15px the resting fan adds to the bounding box, which is
+             easy to forget and worth the measurement. From a 32px gutter,
+             leaving an 18px gap means the column can be at most
+             50vw - 180 - 32 - 18 = 50vw - 230px. A flat 34vw cleared that by
+             only 8px at 1280 and overlapped the pile outright by ~50px at 900,
+             because the column grows with the viewport while the pile does not.
+             Capped at 400px so it stops widening once the type has room. */
+          className="absolute left-4 top-[14vh] z-40 w-[min(72vw,420px)] sm:left-8 sm:top-[18vh] sm:w-[min(calc(50vw-230px),400px)]"
           style={{ opacity: labelOpacity }}
         >
-          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--pine)]/60">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--pine)]/60">
             What we teach
           </p>
-          <h2 className={`${DISPLAY} mb-8 text-[9vw] text-[color:var(--pine)] sm:text-[clamp(1.5rem,4vw,3.4rem)]`}>
+          <h2 className={`${DISPLAY} mb-7 text-[11vw] leading-[0.9] text-[color:var(--pine)] sm:text-[clamp(1.5rem,5vw,4.4rem)]`}>
             The timetable
           </h2>
 
-          {/* A stack that lands in one place necessarily buries five of its six
+          {/* A pile that lands in one place necessarily buries five of its six
               cards, so the deck alone cannot carry the content. The list keeps
-              every class readable and doubles as a progress indicator: each
-              row lights as its own card touches down, off the same ranges the
+              every class readable and doubles as a progress indicator: each row
+              lights as its own card flies in, off the same `cardWindow` the
               cards use, so the two can never disagree. */}
           <ul className="hidden sm:block">
             {CLASSES.map((entry, index) => (
@@ -455,7 +736,7 @@ export function StackingCards() {
                 title={entry.title}
                 index={index}
                 total={CLASSES.length}
-                progress={scrollYProgress}
+                progress={progress}
               />
             ))}
           </ul>
@@ -467,7 +748,7 @@ export function StackingCards() {
             entry={entry}
             index={index}
             total={CLASSES.length}
-            progress={scrollYProgress}
+            progress={progress}
           />
         ))}
       </div>
@@ -483,10 +764,12 @@ export function StackingCards() {
  * against each other and the frame feels like it is being pushed through
  * rather than scrolled past.
  *
- * Opacity is deliberately keyed to fade before the type reaches its largest
- * size. Letting it scale to 4× at full opacity means the last thing on screen
- * is a wall of one or two letters, which reads as a rendering fault; fading
- * from 0.72 onward lets it dissolve while it still resolves as words.
+ * The type does not fade out. It holds full opacity and keeps growing until the
+ * next section arrives over it, so the statement is pushed through the frame
+ * rather than dissolving inside it — the handover, not the type, is what ends
+ * the beat. An earlier version faded from 0.72 to avoid ending on a wall of one
+ * or two letters, but that traded the whole point of the zoom for a tidy
+ * finish, and left the last stretch of the section holding nothing.
  */
 export function ZoomStatement() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -495,14 +778,20 @@ export function ZoomStatement() {
     offset: ["start start", "end end"],
   });
 
+  /* Main-thread passthrough — a transform read straight off `scrollYProgress`
+     is eligible for Motion's ViewTimeline path, which does not clamp past its
+     final keyframe. Opacities are where that shows. */
+  const progress = useTransform(scrollYProgress, (v) => v);
+
   const textScale = useTransform(scrollYProgress, [0, 1], [0.32, 3.6]);
-  const textOpacity = useTransform(scrollYProgress, [0, 0.12, 0.72, 0.94], [0, 1, 1, 0]);
+  // Fades in, then holds. No exit — the next section covers it.
+  const textOpacity = useTransform(progress, [0, 0.12], [0, 1]);
 
   const imageScale = useTransform(scrollYProgress, [0, 1], [1.45, 1]);
-  const imageOpacity = useTransform(scrollYProgress, [0, 0.25, 0.85], [0.15, 0.4, 0.1]);
+  const imageOpacity = useTransform(progress, [0, 0.25, 0.85], [0.15, 0.4, 0.1]);
 
   return (
-    <section ref={sectionRef} className="relative h-[280vh] bg-[color:var(--pine)]">
+    <section id="ethos" ref={sectionRef} className="relative h-[280vh] bg-[color:var(--pine)]">
       <div className="sticky top-0 flex h-screen items-center justify-center overflow-hidden">
         <motion.div
           className="absolute inset-0"
@@ -567,7 +856,7 @@ function CarouselCard({
   // Remapped from [-1,1] to [0,1] so it reads as "how much toward the front".
   const front = (a: number) => Math.cos(a) * 0.5 + 0.5;
 
-  const x = useTransform(angle, (a) => `${round(Math.sin(a) * 82)}%`);
+  const x = useTransform(angle, (a) => `calc(var(--orbit) * ${round(Math.sin(a))})`);
   const scale = useTransform(angle, (a) => round(0.72 + 0.28 * front(a)));
   const zIndex = useTransform(angle, (a) => Math.round(front(a) * 100));
 
@@ -597,19 +886,76 @@ export function ReasoningCarousel() {
   });
 
   const cards = CASTING.carousel.map((i) => PHOTOS[i]);
-  const copyOpacity = useTransform(scrollYProgress, [0.72, 0.88], [0, 1]);
+
+  /* Main-thread passthrough — see the hero. A transform read straight off
+     `scrollYProgress` is eligible for Motion's ViewTimeline path, which does
+     not clamp past its final keyframe. */
+  const progress = useTransform(scrollYProgress, (v) => v);
+  const copyOpacity = useTransform(progress, [0.72, 0.88], [0, 1]);
 
   return (
-    <section ref={sectionRef} className="relative h-[300vh] bg-[color:var(--bone)]">
-      <div className="sticky top-0 flex h-screen items-center justify-center overflow-hidden px-4 sm:px-8">
-        <div className="mx-auto flex w-full max-w-7xl items-center justify-between">
-          <h2 className={`${DISPLAY} w-[30%] shrink-0 text-[7.5vw] text-[color:var(--pine)] sm:text-[clamp(1.25rem,4.6vw,4rem)]`}>
-            {REASONING.left.map((line) => (
-              <RevealLine key={line}>{line}</RevealLine>
-            ))}
+    <section id="reasoning" ref={sectionRef} className="relative h-[300vh] bg-[color:var(--bone)]">
+      {/* Full width to the page gutter, not `max-w-7xl`. The cap parked the
+          headlines inland on anything wide — the carousel is centred on the
+          viewport regardless, so capping the row only ever cost the type its
+          room. */}
+      {/* Top padding clears the fixed nav pill, which sits at --gutter and is
+          12 tall — the stacked column is centred, so without it the first
+          headline centres up underneath the button. */}
+      <div className="sticky top-0 flex h-screen items-center justify-center overflow-hidden px-[var(--gutter)] pt-[calc(var(--gutter)_+_4.5rem)] sm:pt-0">
+        {/* Stacked below `sm`. The three-column split is a desktop composition:
+            at 390px the carousel column came out 119px wide holding 242px
+            cards, so they flew off both edges while the headlines were crushed
+            to slivers. Stacked, each part gets the full width. */}
+        <div className="flex w-full flex-col items-center gap-7 sm:flex-row sm:justify-between sm:gap-0">
+          {/* Set one word per line, so the column is sized by the longest word
+              rather than the longest phrase — "thinking," is the widest here.
+              Leading is opened to 1.02 for the same reason it is on the hero's
+              side headlines: DISPLAY's 0.85 is tighter than Anton's ~0.92em
+              caps, so stacked lines touch.
+           *
+              The size is derived from where the cards actually reach, which is
+              the real constraint — not from the column, and not from taste.
+              Working it back: the cards are sized off height, `min(46vh,500px)`
+              at 45:68, so a card is `min(30.4vh,331px)` wide; they orbit to
+              ±82% of that about the viewport centre, so the nearest edge any
+              card reaches is `50vw - 1.32 x cardWidth`. Leaving 56px for the
+              gutter and a gap, and dividing by the widest word's em width gives
+              the expression below. That divisor is copy-dependent and worth
+              re-deriving whenever the words change: "CHANGE" sets to 2.85em
+              where "THINKING," set to 3.56em, and leaving the old figure in
+              place cost 25% of the available size for nothing.
+           *
+              It has to track height as well as width because the cards do: on a
+              1280x800 viewport that resolves to ~91px, and on 1280x1080 to
+              ~52px, since the taller frame grows the cards and the orbit with
+              them. A flat vw value cannot express that — 7.5vw looked right at
+              one size and put the comma underneath a card. */}
+          <h2
+            className={`${DISPLAY} w-full shrink-0 text-[13vw] text-[color:var(--pine)] sm:w-[30%] sm:text-[clamp(1.5rem,calc(17.5vw_-_min(14.1vh,153px)_-_20px),9rem)]`}
+            style={{ lineHeight: 1.02 }}
+          >
+            <span className="block sm:hidden">
+              {pairUp(REASONING.left).map((line) => (
+                <RevealLine key={line}>{line}</RevealLine>
+              ))}
+            </span>
+            <span className="hidden sm:block">
+              {REASONING.left.map((line) => (
+                <RevealLine key={line}>{line}</RevealLine>
+              ))}
+            </span>
           </h2>
 
-          <div className="relative flex h-[46vh] max-h-[500px] w-[34%] items-center justify-center">
+          {/* --orbit is the same idea as the hero's --card-spread: the sweep is
+              a percentage of the card's own width, so it has to come down on
+              mobile or the cards leave the screen — and, as in the hero, buying
+              it back is what lets the image grow. The row spans
+              2 x max(0.5, orbit + 0.375) x cardWidth, so at 44% it was 1.63x
+              the card and width bound the height well below the space the
+              stacked headlines had freed. At 30% it is 1.35x, and 48vh fits
+              across with room to spare. */}
+          <div className="relative flex h-[min(42vh,88vw)] max-h-[500px] w-full items-center justify-center [--orbit:30%] sm:h-[46vh] sm:w-[34%] sm:[--orbit:82%]">
             {cards.map((src, index) => (
               <CarouselCard
                 key={src}
@@ -621,19 +967,42 @@ export function ReasoningCarousel() {
             ))}
           </div>
 
-          <h2 className={`${DISPLAY} w-[30%] shrink-0 text-right text-[7.5vw] text-[color:var(--rose)] sm:text-[clamp(1.25rem,4.6vw,4rem)]`}>
-            {REASONING.right.map((line) => (
-              <RevealLine key={line}>{line}</RevealLine>
-            ))}
+          <h2
+            className={`${DISPLAY} w-full shrink-0 text-right text-[13vw] text-[color:var(--rose)] sm:w-[30%] sm:text-[clamp(1.5rem,calc(17.5vw_-_min(14.1vh,153px)_-_20px),9rem)]`}
+            style={{ lineHeight: 1.02 }}
+          >
+            <span className="block sm:hidden">
+              {pairUp(REASONING.right).map((line) => (
+                <RevealLine key={line}>{line}</RevealLine>
+              ))}
+            </span>
+            <span className="hidden sm:block">
+              {REASONING.right.map((line) => (
+                <RevealLine key={line}>{line}</RevealLine>
+              ))}
+            </span>
           </h2>
-        </div>
 
-        <motion.p
-          className="absolute inset-x-0 bottom-[8vh] mx-auto max-w-xl px-6 text-center text-[0.95rem] leading-relaxed text-[color:var(--ink)]/70"
-          style={{ opacity: copyOpacity }}
-        >
-          {REASONING.body}
-        </motion.p>
+          {/* In the flow on mobile, pinned to the fold from sm up. Absolute
+              positioning was fine while this was three columns, but once the
+              headlines stack, the column is tall enough that a paragraph pinned
+              to `bottom-[8vh]` lands on top of the second headline. In the flow
+              it simply follows it.
+           *
+              Left-aligned there too: centred copy sitting under a left-aligned
+              stack reads as a different element rather than the same thought.
+           *
+              Sizing was raised from 0.95rem at 70% ink, which was body-copy
+              scale on a page where everything around it is display type — it
+              read as a caption and got skipped. The alpha was costing as much
+              legibility as the size. */}
+          <motion.p
+            className="w-full text-left text-[clamp(1.05rem,1.55vw,1.5rem)] leading-[1.55] text-[color:var(--ink)]/85 sm:absolute sm:inset-x-0 sm:bottom-[8vh] sm:mx-auto sm:w-auto sm:max-w-2xl sm:px-6 sm:text-center"
+            style={{ opacity: copyOpacity }}
+          >
+            {REASONING.body}
+          </motion.p>
+        </div>
       </div>
     </section>
   );
@@ -686,7 +1055,7 @@ export function SplitTransition() {
   const revealScale = useTransform(scrollYProgress, [0.5, 0.86], [0.94, 1]);
 
   return (
-    <section ref={sectionRef} className="relative h-[220vh] bg-[color:var(--bone)]">
+    <section id="method" ref={sectionRef} className="relative h-[220vh] bg-[color:var(--bone)]">
       <div className="sticky top-0 h-screen overflow-hidden">
         <motion.div
           className="absolute inset-0 z-0 flex flex-col items-center justify-center px-6 text-center"
@@ -695,21 +1064,62 @@ export function SplitTransition() {
           <p className="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--pine)]/60">
             The method
           </p>
-          <h2 className={`${DISPLAY} text-[15vw] leading-[0.82] text-[color:var(--pine)] sm:text-[clamp(2rem,14vw,12.5rem)]`}>
+          {/* 23vw fills 95% of the width on mobile, measured rather than
+              guessed: "CONTROL IS" is the longer line at 4.137em, and
+              0.95 / 4.137 = 0.23. Re-derive if the copy changes. */}
+          <h2 className={`${DISPLAY} text-[23vw] leading-[0.82] text-[color:var(--pine)] sm:text-[clamp(2rem,calc(1.75rem_+_11.8vw),12.5rem)]`}>
             Control is
             <br />
             <span className="text-[color:var(--rose)]">strength.</span>
           </h2>
         </motion.div>
 
+        {/* Each panel carries a full-viewport image anchored to its own outer
+            edge — the top half pinned to the top of the screen, the bottom half
+            to the bottom — so closed, the two line up into one continuous
+            photograph across the seam, and parted, each half takes its own
+            portion with it. Anchoring both to `inset-0` instead would show the
+            same top crop twice and the seam would read as a mistake.
+         *
+            `isolate` on each panel is what keeps the blend honest: without a
+            stacking context of its own, `mix-blend-multiply` composites against
+            everything painted beneath the panel — including the copy it is
+            supposed to be hiding — so the headline ghosts through the closed
+            curtain. With it, the image blends only with the panel's own pine. */}
         <motion.div
-          className="absolute inset-x-0 top-0 z-10 h-1/2 bg-[color:var(--pine)]"
+          className="absolute inset-x-0 top-0 z-10 h-1/2 isolate overflow-hidden bg-[color:var(--pine)]"
           style={{ y: topY }}
-        />
+        >
+          <div className="absolute inset-x-0 top-0 h-screen mix-blend-multiply">
+            <Image
+              src={PHOTOS[CASTING.split]}
+              alt=""
+              fill
+              sizes="100vw"
+              /* Lifted before it blends. Multiply only darkens, and it is
+                 landing on pine, which is already dark — straight from the file
+                 the panels came back as near-black with the subject barely
+                 readable. Brightening the source first puts the product back in
+                 the midtones, so the photograph reads and the green still
+                 tints it rather than swallowing it. */
+              className="object-cover brightness-[1.85] contrast-[0.95]"
+            />
+          </div>
+        </motion.div>
         <motion.div
-          className="absolute inset-x-0 bottom-0 z-10 h-1/2 bg-[color:var(--pine)]"
+          className="absolute inset-x-0 bottom-0 z-10 h-1/2 isolate overflow-hidden bg-[color:var(--pine)]"
           style={{ y: bottomY }}
-        />
+        >
+          <div className="absolute inset-x-0 bottom-0 h-screen mix-blend-multiply">
+            <Image
+              src={PHOTOS[CASTING.split]}
+              alt=""
+              fill
+              sizes="100vw"
+              className="object-cover brightness-[1.85] contrast-[0.95]"
+            />
+          </div>
+        </motion.div>
       </div>
     </section>
   );
@@ -745,6 +1155,14 @@ function TeamCard({
 
   const y = useTransform(progress, [start, end], ["46vh", "0vh"]);
 
+  /* The same fan the hero slot and the timetable pile use, so a card behaves
+     the same way wherever it appears on the page. Computed from the card's
+     distance either side of centre, so it stays symmetrical for any number of
+     portraits, and unwound from a steeper entry angle rather than applied flat
+     — a card that rises already square reads as a slide, not a placement. */
+  const restRotate = (index - (total - 1) / 2) * 1.9;
+  const rotate = useTransform(progress, [start, end], [restRotate * 2.4, restRotate]);
+
   /* No opacity animation. The cards have to be fully opaque to do their job —
      the point of the sequence is that they cover the headline — and a card
      that rises into place while still translucent lets the type ghost through
@@ -752,7 +1170,7 @@ function TeamCard({
      carries the entrance. */
 
   return (
-    <motion.article className="group relative w-[22%]" style={{ y }}>
+    <motion.article className="group relative w-full sm:w-[22%]" style={{ y, rotate }}>
       <div className="relative aspect-[45/58] overflow-hidden rounded-[18px] bg-black/20 shadow-[0_28px_70px_rgba(0,0,0,0.45)] ring-1 ring-white/10">
         <Image
           src={photo}
@@ -795,32 +1213,46 @@ export function Team() {
 
   const team = INSTRUCTORS.slice(0, 4);
 
-  /* The headline steps back as the portraits arrive. Covering type with images
-     alone left the two fighting — the display face is heavy enough that it kept
-     reading as the subject even with cards on top of it. Dropping it to a
-     third makes the portraits the subject and leaves the words as texture
-     behind them, which is what the covering was for. */
-  const headlineOpacity = useTransform(scrollYProgress, [0.05, 0.45], [1, 0.32]);
+  /* Main-thread passthrough — see the hero. */
+  const progress = useTransform(scrollYProgress, (v) => v);
+
+  /* The headline steps back as the portraits arrive, by changing colour rather
+     than by fading. Fading to a third left it washed out — reading as type that
+     had failed to load rather than type deliberately behind something — because
+     opacity takes the letterforms toward the background's value without ever
+     belonging to it. Moving to a lifted pine keeps the words fully opaque and
+     crisp while sitting only a step off the ground they are on, which is what
+     lets the portraits take the foreground.
+   *
+     Both colours travel, so the blush/rose pairing holds at the start and
+     converges as it recedes; leaving the accent behind would have it flare out
+     of a headline that is otherwise stepping back. */
+  const headlineColor = useTransform(progress, [0.05, 0.45], [TOKENS.blush, TOKENS.pineLift]);
+  const accentColor = useTransform(progress, [0.05, 0.45], [TOKENS.rose, TOKENS.pineLift]);
 
   return (
-    <section ref={sectionRef} className="relative h-[260vh] bg-[color:var(--pine)]">
+    <section id="instructors" ref={sectionRef} className="relative h-[260vh] bg-[color:var(--pine)]">
       <div className="sticky top-0 flex h-screen flex-col items-center justify-center overflow-hidden px-4 sm:px-8">
         <p className="absolute top-[12vh] text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--blush)]/60">
           Who teaches you
         </p>
 
         <motion.h2
-          className={`${DISPLAY} pointer-events-none absolute inset-x-0 z-0 px-4 text-center text-[clamp(2rem,13vw,11rem)] text-[color:var(--blush)]`}
-          style={{ opacity: headlineOpacity }}
+          className={`${DISPLAY} pointer-events-none absolute inset-x-0 z-0 px-4 text-center text-[clamp(2rem,calc(2.2rem_+_10.2vw),11rem)]`}
+          style={{ color: headlineColor }}
         >
           Qualified
           <br />
           and in
           <br />
-          <span className="text-[color:var(--rose)]">the room</span>
+          <motion.span style={{ color: accentColor }}>the room</motion.span>
         </motion.h2>
 
-        <div className="relative z-10 flex w-full max-w-6xl items-start justify-between">
+        {/* Two up on mobile, four across from sm. At four abreast each portrait
+            came out 84px wide on a phone — the faces were unreadable and the
+            captions inside them worse. Two columns give ~171px, and the row of
+            four is a desktop composition anyway. */}
+        <div className="relative z-10 grid w-full max-w-6xl grid-cols-2 gap-4 sm:flex sm:items-start sm:justify-between sm:gap-0">
           {team.map((instructor, index) => (
             <TeamCard
               key={instructor.name}
@@ -828,7 +1260,7 @@ export function Team() {
               photo={PHOTOS[CASTING.team[index]]}
               index={index}
               total={team.length}
-              progress={scrollYProgress}
+              progress={progress}
             />
           ))}
         </div>
@@ -841,13 +1273,28 @@ export function Team() {
 
 export function Process() {
   return (
-    <section className="relative bg-[color:var(--bone)] px-4 pt-28 pb-14 sm:px-8">
+    <section id="process" className="relative bg-[color:var(--bone)] px-4 pt-28 pb-14 sm:px-8">
       <div className="mx-auto max-w-7xl">
-        <h2 className={`${DISPLAY} mb-7 text-[11vw] text-[color:var(--pine)] sm:text-[clamp(1.75rem,6.5vw,5.6rem)]`}>
+        {/* Leading opened to 1.02 for the same reason as the hero's side
+            headlines — DISPLAY's 0.85 is tighter than Anton's ~0.92em caps, so
+            stacked lines touch. Set inline rather than as a second `leading-`
+            class, since two would both be present and stylesheet order, not
+            attribute order, would pick the winner.
+         *
+            The second line takes the rose, so the pair breaks by colour as well
+            as by line. RevealLine passes `className` to the span it animates,
+            which is the element that needs it — colouring the h2 twice would
+            not work, and colouring the mask would be overridden. */}
+        <h2
+          className={`${DISPLAY} mb-7 text-[11vw] text-[color:var(--pine)] sm:text-[clamp(1.75rem,calc(2rem_+_3.9vw),5.6rem)]`}
+          style={{ lineHeight: 1.02 }}
+        >
           <RevealLine>We prefer</RevealLine>
-          <RevealLine delay={0.08}>this order.</RevealLine>
+          <RevealLine delay={0.08} className="text-[color:var(--rose)]">
+            this order.
+          </RevealLine>
         </h2>
-        <p className="mb-14 max-w-md text-[0.95rem] leading-relaxed text-[color:var(--ink)]/70">
+        <p className="mb-14 max-w-xl text-[clamp(1.05rem,1.35vw,1.3rem)] leading-[1.6] text-[color:var(--ink)]/80">
           Every programme runs through the same five stages, in the same sequence. It is the
           sequence, more than any single exercise, that produces the result.
         </p>
@@ -870,7 +1317,9 @@ export function Process() {
             />
             <span className={`${DISPLAY} text-3xl text-[color:var(--rose)]`}>{entry.step}</span>
             <h3 className={`${DISPLAY} text-3xl text-[color:var(--pine)] sm:text-4xl`}>{entry.title}</h3>
-            <p className="text-[0.95rem] leading-relaxed text-[color:var(--ink)]/70">{entry.body}</p>
+            <p className="text-[clamp(1rem,1.2vw,1.15rem)] leading-[1.6] text-[color:var(--ink)]/80">
+              {entry.body}
+            </p>
           </motion.div>
         ))}
       </div>
@@ -882,9 +1331,9 @@ export function Process() {
 
 export function WhyUs() {
   return (
-    <section className="relative bg-[color:var(--bone)] px-4 pt-14 pb-14 sm:px-8">
+    <section id="why-us" className="relative bg-[color:var(--bone)] px-4 pt-14 pb-14 sm:px-8">
       <div className="mx-auto max-w-7xl">
-        <h2 className={`${DISPLAY} mb-14 text-[11vw] text-[color:var(--pine)] sm:text-[clamp(1.75rem,6.5vw,5.6rem)]`}>
+        <h2 className={`${DISPLAY} mb-14 text-[11vw] text-[color:var(--pine)] sm:text-[clamp(1.75rem,calc(2rem_+_3.9vw),5.6rem)]`}>
           <RevealLine>Why here</RevealLine>
         </h2>
 
@@ -898,7 +1347,9 @@ export function WhyUs() {
               transition={{ duration: 0.65, delay: index * 0.08 }}
             >
               <h3 className={`${DISPLAY} mb-3 text-[1.7rem] leading-[1.05] text-[color:var(--rose)]`}>{reason.title}</h3>
-              <p className="text-[0.95rem] leading-relaxed text-[color:var(--ink)]/70">{reason.body}</p>
+              <p className="text-[clamp(1rem,1.2vw,1.15rem)] leading-[1.6] text-[color:var(--ink)]/80">
+                {reason.body}
+              </p>
             </motion.div>
           ))}
         </div>
@@ -931,7 +1382,7 @@ export function StillBand() {
   const y = useTransform(scrollYProgress, [0, 1], ["-9%", "9%"]);
 
   return (
-    <section ref={sectionRef} className="relative h-[62vh] overflow-hidden bg-[color:var(--pine)]">
+    <section id="studio-space" ref={sectionRef} className="relative h-[62vh] overflow-hidden bg-[color:var(--pine)]">
       <motion.div className="absolute inset-0 h-[118%] -top-[9%]" style={{ y }}>
         <Image
           src={PHOTOS[CASTING.band]}
@@ -951,11 +1402,16 @@ export function Faq() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section className="relative bg-[color:var(--bone)] px-4 pt-14 pb-28 sm:px-8">
+    <section id="faqs" className="relative bg-[color:var(--bone)] px-4 pt-14 pb-28 sm:px-8">
       <div className="mx-auto max-w-7xl">
-        <h2 className={`${DISPLAY} mb-14 text-[11vw] text-[color:var(--pine)] sm:text-[clamp(1.75rem,6.5vw,5.6rem)]`}>
+        <h2
+          className={`${DISPLAY} mb-14 text-[11vw] text-[color:var(--pine)] sm:text-[clamp(1.75rem,calc(2rem_+_3.9vw),5.6rem)]`}
+          style={{ lineHeight: 1.02 }}
+        >
           <RevealLine>Small questions,</RevealLine>
-          <RevealLine delay={0.08}>big answers</RevealLine>
+          <RevealLine delay={0.08} className="text-[color:var(--rose)]">
+            big answers
+          </RevealLine>
         </h2>
 
         <div className="max-w-3xl">
@@ -985,7 +1441,9 @@ export function Faq() {
                   animate={{ height: isOpen ? "auto" : 0, opacity: isOpen ? 1 : 0 }}
                   transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                 >
-                  <p className="pb-6 pr-12 text-[0.95rem] leading-relaxed text-[color:var(--ink)]/70">{faq.a}</p>
+                  <p className="pb-6 pr-12 text-[clamp(1rem,1.2vw,1.15rem)] leading-[1.6] text-[color:var(--ink)]/80">
+                    {faq.a}
+                  </p>
                 </motion.div>
               </div>
             );
@@ -1005,10 +1463,15 @@ export function Faq() {
  */
 export function Footer() {
   return (
-    <footer className="relative overflow-hidden bg-[color:var(--pine)] pt-24 text-[color:var(--blush)]">
+    <footer id="contact" className="relative overflow-hidden bg-[color:var(--pine)] pt-24 text-[color:var(--blush)]">
       <div className="mx-auto mb-20 max-w-7xl px-4 sm:px-8">
         <p className="mb-4 text-xs font-semibold uppercase tracking-[0.18em] opacity-60">Contact</p>
-        <h2 className={`${DISPLAY} mb-8 text-[10vw] sm:text-[clamp(1.75rem,6vw,5.2rem)]`}>
+        {/* The page's other two-line display headline, given the same leading so
+            the stacked lines are not the only ones on the page still touching. */}
+        <h2
+          className={`${DISPLAY} mb-8 text-[10vw] sm:text-[clamp(1.75rem,calc(1.9rem_+_3.6vw),5.2rem)]`}
+          style={{ lineHeight: 1.02 }}
+        >
           <RevealLine>Come and</RevealLine>
           <RevealLine delay={0.08}>move with us.</RevealLine>
         </h2>

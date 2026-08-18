@@ -56,15 +56,18 @@ function Line({
  * section — an ancestor with `overflow-hidden` silently breaks
  * `position: sticky`.
  *
- * `overflow-anchor: none` on the section is not cosmetic. Animating the card's
- * width/height is a real layout change every frame, so this section emits a
- * continuous stream of layout shifts (measured: ~0.42 across one pass). Scroll
- * anchoring is enabled by default, and its whole job is to correct scrollTop
- * when laid-out content moves — so it will keep nudging scroll position inside
- * a section that is deliberately relaying out on every frame, while Lenis is
- * simultaneously easing toward its own target. The two writers fight, which is
- * the mechanism behind an intermittent "scroll won't progress here". Opting
- * this subtree out of anchoring leaves Lenis as the only writer.
+ * `overflow-anchor: none` is a precaution, not the fix for anything observed.
+ * Animating the card's width/height is a real layout change every frame, so
+ * this section emits a continuous stream of layout shifts (measured ~0.42
+ * across one pass) that scroll anchoring would otherwise be entitled to
+ * "correct" by moving scrollTop while Lenis eases toward its own target.
+ * Plausible, cheap to rule out, and worth keeping — but it was NOT the cause
+ * of the intermittent "scroll stops dead here" this section was blamed for.
+ * That was Lenis caching a stale scroll limit site-wide and clamping downward
+ * scrolling to it; see registry/lib/lenis-provider.tsx. The tell was that the
+ * native scrollbar could still drag past the barrier while the wheel could
+ * not, which rules out anything in this file — a rendering or layout problem
+ * cannot distinguish between the two input paths.
  */
 export default function ShowcasePerspectiveExpand({
   eyebrow = "Why work with us",

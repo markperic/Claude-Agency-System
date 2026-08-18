@@ -765,7 +765,8 @@
       "file": "src/registry/modules/86-nav-scroll-chapter-pill.tsx",
       "component": "NavScrollChapterPill",
       "description": "A floating pill that relabels itself as you scroll, tracking the current chapter by scanning the named sections on each scroll and keeping the last one whose top edge has crossed a line near the top of the viewport — deliberately a scan rather than IntersectionObserver, which would lose the label once you scroll past the final chapter; hamburger opens a jump-link dropdown of all chapters. Host page must give each chapter section a matching id attribute. Optional mobileAlign=\"end\" parks the pill in the top-right corner below sm, for pages where a centred pill would sit on top of full-bleed pinned content.",
-      "editable": { "chapters prop": "array of {id, label}; ids must match the host page's section ids" }
+      "editable": { "chapters prop": "array of {id, label}; ids must match the host page's section ids",
+        "stickyTop": "CSS length the pill parks at; raise it clear of a site header that also sticks to the top (the example pages pass 3.25rem)" }
     },
     {
       "id": 87,
@@ -903,6 +904,22 @@
       "editable": {
         "eyebrow": "Where we work",
         "LOCATIONS array": "city, IANA timeZone, building, blurb, backdrop, and four thumbs per location — see file"
+      }
+    },
+    {
+      "id": 97,
+      "name": "Nav — Kinetic Overlay",
+      "category": "nav",
+      "file": "src/registry/modules/97-nav-kinetic-overlay.tsx",
+      "component": "NavKineticOverlay",
+      "description": "A header pill whose \"Menu\" label rolls over to \"Close\" and whose plus icon spins 315° while a full-height panel flies in from the right — three coloured backdrop layers staggered behind each other, then the links swinging up from below with a slight rotation. Hovering a link holds it at full black and slides it right while every other link recedes to 20%. Adapted from a 21st.dev kinetic-navigation component whose GSAP timeline (including its CustomEase) was rebuilt on motion/react's animate(), and whose markup shipped without the stylesheet it referenced, so the visual design is authored here from what the timeline implies. Exports KineticOverlayNav alongside the demo, which is what src/components/site-nav.tsx renders as the site's own chrome.",
+      "editable": {
+        "wordmark": "text wordmark in the header pill",
+        "links": "array of {label, href}; past eight links the panel switches to a denser two-column layout",
+        "hint": "optional small uppercase hint beside the Menu button, omitted by default",
+        "CONDENSE_AT": "scroll distance in px before the sticky header condenses and fades \u2014 see file",
+        "contained": "renders the overlay absolute inside a bounded frame instead of fixed over the viewport",
+        "BACKDROP_LAYERS": "the three panel colours; the last is the surface the links sit on — see file"
       }
     }
   ]

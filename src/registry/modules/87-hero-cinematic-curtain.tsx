@@ -178,7 +178,7 @@ export default function HeroCinematicCurtain({
         {/* Beat 2 — headline */}
         <motion.div
           style={{ y: titleY, opacity: titleOpacity }}
-          className="absolute inset-0 flex items-center justify-center px-6"
+          className="absolute inset-0 flex items-center justify-center px-7 md:px-6"
         >
           <h1 className="max-w-5xl text-center text-[clamp(2.25rem,5.4vw,4.75rem)] font-extrabold uppercase leading-[0.88] tracking-[-0.045em] text-white [text-wrap:balance]">
             {headline.split("\n").map((line) => (
@@ -252,10 +252,31 @@ export default function HeroCinematicCurtain({
           {/* Held at mid-height on the left and right edges, level with the
               headline. Horizontal padding only: `-translate-y-1/2` offsets by
               the element's own height, so vertical padding here would throw
-              the centring off by half of whatever it added. */}
-          <div className="absolute inset-x-0 top-1/2 flex -translate-y-1/2 items-center justify-between px-6 md:px-8">
-            <span>{eyebrow}</span>
-            <span className="hidden md:inline">Let&rsquo;s discuss &#8599;</span>
+              the centring off by half of whatever it added.
+
+              Below md the two marks turn to run vertically up the edges. Laid
+              out horizontally they cross the middle of a narrow viewport and
+              land on top of the headline, which is also why the right-hand one
+              used to be hidden outright on mobile — turned, both fit. The turn
+              is `writing-mode`, not a rotate transform: writing-mode gives the
+              flex row a genuinely tall-and-narrow box to place at each edge,
+              whereas a rotated box still measures full width and the two marks
+              would collide in the centre while merely being drawn sideways.
+              `rotate-180` on the left one makes it read bottom-to-top, the
+              usual pairing against a top-to-bottom mark on the right.
+
+              Turning them is not on its own enough: the headline's widest line
+              still bit ~4px into each strip. The clearance below md is
+              structural rather than a measured gap — the marks sit in a `px-2`
+              gutter and are 11px wide, so they can never extend past x=19,
+              while the headline block's `px-7` starts its content at x=28.
+              Text cannot render outside its own content box, so the two are
+              guaranteed apart at every viewport width rather than merely at
+              the one that was checked. Widths too narrow for the headline's
+              measure wrap it, which is the correct outcome. */}
+          <div className="absolute inset-x-0 top-1/2 flex -translate-y-1/2 items-center justify-between px-2 md:px-8">
+            <span className="rotate-180 [writing-mode:vertical-rl] md:rotate-0 md:[writing-mode:horizontal-tb]">{eyebrow}</span>
+            <span className="[writing-mode:vertical-rl] md:[writing-mode:horizontal-tb]">Let&rsquo;s discuss &#8599;</span>
           </div>
           <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-6 md:p-8">
             <span>Scroll</span>

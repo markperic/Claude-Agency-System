@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
 import HeroStatementDark from "@/registry/modules/80-hero-statement-dark";
@@ -25,10 +26,14 @@ import CtaRotatingWordCloser from "@/registry/modules/85-cta-rotating-word";
  */
 export default function DesignManifestoPage() {
   return (
-    <main>
+    <main
+      /* Site header condensed (42px) plus the chapter pill beneath it (98px).
+         Pinned sections read this to keep their resting content clear. */
+      style={{ "--page-chrome": "98px" } as CSSProperties}
+    >
       <SiteNav />
       <HeroStatementDark />
-      <NavScrollChapterPill mobileAlign="end" />
+      <NavScrollChapterPill stickyTop="3.25rem" mobileAlign="end" />
 
       <div id="state-of-design">
         <StatsBarChart />

@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
 import HeroCinematicCurtain from "@/registry/modules/87-hero-cinematic-curtain";
@@ -50,11 +51,16 @@ const CHAPTERS = [
  */
 export default function EstateAgencyPage() {
   return (
-    <main className="bg-[#0a0a0a]">
-      <SiteNav />
+    <main
+      className="bg-[#0a0a0a]"
+      /* Site header condensed (42px) plus the chapter pill beneath it (98px).
+         Pinned sections read this to keep their resting content clear. */
+      style={{ "--page-chrome": "98px" } as CSSProperties}
+    >
+      <SiteNav overlay />
 
       <HeroCinematicCurtain />
-      <NavScrollChapterPill chapters={CHAPTERS} mobileAlign="end" />
+      <NavScrollChapterPill stickyTop="3.25rem" chapters={CHAPTERS} mobileAlign="end" />
 
       <div id="about">
         <ContentDragSlider />

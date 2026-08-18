@@ -42,9 +42,14 @@ const DEFAULT_CHAPTERS: Chapter[] = [
 export default function NavScrollChapterPill({
   chapters = DEFAULT_CHAPTERS,
   mobileAlign = "center",
+  stickyTop = "1.5rem",
 }: {
   chapters?: Chapter[];
   mobileAlign?: "center" | "end";
+  /** Where the pill parks itself, as a CSS length. Raise it clear of any site
+   *  header that also sticks to the top of the viewport — inline rather than a
+   *  Tailwind `top-*` class so a host page can pass its own header's height. */
+  stickyTop?: string;
 } = {}) {
   const [active, setActive] = useState(0);
   const [open, setOpen] = useState(false);
@@ -68,7 +73,8 @@ export default function NavScrollChapterPill({
 
   return (
     <div
-      className={`sticky top-6 z-40 flex px-6 sm:justify-center ${
+      style={{ top: stickyTop }}
+      className={`sticky z-40 flex px-6 sm:justify-center ${
         mobileAlign === "end" ? "justify-end" : "justify-center"
       }`}
     >

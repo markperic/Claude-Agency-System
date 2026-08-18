@@ -233,10 +233,15 @@ export default function StatsColumnScroller({
         ))}
         <div className="absolute inset-0 bg-black/30" />
 
-        {/* Top padding clears a floating page-level element (the chapter pill
-            on the estate example sits centred at top-6) — without it the
-            centre column's figure collides with it. */}
-        <div className="relative flex h-full flex-col px-5 pb-6 pt-20 md:px-8 md:pb-8 md:pt-24">
+        {/* This section pins, so its top band is where content *rests* rather
+            than somewhere it scrolls past — it has to clear whatever floating
+            chrome the host page stacks above it. `--page-chrome` (globals.css)
+            carries that height; the max() keeps the module's own 5rem/6rem on
+            pages that float nothing, so the demo page is unaffected. Reading
+            the token beats hardcoding a number: this padding was previously
+            tuned to a chapter pill sitting at top-6, and silently became too
+            small the moment that pill moved down. */}
+        <div className="relative flex h-full flex-col px-5 pb-6 pt-[max(5rem,calc(var(--page-chrome)+1.5rem))] md:px-8 md:pb-8 md:pt-[max(6rem,calc(var(--page-chrome)+2rem))]">
           {/* Stat band across the top */}
           <div className="grid grid-cols-1 gap-y-10 sm:grid-cols-3 sm:gap-x-8">
             {COLUMNS.map((column, c) => (

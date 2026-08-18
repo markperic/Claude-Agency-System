@@ -95,6 +95,7 @@ import ContentStickySplitScroller from "@/registry/modules/93-content-sticky-spl
 import TeamSplitSlider from "@/registry/modules/94-team-split-slider";
 import ContactStatementForm from "@/registry/modules/95-contact-statement-form";
 import LocationsTabbedPanel from "@/registry/modules/96-locations-tabbed-panel";
+import NavKineticOverlay from "@/registry/modules/97-nav-kinetic-overlay";
 
 /**
  * The full id → component lookup for every module in src/registry/modules.json.
@@ -196,6 +197,7 @@ export const MODULE_COMPONENTS: Record<number, ElementType> = {
   94: TeamSplitSlider,
   95: ContactStatementForm,
   96: LocationsTabbedPanel,
+  97: NavKineticOverlay,
 };
 
 /** The label bar + module pairing used on every /demo category page. */

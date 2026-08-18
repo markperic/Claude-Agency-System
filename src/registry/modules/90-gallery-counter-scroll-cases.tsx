@@ -77,7 +77,11 @@ export default function GalleryCounterScrollCases({
 
   return (
     <section ref={ref} className="relative h-[260vh] bg-black">
-      <div className="sticky top-0 flex h-screen flex-col justify-center overflow-hidden">
+      {/* Pinned, and its stack is vertically centred — so the padding centres
+          the content in whatever height is left below the host page's floating
+          chrome rather than behind it. Resolves to 0 on pages that float
+          nothing (see --page-chrome in globals.css). */}
+      <div className="sticky top-0 flex h-screen flex-col justify-center overflow-hidden pt-[var(--page-chrome)]">
         <motion.div
           style={{ opacity: titleOpacity }}
           className="mb-10 flex items-baseline justify-between px-6 md:px-10"

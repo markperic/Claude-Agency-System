@@ -1,11 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
-import { Menu, X } from "lucide-react";
 import { CATEGORIES } from "@/registry/categories";
+import { KineticOverlayNav, type KineticNavLink } from "@/registry/modules/97-nav-kinetic-overlay";
 
-const LINKS = [
+const LINKS: KineticNavLink[] = [
   { href: "/", label: "Home" },
   ...CATEGORIES.map((c) => ({ href: `/demo/${c.slug}`, label: c.navLabel })),
 ];
@@ -13,60 +11,25 @@ const LINKS = [
 /**
  * Site chrome, not a numbered catalog module — this is navigation for the
  * site itself, not a marketing-page section, so it doesn't belong in
- * src/registry/modules. Styled as a floating pill (rounded, bordered,
- * blurred), the look popularized by Aceternity-style navbars, rebuilt here
- * in plain Tailwind rather than pulling in their component.
+ * src/registry/modules. It does, however, *render* one: module 97's
+ * `KineticOverlayNav`, so the site is dogfooding the catalog rather than
+ * keeping a parallel implementation of the same thing.
  *
- * Fourteen links (Home + thirteen categories) is more than a fixed-width
- * pill can promise to fit even at xl+, so the inline row also scrolls
- * horizontally (hidden scrollbar) as a safety net — it won't visually
- * break even if a future category pushes it past the available width.
- * Below xl — tablet and mobile — the row collapses behind a hamburger
- * button that opens a stacked dropdown under the pill instead.
+ * This replaced a floating pill with sixteen links laid out inline. That row
+ * never really fit — it needed a hidden horizontal scroller as a safety net at
+ * xl+ and collapsed to a hamburger below it — and sixteen links is exactly the
+ * case module 97's `dense` layout exists for, so they now live in the overlay
+ * panel in two columns at every breakpoint instead of being squeezed into the
+ * bar. The pill itself is kept (white, bordered, blurred) rather than taking
+ * the module's bare-header treatment, because SiteNav sits over both the light
+ * /demo pages and the dark hero on /examples/design-manifesto, and the pill is
+ * what makes it legible on both.
+ *
+ * Rendered per-page (each page calls <SiteNav /> itself) rather than from the
+ * root layout, same as SiteFooter — see that file for why. Pass `overlay` on
+ * pages that open on a full-bleed hero (e.g. /examples/estate-agency) so the
+ * header floats over it instead of reserving a band above it.
  */
-export function SiteNav() {
-  const [open, setOpen] = useState(false);
-
-  return (
-    <div className="relative px-6 pt-6">
-      <nav className="mx-auto flex max-w-6xl items-center justify-between gap-6 rounded-full border border-zinc-200 bg-white/80 px-6 py-3 shadow-sm backdrop-blur-md">
-        <span className="shrink-0 text-sm font-semibold tracking-tight text-zinc-950">Claude Agency System</span>
-
-        <div className="hidden min-w-0 items-center gap-5 overflow-x-auto text-sm font-medium [scrollbar-width:none] xl:flex [&::-webkit-scrollbar]:hidden">
-          {LINKS.map((link) => (
-            <Link key={link.href} href={link.href} className="shrink-0 text-zinc-600 transition-colors hover:text-zinc-950">
-              {link.label}
-            </Link>
-          ))}
-        </div>
-
-        <button
-          type="button"
-          onClick={() => setOpen((v) => !v)}
-          aria-label={open ? "Close menu" : "Open menu"}
-          aria-expanded={open}
-          className="flex h-8 w-8 shrink-0 items-center justify-center text-zinc-600 transition-colors hover:text-zinc-950 xl:hidden"
-        >
-          {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
-      </nav>
-
-      {open && (
-        <div className="mx-auto mt-2 max-w-6xl px-6 xl:hidden">
-          <div className="flex max-h-[70vh] flex-col overflow-y-auto rounded-2xl border border-zinc-200 bg-white shadow-sm">
-            {LINKS.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setOpen(false)}
-                className="border-b border-zinc-100 px-5 py-3 text-sm font-medium text-zinc-600 transition-colors last:border-b-0 hover:bg-zinc-50 hover:text-zinc-950"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
-        </div>
-      )}
-    </div>
-  );
+export function SiteNav({ overlay = false }: { overlay?: boolean }) {
+  return <KineticOverlayNav wordmark="Claude Agency System" links={LINKS} overlay={overlay} />;
 }

@@ -1,4 +1,4 @@
-import type { ElementType } from "react";
+import type { ComponentType } from "react";
 
 import HeroCentered from "@/registry/modules/01-hero-centered";
 import HeroSplit from "@/registry/modules/02-hero-split";
@@ -101,7 +101,21 @@ import NavKineticOverlay from "@/registry/modules/97-nav-kinetic-overlay";
  * The full id → component lookup for every module in src/registry/modules.json.
  * Shared by every /demo category page so the import list only lives once.
  */
-export const MODULE_COMPONENTS: Record<number, ElementType> = {
+/*
+ * `ComponentType`, not `ElementType`, and the distinction is load-bearing.
+ *
+ * `ElementType` also covers every key of `JSX.IntrinsicElements`. React Three
+ * Fiber augments that interface globally the moment it is imported anywhere in
+ * the program — which /examples/pilates-ring now does — adding ~100 three.js
+ * element types to it. `<Component />` below passes no props, so it has to
+ * satisfy every member of the union at once, and the intersection across that
+ * many unrelated element types collapses to `never`. The error surfaces here,
+ * in a file that has nothing to do with 3D.
+ *
+ * Every value in this map is a real React component, so narrowing the
+ * annotation is both the fix and the more accurate type.
+ */
+export const MODULE_COMPONENTS: Record<number, ComponentType> = {
   1: HeroCentered,
   2: HeroSplit,
   3: LogoCloud,

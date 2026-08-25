@@ -17,8 +17,5 @@
     "lib": "@/lib",
     "hooks": "@/hooks"
   },
-  "iconLibrary": "lucide",
-  "registries": {
-    "notes": "This sandbox's network policy blocked ui.shadcn.com and 21st.dev, so this file is hand-written boilerplate rather than CLI-generated, and no registries are wired in yet. On a machine with normal network access, `npx shadcn@latest add <component>` and the 21st.dev MCP should both work against this config as-is — add registry entries under this key as you connect them (see shadcn's registry docs)."
-  }
+  "iconLibrary": "lucide"
 }

@@ -935,6 +935,21 @@
         "trailingOpacity": "opacity of the half without the links, default 0.5; the link side stays opaque because opacity applies to a whole subtree and would take the type down with it",
         "footer": "optional node pinned bottom-left — socials, a phone number",
         "--nav-* custom properties": "--nav-panel (both halves), --nav-text (links), --nav-surface (pill), --nav-muted (footer)" }
+    },
+    {
+      "id": 99,
+      "name": "Hero — Filmstrip Carousel",
+      "category": "hero",
+      "file": "src/registry/modules/99-hero-filmstrip-carousel.tsx",
+      "component": "HeroFilmstripCarousel",
+      "description": "A full-bleed hero whose backdrop is the focused item's photo, tinted with that item's accent colour via mix-blend-overlay and crossfading as focus moves, darkened (bg-black/60) with a masked backdrop-blur vignette (sharp centre, blurred edges) so the filmstrip and title stay the focal point. Below it a filmstrip of every item shares one top edge; the focused card unfurls to ~38vh tall and 2.4x the flex-width of the rest, which stay clipped to ~16vh at 1x width, so the strip reads as an equalizer rather than a plain row of thumbnails and the focused card lands close to a normal photo aspect instead of a tall sliver. Every card shares the same rounded-xl corners on all four sides, and the focused card always renders at the middle slot — the strip re-centres around it (via layout=\"position\" FLIP animation) rather than the focused card sitting wherever its index falls. Drag the strip, click a card, use the prev/next arrow buttons, or arrow keys — all move focus by one card; deliberately not wheel-driven, since this is a full h-screen section and capturing wheel input would trap users who couldn't then scroll past it. Drag is accumulator-based rather than continuous — this carousel only ever lands on a whole card, so a distance threshold that fires one discrete step is simpler than tracking and tweening a fractional position. Fully custom interaction, not part of the A–K effect catalog, same call as modules 71, 68, and 69.",
+      "editable": {
+        "items prop": "array of {title, credit, meta, accent, image}; title supports a literal \\n for a two-line stack",
+        "brand": "small uppercase label top-left, default \"STUDIO\"",
+        "primaryCta / secondaryCta": "optional {label, href, external?}; render as a persistent pill pair under the title",
+        "the 38vh / 16vh height and 2.4x / 1x flexGrow split": "focused vs. resting card size — see the motion.button animate prop in the file",
+        "the two arrow buttons": "prev/next; step() by ±1 — see the two <button> elements at the end of the filmstrip div"
+      }
     }
   ]
 }

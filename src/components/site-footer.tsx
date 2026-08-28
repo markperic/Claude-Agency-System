@@ -20,7 +20,7 @@ export function SiteFooter() {
       <div className="mx-auto flex max-w-6xl flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <Link href="/" className="text-sm font-semibold tracking-tight text-zinc-950">
-            Claude Agency System
+            Capote Design
           </Link>
           <p className="mt-1 max-w-xs text-sm text-zinc-500">A numbered, animated module library for composing marketing sites.</p>
         </div>
@@ -35,7 +35,7 @@ export function SiteFooter() {
       </div>
 
       <div className="mx-auto mt-8 flex max-w-6xl items-center justify-between border-t border-zinc-100 pt-6 text-sm text-zinc-400">
-        <span>© {new Date().getFullYear()} Claude Agency System.</span>
+        <span>© {new Date().getFullYear()} Capote Design.</span>
         <a href="#" className="inline-flex items-center gap-1.5 text-zinc-500 transition-colors hover:text-zinc-950">
           Back to top
           <ArrowUp className="h-3.5 w-3.5" />

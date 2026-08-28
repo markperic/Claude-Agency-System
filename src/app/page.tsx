@@ -30,7 +30,7 @@ export default function Home() {
       <div className="mx-auto max-w-5xl px-6 py-16">
         <div className="text-center">
           <p className="mb-3 text-sm font-medium tracking-wide text-zinc-500 uppercase">
-            Claude Agency System
+            Capote Design
           </p>
           <h1 className="text-3xl font-semibold tracking-tight text-zinc-950 sm:text-4xl">
             Module &amp; animation catalog

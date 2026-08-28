@@ -8,8 +8,8 @@ import "./globals.css";
 // your build environment has normal network access, whenever you're ready.
 
 export const metadata: Metadata = {
-  title: "Claude Agency System — Module Library",
-  description: "A numbered, animated component library and starter kit for composing marketing sites with Claude Code.",
+  title: "Capote Design — Module Library",
+  description: "A numbered, animated component library and starter kit for composing marketing sites.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

@@ -36,7 +36,7 @@ export default function ContentSplit() {
           </ScrollReveal>
 
           <ScrollReveal effect="A" as="p" className="mt-6 text-lg text-zinc-600">
-            When Claude composes from a fixed, vetted library instead of
+            When a page composes from a fixed, vetted library instead of
             inventing a layout from a screenshot, every project starts from
             the same quality bar — and stays consistent as the site grows.
           </ScrollReveal>

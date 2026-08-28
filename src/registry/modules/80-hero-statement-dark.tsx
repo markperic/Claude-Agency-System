@@ -50,7 +50,7 @@ export default function HeroStatementDark() {
       <section className="bg-zinc-950 px-6 pt-28 pb-6 sm:pt-36">
         <div className="mx-auto max-w-4xl text-center">
           <Reveal effect="A" as="p" className="mb-6 text-sm font-medium tracking-wide text-zinc-500 uppercase">
-            A Claude Agency System Manifesto
+            A Capote Design Manifesto
           </Reveal>
 
           <SplitReveal as="h1" className="text-balance text-5xl font-semibold tracking-tight text-white sm:text-7xl">

@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
  * Free vs. Pro, deliberately asymmetric — the free card is visually
  * smaller/quieter, Pro is the obvious upgrade. Effect: F (stagger) + I.
  */
-const FREE = ["3 modules per project", "Community support", "Claude Agency System watermark"];
+const FREE = ["3 modules per project", "Community support", "Capote Design watermark"];
 const PRO = ["Full 60+ module library", "Every animation effect", "Priority support", "No watermark"];
 
 export default function PricingFreemium() {

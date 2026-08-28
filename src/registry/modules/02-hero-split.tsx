@@ -25,7 +25,7 @@ export default function HeroSplit() {
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
             className="mt-6 text-lg text-zinc-600"
           >
-            Point Claude at a module number and it builds from a component
+            Pick a module number and it builds from a component
             that&apos;s already well-designed, responsive, and on-brand — not
             a fresh guess every time.
           </Reveal>

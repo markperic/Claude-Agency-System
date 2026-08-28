@@ -14,7 +14,7 @@ import { cn } from "@/lib/utils";
  */
 const TABS = [
   { key: "design", label: "Design", body: "Pull the layout from a curated source, adapt colors and copy to the client." },
-  { key: "build", label: "Build", body: "Point Claude at module numbers and effect letters — the page assembles itself." },
+  { key: "build", label: "Build", body: "Pick module numbers and effect letters — the page assembles itself." },
   { key: "ship", label: "Ship", body: "Deploy straight from the repo. No separate CMS migration step required." },
 ];
 

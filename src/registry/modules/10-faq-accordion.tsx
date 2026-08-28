@@ -12,7 +12,7 @@ import { ChevronDown } from "lucide-react";
  * a state change, not an entrance).
  */
 const FAQS = [
-  { q: "Can I add my own modules?", a: "Yes — drop a new numbered file in src/registry/modules and add an entry to modules.json. Claude Code picks it up automatically." },
+  { q: "Can I add my own modules?", a: "Yes — drop a new numbered file in src/registry/modules and add an entry to modules.json. It's picked up automatically." },
   { q: "Does this replace a CMS?", a: "No. This solves page assembly and consistency. Pair it with a headless CMS if clients need to self-edit content." },
   { q: "Can I change an effect after the fact?", a: "Yes — effects are just a prop. \"Change module 5's title to effect C\" is a one-line edit." },
 ];

@@ -81,7 +81,7 @@ export default function CtaRotatingWordCloser() {
         </p>
 
         <p className="mt-16 text-sm text-zinc-500">
-          Designed &amp; built with Claude Code — a numbered module library.
+          Designed &amp; built as a numbered module library.
         </p>
       </div>
     </section>

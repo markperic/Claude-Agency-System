@@ -6,7 +6,7 @@ import { ScrollReveal, StaggerGroup } from "@/registry/lib/motion-variants";
  * (Stagger) of Effect A per step.
  */
 const STEPS = [
-  { n: "01", title: "Describe the page", body: "Tell Claude which modules and effects to use, in plain English." },
+  { n: "01", title: "Describe the page", body: "Choose which modules and effects to use, in plain English." },
   { n: "02", title: "It assembles the sections", body: "Each instruction resolves to a real, numbered component." },
   { n: "03", title: "Adjust and ship", body: "Swap an effect, tweak copy, and the page is ready to deploy." },
 ];

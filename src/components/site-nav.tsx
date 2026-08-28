@@ -31,5 +31,5 @@ const LINKS: KineticNavLink[] = [
  * header floats over it instead of reserving a band above it.
  */
 export function SiteNav({ overlay = false }: { overlay?: boolean }) {
-  return <KineticOverlayNav wordmark="Claude Agency System" links={LINKS} overlay={overlay} />;
+  return <KineticOverlayNav wordmark="Capote Design" links={LINKS} overlay={overlay} />;
 }

@@ -84,6 +84,14 @@ those sources. On a normal machine those registries should be reachable
 fine — this is a sandbox-specific limitation, not a limitation of the
 approach itself.
 
+## Adding a full example page
+
+Full pages are listed at `/demo/pages` from `src/registry/pages.json` (slug, title, href, description and an animated `thumb`). To add one:
+
+1. Build the route under `src/app/(main)/examples/<slug>/`. If the page needs its own Tailwind scale or a different root `<html>` (as `/examples/property` does: GSAP + Lenis, a 0.1rem spacing scale), give it its own root layout in a separate route group such as `src/app/(property)/`, import its own stylesheet there, and keep its source in `src/showcase/<name>/`. Add `@source not "../../showcase/<name>";` to `src/app/(main)/globals.css` so the two stylesheets stay apart. Multiple root layouts mean there is no top-level `layout.tsx`.
+2. Put images/video in `public/` (optimise them: WebP stills, H.264 video without audio).
+3. Add the entry to `pages.json` and a looping thumbnail at `public/thumbs/<slug>.webp`: capture about seven 1280x800 frames while scrolling the page, resize to 608x380, and crossfade them into an animated WebP. The listing renders it with `unoptimized` so Next doesn't flatten the animation.
+
 ## Adding a new animation effect
 
 Edit `src/registry/lib/motion-variants.tsx`: add the effect's description to

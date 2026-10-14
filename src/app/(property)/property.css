@@ -1,0 +1,132 @@
+/*
+ * Stylesheet for the "Property" showcase example only (see layout.tsx).
+ * Tailwind is told to scan just this example's own files, so none of its
+ * 0.1rem-based spacing scale is generated for, or leaks into, the main site.
+ */
+@import "tailwindcss" source(none);
+@source "../../showcase/property";
+@source "./";
+@import "lenis/dist/lenis.css";
+
+/*
+ * Design tokens — the single source for colours, type, spacing and radii.
+ * Values are measured from the reference (reference/styles.json,
+ * reference/out/styles-full.json, reference/out/tree-*.txt).
+ *
+ * Root sizing: 1rem = 10px at the 1440 and 390 design widths and scales with
+ * the viewport in between, exactly like the reference. One Tailwind spacing
+ * unit is 0.1rem, so `p-30` reads as "30px at design width".
+ */
+@theme {
+  --spacing: 0.1rem;
+
+  /* Breakpoints: mobile layout up to 900px, desktop from 901px, wide from 1920px */
+  --breakpoint-*: initial;
+  --breakpoint-desk: 901px;
+  --breakpoint-wide: 1920px;
+
+  /* Colours */
+  --color-ink: rgb(11 8 13);
+  --color-ink-alt: rgb(23 23 23);
+  --color-coal: rgb(33 33 33);
+  --color-muted: rgb(115 115 115);
+  --color-line: rgb(218 218 218);
+  --color-mist: rgb(240 240 240);
+  --color-paper: rgb(255 255 255);
+  --color-brand: #2b5797; /* brand blue */
+  --color-cream: #f6e8de; /* brand cream */
+  --color-line-light: rgb(255 255 255 / 0.25);
+  --color-line-hero: rgb(255 255 255 / 0.15);
+  --color-line-strong: rgb(255 255 255 / 0.3);
+  --color-scrim: rgb(0 0 0 / 0.2);
+
+  /* Type. Sizes marked "responsive" are redefined for desktop below. */
+  --font-sans: var(--font-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --text-*: initial;
+  --text-tiny: 1.3rem;
+  --text-tiny--line-height: 1.5;
+  --text-small: 1.4rem;
+  --text-small--line-height: 1.5;
+  --text-body: 1.6rem;
+  --text-body--line-height: 1.1;
+  --text-nav: 1.8rem;
+  --text-nav--line-height: 1;
+  --text-name: 2rem;
+  --text-name--line-height: 1.2;
+  --text-question: 2rem; /* responsive */
+  --text-question--line-height: 1.2;
+  --text-lead: 2rem; /* responsive */
+  --text-lead--line-height: 1.1;
+  --text-h3: 2.4rem; /* responsive */
+  --text-h3--line-height: 1.1;
+  --text-menu: 3.2rem; /* responsive */
+  --text-menu--line-height: 1.5;
+  --text-title: 3.2rem; /* responsive */
+  --text-title--line-height: 1.1;
+  --text-num: 4rem; /* responsive */
+  --text-num--line-height: 1;
+  --text-h2: 4.8rem; /* responsive */
+  --text-h2--line-height: 1.1;
+  --leading-base: 1.1;
+
+  /* Layout */
+  --spacing-gutter: 2rem; /* responsive: page side margin */
+  --spacing-gutter-narrow: 2rem; /* responsive: side margin of the 1032-wide column */
+  --spacing-grid-gap: 1rem;
+  --spacing-header: 8rem;
+
+  /* Radii */
+  --radius-*: initial;
+  --radius-sm: 0.2rem;
+  --radius-card: 0.5rem;
+  --radius-pill: 10rem;
+}
+
+@media (min-width: 901px) {
+  :root {
+    --text-question: 2.4rem;
+    --text-lead: 2.4rem;
+    --text-h3: 3.2rem;
+    --text-menu: 2.4rem;
+    --text-title: 3.6rem;
+    --text-num: 6.4rem;
+    --text-h2: 6.4rem;
+    --spacing-gutter: 3rem;
+    --spacing-gutter-narrow: 20.4rem;
+  }
+}
+
+html {
+  font-size: calc(100vw / 39);
+}
+@media (min-width: 901px) {
+  html {
+    font-size: calc(100vw / 144);
+  }
+}
+@media (min-width: 1920px) {
+  html {
+    font-size: calc(100vw / 198);
+  }
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: var(--leading-base);
+}
+
+/*
+ * Placeholder media tones — flat gradients standing in for photos and video
+ * until real assets are set in src/content/content.ts.
+ */
+.ph-dusk { background: linear-gradient(180deg, #5b6470 0%, #3a3f48 45%, #1f2126 100%); }
+.ph-ember { background: linear-gradient(135deg, #b9703f 0%, #7a3f22 55%, #3d2416 100%); }
+.ph-stone { background: linear-gradient(160deg, #e7e5e1 0%, #c9c6c0 55%, #a9a59d 100%); }
+.ph-steel { background: linear-gradient(150deg, #cfd6dc 0%, #9aa6b1 55%, #6a7783 100%); }
+.ph-sage { background: linear-gradient(150deg, #b3c6e0 0%, #7a98c2 55%, #46628f 100%); }
+.ph-sand { background: linear-gradient(150deg, #ead9bd 0%, #cdb48d 55%, #a48a62 100%); }
+.ph-amber { background: linear-gradient(150deg, #f3b25a 0%, #dd8a2c 60%, #b3661a 100%); }
+.ph-brand { background: linear-gradient(160deg, #3a68a8 0%, #2b5797 50%, #21457a 100%); }

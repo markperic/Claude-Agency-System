@@ -27,8 +27,8 @@ src/registry/
   modules.json         the catalog Claude Code reads to resolve "module N"
   categories.ts         the category list shared by the nav and homepage
   lib/motion-variants.tsx   the A–J animation effect system, shared by every module
-src/app/page.tsx       homepage — the catalog index
-src/app/example        worked example composing modules into a page
+src/app/(main)/page.tsx homepage — the catalog index
+src/app/(main)/example worked example composing modules into a page
 MODULE-LIBRARY.md      how the system works, how to extend it
 CLAUDE.md              project instructions Claude Code loads automatically
 ```
@@ -40,9 +40,9 @@ React animation library formerly known as Framer Motion) · TypeScript.
 
 This repo is meant to be the reusable base, not a one-off site. The usual
 pattern: start a new project from this one (clone, or use it as a template),
-replace `src/app/page.tsx` with the client's actual homepage, then build the
+replace `src/app/(main)/page.tsx` with the client's actual homepage, then build the
 rest of their pages by telling Claude Code which modules to use, in what
-order, with which effects — see the worked example at `src/app/example`.
+order, with which effects — see the worked example at `src/app/(main)/example`.
 Grow the catalog over time as you build; new modules benefit every future
 project.
 

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import pagesData from "@/registry/pages.json";
@@ -9,7 +10,9 @@ import { SiteFooter } from "@/components/site-footer";
  * category and rendered in isolation via ModuleRow (see ../category-page.tsx).
  * A "page" here is a full composition of many modules plus SiteNav/SiteFooter,
  * not a single component that makes sense shown standalone, so this route
- * reads from src/registry/pages.json instead and links out to each page's
+ * reads from src/registry/pages.json instead (each entry has an animated
+ * `thumb` in public/thumbs/ — a looping slideshow of the page as it scrolls)
+ * and links out to each page's
  * real route under /examples/ rather than rendering it inline.
  */
 export default function PagesCategoryPage() {
@@ -43,6 +46,17 @@ export default function PagesCategoryPage() {
               href={page.href}
               className="group rounded-2xl border border-zinc-200 p-6 transition-colors hover:border-zinc-300 hover:bg-zinc-50"
             >
+              <div className="relative mb-5 aspect-[16/10] overflow-hidden rounded-xl bg-zinc-100">
+                <Image
+                  src={page.thumb}
+                  alt={`Animated preview of the ${page.title} page, scrolling through its sections`}
+                  fill
+                  sizes="(min-width: 640px) 480px, 100vw"
+                  // Animated WebP: unoptimized so Next doesn't flatten the animation.
+                  unoptimized
+                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                />
+              </div>
               <h2 className="flex items-center gap-1.5 text-lg font-semibold text-zinc-950">
                 {page.title}
                 <ArrowRight className="h-4 w-4 -translate-x-1 opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100" />

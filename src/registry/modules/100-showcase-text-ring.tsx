@@ -69,10 +69,10 @@ export type TextRingItem = {
 };
 
 const DEFAULT_ITEMS: TextRingItem[] = [
-  { word: "BRAND", line: "BUILD IDENTITY THROUGH" },
-  { word: "CREATIVE", line: "CREATE ATTENTION THROUGH" },
-  { word: "PRINT PRODUCTION", line: "SHAPE EXPERIENCE THROUGH", short: "PRINT" },
-  { word: "MARKETING", line: "LEAVE A MEMORY THROUGH" },
+  { word: "STRATEGY", line: "SET DIRECTION THROUGH" },
+  { word: "DESIGN", line: "GIVE IT SHAPE THROUGH" },
+  { word: "DIGITAL PRODUCTION", line: "MAKE IT REAL THROUGH", short: "DIGITAL" },
+  { word: "GROWTH", line: "EARN ATTENTION THROUGH" },
 ];
 
 const DEFAULT_FONT_FAMILY = 'ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif';

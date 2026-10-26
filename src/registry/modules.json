@@ -951,6 +951,23 @@
         "DESKTOP_VISIBLE / MOBILE_VISIBLE": "cards shown at once (5 / 3), and the 34vh / 16vh height and 1.6x / 1x flexGrow split for focused vs. resting card size — see the top of the file and the motion.button animate prop",
         "the two arrow buttons": "prev/next; step() by ±1 — see the two <button> elements at the end of the filmstrip div"
       }
+    },
+    {
+      "id": 100,
+      "name": "Showcase — Scroll Text Ring",
+      "category": "showcase",
+      "file": "src/registry/modules/100-showcase-text-ring.tsx",
+      "component": "ShowcaseTextRing",
+      "description": "A pinned, full-screen scroll set piece (500vh). A two-line title (\"What / we do\") rises from an invisible horizon; a single string of service words then runs in from off-screen left along a straight line, goes once around the title as a ring — the font size is solved so the words and their dots fill exactly 360° — and carries straight on out to the right. The title then slides together onto one line and the services resolve beneath it as a staggered, alternately left/right-aligned list. Each letter is its own element placed by its distance along the path (not SVG textPath, so the whole train can slide along it), measured with canvas measureText against the same font stack it renders in and re-measured once webfonts load. Scroll progress is re-published through a plain motion value, not read straight from useScroll, so the multi-stop ranges stay on one clock instead of being offloaded to a native scroll timeline. Reduced motion gets the end state (title + list) as a static block. Lifted from a client's \"What we do\" section with the copy and brand colours made props. Fully custom scroll choreography, not part of the A–K effect catalog, same call as modules 80 and 99.",
+      "editable": {
+        "items prop": "array of {word, line, short?} — word travels round the ring and is highlighted in the list, line is the list text before it, short is an optional shorter word for the list (not the ring). The ring re-solves its font size for any number of items; 3–5 reads best",
+        "titleTop / titleBottom": "the two title lines, default \"What\" / \"we do\"",
+        "accent / ink / background": "title + highlighted word colour, ring letters + list text colour, section background (any CSS colour)",
+        "fontFamily": "CSS font-family stack for everything in the section; also used to measure the ring, so pass the real stack the page renders — a CSS var() won't work, canvas can't read it",
+        "id / navTheme": "optional element id for in-page nav anchors, and a data-nav-theme value for fixed headers that recolour over light sections",
+        "PIN_VH": "scroll length of the pin, 500vh — raising it slows every phase down proportionally",
+        "phase ranges": "the p breakpoints in the file (title rise 0–0.21, ring pass 0.1–0.6, collapse 0.62–0.74, list 0.68+) overlap deliberately; retune them together"
+      }
     }
   ]
 }

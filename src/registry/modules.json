@@ -984,6 +984,24 @@
         "HOLD_VH / SLIDE_VH": "how long each slide holds (55) and how long each slide-over takes (70), in vh of scroll",
         "arrow buttons": "the two <button>s and the counter <p> at the bottom-left of the sticky stage; goTo() scrolls to the middle of a slide's hold"
       }
+    },
+    {
+      "id": 102,
+      "name": "Showcase — Scroll Word Reel",
+      "category": "showcase",
+      "file": "src/registry/modules/102-showcase-scroll-word-reel.tsx",
+      "component": "ShowcaseScrollWordReel",
+      "description": "A pinned, full-screen closing statement (220vh) over a live WebGL grain-gradient blob: a brand name with a vertically scrolling word beside it (\"STUDIO IDEAS\"). The reel is driven by scroll position, not a timer — it steps through the whole word list once as you scroll through the pin and rests on the last word. The lockup fills its container: brand and word share one font size, solved so the widest word in the list just fits (a long word reserves the space a short one leaves empty, and a thin line fills the gap after short words so the row never changes width), and it stacks brand-over-word when side by side would shrink the type below ~46px — content-driven, not a fixed breakpoint. Widths are measured once at a reference size and re-measured when webfonts load. The backdrop is @paper-design/shaders-react's GrainGradient, loaded client-side only with a CSS gradient standing in until it arrives or if WebGL is unavailable; its slow rotate/pulse is recomputed ~12×/s instead of 60, it pauses off-screen, and maxPixelCount caps GPU work on high-DPI screens. It lives inside the sticky box so it pins with the content. Lifted from a client's closing section, with the SVG wordmark replaced by a text brand and copy/colours made props. Fully custom scroll choreography, not part of the A–K effect catalog, same call as modules 80, 99, 100 and 101. Adds the @paper-design/shaders-react dependency.",
+      "editable": {
+        "brand": "the brand text, set at the same size and weight (800) as the reel — default \"STUDIO\"",
+        "words prop": "array of strings the reel steps through once as you scroll, resting on the last. It re-measures and re-solves the font size for whatever you pass; 6–12 words reads well",
+        "colors / colorBack": "the shader's gradient palette (dark to light, 5–8 stops) and base colour; the static fallback gradient is derived from them",
+        "textColor / lineColor": "brand + word colour, and the thin fill line after short words",
+        "fontFamily": "CSS font-family stack for the lockup; also used to measure it, so pass the real stack the page renders (a CSS var() won't work for measuring)",
+        "id / navTheme": "optional element id for in-page nav anchors, and a data-nav-theme value for fixed headers",
+        "PIN_VH": "scroll length of the pin, 220vh — must stay well above 100 or the pin never engages; raise it to slow the word changes down",
+        "MAX_F / STACK_BELOW_F": "font-size ceiling (224px) and the size below which the lockup stacks (46px)"
+      }
     }
   ]
 }

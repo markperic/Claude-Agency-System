@@ -100,6 +100,7 @@ import NavSplitCurtain from "@/registry/modules/98-nav-split-curtain";
 import HeroFilmstripCarousel from "@/registry/modules/99-hero-filmstrip-carousel";
 import ShowcaseTextRing from "@/registry/modules/100-showcase-text-ring";
 import ShowcasePinnedSlides from "@/registry/modules/101-showcase-pinned-slides";
+import ShowcaseScrollWordReel from "@/registry/modules/102-showcase-scroll-word-reel";
 
 /**
  * The full id → component lookup for every module in src/registry/modules.json.
@@ -220,6 +221,7 @@ export const MODULE_COMPONENTS: Record<number, ComponentType> = {
   99: HeroFilmstripCarousel,
   100: ShowcaseTextRing,
   101: ShowcasePinnedSlides,
+  102: ShowcaseScrollWordReel,
 };
 
 /** The label bar + module pairing used on every /demo category page. */

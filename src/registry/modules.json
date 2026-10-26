@@ -968,6 +968,22 @@
         "PIN_VH": "scroll length of the pin, 500vh — raising it slows every phase down proportionally",
         "phase ranges": "the p breakpoints in the file (title rise 0–0.21, ring pass 0.1–0.6, collapse 0.62–0.74, list 0.68+) overlap deliberately; retune them together"
       }
+    },
+    {
+      "id": 101,
+      "name": "Showcase — Pinned Service Slides",
+      "category": "showcase",
+      "file": "src/registry/modules/101-showcase-pinned-slides.tsx",
+      "component": "ShowcasePinnedSlides",
+      "description": "Full-screen service slides on one pinned stage. Each slide is a 50/50 split — a big stacked title, one-line tagline and dot points on the left, an image on the right (stacked on mobile, with the bullets beside the title). The slides sit side by side on a single horizontal track; scroll holds on a slide, then slides the whole track sideways to the next (hold, slide, hold, slide…), so the pin's length is derived from the slide count (55vh hold + 70vh slide-over each). Titles are stacks of chunks (e.g. [\"Prod\", \"uction\"]) that rise out of a clipped box as their slide arrives, staggered line by line, sized from the column with container-query units so the widest chunk exactly fills it and also capped by a height budget so a three-line title can't push the bullets off screen. Prev/next arrow buttons scroll the page to the middle of the target slide's hold, with a 01 / 04 counter. A slide's image can be fit: \"contain\" with a matching bg to show a whole image on a flat colour without cropping. Scroll progress is re-published through a plain motion value, not read straight from useScroll, so the multi-stop ranges stay on one clock. Reduced motion gets the slides as ordinary stacked full-screen sections. Lifted from a client's \"What we do\" slides with the copy, photography and brand colours made props. Fully custom scroll choreography, not part of the A–K effect catalog, same call as modules 80, 99 and 100.",
+      "editable": {
+        "slides prop": "array of {name, title: string[], tagline, points: string[], image: {src, alt, fit?, bg?}} — title chunks stack one per line; the scroll timing, arrows and counter all re-time to however many slides you pass (3–5 reads best). Default is four sample services over the placeholder photo library",
+        "accent / ink / background": "title + arrow-hover colour, tagline/bullet/button text colour, slide + button background (any CSS colour)",
+        "fontFamily": "CSS font-family stack for the whole section. Title sizing uses the CAP_EM width table, which assumes heavy geometric-sans capitals — a much narrower or wider face may need that table adjusted",
+        "id / navTheme": "optional element id for in-page nav anchors, and a data-nav-theme value for fixed headers that recolour over light sections",
+        "HOLD_VH / SLIDE_VH": "how long each slide holds (55) and how long each slide-over takes (70), in vh of scroll",
+        "arrow buttons": "the two <button>s and the counter <p> at the bottom-left of the sticky stage; goTo() scrolls to the middle of a slide's hold"
+      }
     }
   ]
 }

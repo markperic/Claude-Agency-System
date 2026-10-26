@@ -99,6 +99,7 @@ import NavKineticOverlay from "@/registry/modules/97-nav-kinetic-overlay";
 import NavSplitCurtain from "@/registry/modules/98-nav-split-curtain";
 import HeroFilmstripCarousel from "@/registry/modules/99-hero-filmstrip-carousel";
 import ShowcaseTextRing from "@/registry/modules/100-showcase-text-ring";
+import ShowcasePinnedSlides from "@/registry/modules/101-showcase-pinned-slides";
 
 /**
  * The full id → component lookup for every module in src/registry/modules.json.
@@ -218,6 +219,7 @@ export const MODULE_COMPONENTS: Record<number, ComponentType> = {
   98: NavSplitCurtain,
   99: HeroFilmstripCarousel,
   100: ShowcaseTextRing,
+  101: ShowcasePinnedSlides,
 };
 
 /** The label bar + module pairing used on every /demo category page. */

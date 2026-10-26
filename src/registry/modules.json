@@ -1002,6 +1002,40 @@
         "PIN_VH": "scroll length of the pin, 220vh — must stay well above 100 or the pin never engages; raise it to slow the word changes down",
         "MAX_F / STACK_BELOW_F": "font-size ceiling (224px) and the size below which the lockup stacks (46px)"
       }
+    },
+    {
+      "id": 103,
+      "name": "Content — Hover Accordion with Picture",
+      "category": "content",
+      "file": "src/registry/modules/103-content-hover-accordion.tsx",
+      "component": "ContentHoverAccordion",
+      "description": "A services section modelled on wulfe.company/disciplines. A big RiseTitle across the top (it rises from an invisible horizon as it scrolls into view); below it, on the left, a statement and a 4:5 picture, and on the right a stack of ruled rows (title + a + that turns into a −) that open on hover. One row is open at a time; the panel's height animates open and closed in ~0.3s with an ease-out while the icon swaps; the open row stays open when the pointer leaves so the accordion never empties itself. The picture follows the last-open row and crossfades between rows — every picture stays mounted (stacked, opacity only) so switching never waits on a download; fit:\"contain\" + a matching bg shows a whole image on a flat panel, and .gif/.webp are unoptimized so animations survive. The stack is bottom-aligned with the picture, so an opening row grows upward from a fixed bottom edge — which is what makes hover-to-open safe: the pointer stays inside the row it just opened, so layout shifting under a still pointer can't hand the hover to a neighbour and cause flicker. Keyboard and touch can't hover, so for them a press toggles the row (a mouse press is ignored — hover already opened it). Panel is a role=region labelled by its button, with aria-expanded/aria-controls. Lifted from a client's \"What we do\" services section with copy, photos and brand colours made props. Fully custom interaction, not part of the A–K effect catalog.",
+      "editable": {
+        "services prop": "array of {name, tagline, points: string[], image: {src, alt, fit?, bg?}} — one row each; the picture, panel and counter all adapt to however many you pass (3–5 reads best). Default is four sample services over the placeholder photo library",
+        "title": "array of words for the big title, one entry per word group that rises separately; default [\"Our\", \"services\"]",
+        "titleFit": "the title's widest line in ems at extra-bold / -0.06em tracking (font size = container width / titleFit), default 7 — retune for a longer or shorter title",
+        "statement": "the line of copy above the picture",
+        "accent / ink / background": "title + row-title colour; statement, panel text and rule colour; section background (any CSS colour)",
+        "fontFamily": "CSS font-family stack for the whole section",
+        "id / navTheme": "optional element id for in-page nav anchors, and a data-nav-theme value for fixed headers"
+      }
+    },
+    {
+      "id": 104,
+      "name": "Showcase — Rise Title",
+      "category": "showcase",
+      "file": "src/registry/modules/104-showcase-rise-title.tsx",
+      "component": "ShowcaseRiseTitle",
+      "description": "A big section title that rises out of an invisible horizon as it scrolls into view, with an optional line of copy under it. The bottom edge of the overflow-hidden heading box is the horizon: each word starts just below it and rises into place — first word leading, the next a beat behind — driven by scroll position (progress 0→1 as the heading's top edge travels from 85% to 45% of the way down the viewport), so it plays forwards and backwards with the page and has landed before the heading reaches its resting spot. The title is one row of extra-bold caps at -0.06em tracking, sized from its container (container-query units: font size = 100cqw / fit, capped at 10.3rem) so it fills the width at any viewport. Scroll progress is re-published through a plain motion value rather than read straight from useScroll, so the multi-stop ranges stay on one clock instead of being offloaded to a native scroll timeline. Reduced motion gets the plain heading. The animation is the RiseTitle primitive in src/registry/lib/rise-title.tsx, shared with module 103; this module is the standalone section — the title plus room to scroll it in. Lifted from a client's \"What we do\" section, whose title did this, with copy and brand colours made props. Fully custom scroll choreography, not part of the A–K effect catalog, same call as modules 80, 99–102.",
+      "editable": {
+        "words": "array of word groups that rise separately, default [\"Our\", \"work\"]",
+        "fit": "the title's widest line in ems at this weight and tracking (font size = container width / fit), default 6 for \"OUR WORK\"; \"OUR PARTNERS\" needs ~7. Too small a value overflows sideways (the title is nowrap)",
+        "subhead": "optional line of copy under the title; empty string removes it",
+        "accent / ink / background": "title colour, subhead colour, section background (any CSS colour)",
+        "fontFamily": "CSS font-family stack",
+        "id / navTheme": "optional element id for in-page nav anchors, and a data-nav-theme value for fixed headers",
+        "RiseTitle (lib)": "weight/tracking/caps are baked into src/registry/lib/rise-title.tsx, along with the 85%→45% scroll window and the per-word stagger (first word 0–0.75, each next 0.15 later) — change those there, then retune fit"
+      }
     }
   ]
 }

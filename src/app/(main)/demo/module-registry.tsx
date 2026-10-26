@@ -101,6 +101,8 @@ import HeroFilmstripCarousel from "@/registry/modules/99-hero-filmstrip-carousel
 import ShowcaseTextRing from "@/registry/modules/100-showcase-text-ring";
 import ShowcasePinnedSlides from "@/registry/modules/101-showcase-pinned-slides";
 import ShowcaseScrollWordReel from "@/registry/modules/102-showcase-scroll-word-reel";
+import ContentHoverAccordion from "@/registry/modules/103-content-hover-accordion";
+import ShowcaseRiseTitle from "@/registry/modules/104-showcase-rise-title";
 
 /**
  * The full id → component lookup for every module in src/registry/modules.json.
@@ -222,6 +224,8 @@ export const MODULE_COMPONENTS: Record<number, ComponentType> = {
   100: ShowcaseTextRing,
   101: ShowcasePinnedSlides,
   102: ShowcaseScrollWordReel,
+  103: ContentHoverAccordion,
+  104: ShowcaseRiseTitle,
 };
 
 /** The label bar + module pairing used on every /demo category page. */

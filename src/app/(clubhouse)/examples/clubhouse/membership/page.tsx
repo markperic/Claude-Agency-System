@@ -1,25 +1,33 @@
-import { PageTitle } from "@/showcase/clubhouse/components/PageTitle";
+import { ClubHero } from "@/showcase/clubhouse/components/ClubHero";
 import { Footer } from "@/showcase/clubhouse/components/Footer";
-import { TextSection } from "@/showcase/clubhouse/components/sections/TextSection";
+import { StepsSection } from "@/showcase/clubhouse/components/sections/StepsSection";
 import { Statement } from "@/showcase/clubhouse/components/showcase/Statement";
-import { membershipPage, textSectionMembership } from "@/showcase/clubhouse/content";
+import { membershipBenefits, membershipHero, membershipHowToJoin, membershipStatement } from "@/showcase/clubhouse/content";
 
 export default function MembershipPage() {
   return (
     <>
       <main>
-        <PageTitle eyebrow="Membership" title={membershipPage.heading}>
-          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-cream/85">{membershipPage.intro}</p>
-        </PageTitle>
-        <TextSection
-          eyebrow={textSectionMembership.eyebrow}
-          heading={textSectionMembership.heading}
-          paragraphs={textSectionMembership.paragraphs}
-          image={textSectionMembership.image}
-          imagePosition={textSectionMembership.imagePosition}
-          cta={textSectionMembership.cta}
+        <ClubHero slides={membershipHero} />
+        <StepsSection
+          eyebrow={membershipHowToJoin.eyebrow}
+          heading={membershipHowToJoin.heading}
+          intro={membershipHowToJoin.intro}
+          paragraphs={membershipHowToJoin.paragraphs}
+          items={membershipHowToJoin.items}
+          image={membershipHowToJoin.image}
+          imagePosition={membershipHowToJoin.imagePosition}
         />
-        <Statement {...membershipPage.statement} />
+        <Statement {...membershipStatement} />
+        <StepsSection
+          heading={membershipBenefits.heading}
+          intro={membershipBenefits.intro}
+          paragraphs={membershipBenefits.paragraphs}
+          items={membershipBenefits.items}
+          image={membershipBenefits.image}
+          imagePosition={membershipBenefits.imagePosition}
+          tone={membershipBenefits.tone}
+        />
       </main>
       <Footer />
     </>

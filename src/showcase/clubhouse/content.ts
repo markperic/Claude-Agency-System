@@ -1,13 +1,16 @@
 // All copy and image references live here — components take these as props.
 //
 // This is a template: "The Clubhouse" in the fictional suburb of Brindabank is
-// a made-up community sports and social club. The design, the page's section
-// sequence and every photo were ported from a real club-website client
-// project's actual current home page; the name, location, club names, prices
-// and figures below are invented so no real club, address or phone number is
-// implied. Nav links, the booking CTA and the "See everything on" events link
-// point to "#" or the page's own booking section — this is a single static
-// page with no sub-routes or booking backend to link to.
+// a made-up community sports and social club. The design, every page's hero
+// and section sequence, and every photo were ported from a real club-website
+// client project's actual current site (queried live from its CMS, not its
+// seed script, which is stale) — the name, location, club names, prices,
+// phone numbers and figures below are invented so no real club, address or
+// phone number is implied. A handful of CMS/backend-only pieces (the live
+// booking widget, real third-party sign-up forms, a live map embed, multi-
+// page sub-routes this demo doesn't build) get the minimum fictional
+// stand-in a static, single-page-per-route demo needs — usually an anchor
+// link to the nearest real content, never a bare dead "#".
 
 import type { Chapter } from "@/showcase/clubhouse/components/showcase/Chapters";
 import type { ArcItem } from "@/showcase/clubhouse/components/showcase/ClubArc";
@@ -22,7 +25,8 @@ const P = (name: string, width: number, height: number, alt: string) => ({
   alt,
 });
 
-const BOOK = "#restaurant-bookings";
+const ROOT = "/examples/clubhouse";
+const BOOK = `${ROOT}#restaurant-bookings`;
 
 export const site = {
   name: "The Clubhouse — Dining, Bars & Community in Brindabank",
@@ -31,8 +35,6 @@ export const site = {
 };
 
 /* ------------------------------------------------------------- header */
-
-const ROOT = "/examples/clubhouse";
 
 export const nav: NavItem[] = [
   { key: "home", href: ROOT, label: "Home" },
@@ -85,21 +87,21 @@ export const heroSlides: HeroSlide[] = [
     text: "Located between Fernlea and Corran Downs, we are open for lunch and dinner, 7 days a week.",
     image: P("hero-welcome", 1600, 797, "The Clubhouse dining room"),
     cta: { label: "Book a table", href: BOOK },
-    cta2: { label: "View menu", href: "#menu" },
+    cta2: { label: "View menu", href: `${ROOT}#menu` },
   },
   {
     key: "bar",
     eyebrow: "Drinks at the",
     heading: "Clubhouse Bar",
     image: P("chapter-bar", 1600, 797, "The Clubhouse Bar"),
-    cta: { label: "See what's on", href: "/examples/clubhouse/events" },
+    cta: { label: "See what's on", href: `${ROOT}/events` },
   },
   {
     key: "functions",
     eyebrow: "Book now at",
     heading: "The Clubhouse",
     image: P("chapter-functions", 1600, 797, "The Clubhouse function room"),
-    cta: { label: "Find out more", href: "/examples/clubhouse/dining-and-bars#functions" },
+    cta: { label: "Find out more", href: `${ROOT}/dining-and-bars#functions` },
   },
 ];
 
@@ -117,6 +119,7 @@ export const splitTitle = {
 };
 
 /* ---------------------------------------------------------- chapters */
+// The venue cards, reused as-is on the home page and the Dining and Bars page.
 
 export const chapters: Chapter[] = [
   {
@@ -124,8 +127,8 @@ export const chapters: Chapter[] = [
     title: "The Kitchen",
     colour: "paddock",
     kicker: "Restaurant · Lunch & dinner, 7 days",
-    text: "Scratch-made pub classics and weekly specials, served all day in a room that looks out over the fields.",
-    image: P("chapter-kitchen", 1600, 797, "The Clubhouse kitchen dining room"),
+    text: "Tucked away at The Clubhouse, The Kitchen is an intimate dining venue for amazing seafood, steak and salads. Bookings recommended.",
+    image: P("chef-plating", 1100, 1693, "Our chef plating a dish at The Kitchen"),
     cta: { label: "Book a table", href: BOOK },
   },
   {
@@ -133,7 +136,7 @@ export const chapters: Chapter[] = [
     title: "The Clubhouse Bar",
     colour: "clay",
     kicker: "Beer, wine & spirits",
-    text: "Cold schooners, a tidy wine list and a crowd that knows every face behind the taps.",
+    text: "Our casual bar environment is the perfect place to relax. We have a range of domestic and imported beers, spirits and wines.",
     image: P("chapter-bar", 1600, 797, "The Clubhouse Bar"),
   },
   {
@@ -141,15 +144,15 @@ export const chapters: Chapter[] = [
     title: "The Lounge",
     colour: "night",
     kicker: "Gaming lounge",
-    text: "Twenty modern machines, comfortable seating and a dedicated host on every shift.",
-    image: P("chapter-lounge", 1600, 797, "The Clubhouse gaming lounge"),
+    text: "With 20 modern poker machines available, you'll be sure to find your favourite. Check back regularly for giveaways and promotions.",
+    image: P("chapter-lounge-pokies", 1600, 1066, "The Lounge gaming floor at The Clubhouse"),
   },
   {
     key: "bottleshop",
     title: "The Bottle Shop",
     colour: "gold",
     kicker: "Takeaway drinks",
-    text: "Cold beer, wine and spirits to take home, with member pricing on the shelves every day.",
+    text: "Take home a few of your favourite beverages — and drop off your empties at our Containers for Change express point.",
     image: P("chapter-bottleshop", 1600, 797, "The Clubhouse Bottle Shop"),
   },
   {
@@ -157,7 +160,7 @@ export const chapters: Chapter[] = [
     title: "Functions",
     colour: "eucalyptus",
     kicker: "Catering and event space",
-    text: "Birthdays, presentations and wakes — our function room seats up to 120 with in-house catering.",
+    text: "Looking for a location for your next function or event? The Clubhouse can provide the perfect setting and catering for all occasions.",
     image: P("chapter-functions", 1600, 797, "The Clubhouse function room set for an event"),
   },
 ];
@@ -196,7 +199,7 @@ export const events: ClubEvent[] = [
     category: "Members",
     excerpt: "Celebrate the year with fellow members — festive canapés, a lucky door prize, a visit from Santa for the kids and live carols.",
     image: P("chapter-functions", 1600, 797, "Members' Christmas Party at The Clubhouse"),
-    cta: { label: "Become a member", href: "/examples/clubhouse/membership" },
+    cta: { label: "Become a member", href: `${ROOT}/membership` },
   },
 ];
 
@@ -210,15 +213,16 @@ export const statement = {
 };
 
 /* ----------------------------------------------------------- clubArc */
+// Home page only — the fanned "club life" deck (the real site's clubArcSection).
 
 export const clubArc = {
   eyebrow: "Community",
   heading: "Healthy, Active, / Happy, Connected",
   intro: "The Clubhouse supports each of the sporting codes and groups that use our fields at the Brindabank Recreation Reserve.",
   items: [
-    { key: "rugby", label: "Brindabank Rugby League", meta: "Tue & Thu training · Sunday games", image: P("arc-rugby", 1600, 2209, "Brindabank Rugby League players"), href: "/examples/clubhouse/community/rugby-league" },
-    { key: "touch", label: "The Clubhouse Touch", meta: "Monday nights · All ages", image: P("arc-touch", 1600, 2000, "Touch football at The Clubhouse"), href: "/examples/clubhouse/community/touch" },
-    { key: "walking", label: "Over 50's Walking Football", meta: "Mon, Wed & Fri mornings", image: P("arc-walking", 1600, 2843, "Over 50's walking football team"), href: "/examples/clubhouse/community/walking-football" },
+    { key: "rugby", label: "Brindabank Rugby League", meta: "Tue & Thu training · Sunday games", image: P("arc-rugby", 1600, 2209, "Brindabank Rugby League players"), href: `${ROOT}/community/rugby-league` },
+    { key: "touch", label: "The Clubhouse Touch", meta: "Monday nights · All ages", image: P("arc-touch", 1600, 2000, "Touch football at The Clubhouse"), href: `${ROOT}/community/touch` },
+    { key: "walking", label: "Over 50's Walking Football", meta: "Mon, Wed & Fri mornings", image: P("arc-walking", 1600, 2843, "Over 50's walking football team"), href: `${ROOT}/community/walking-football` },
     { key: "school", label: "School Sports", meta: "Gala days for local schools", image: P("arc-schoolsport", 1600, 2400, "School sports gala day") },
     { key: "dogsport", label: "Brindabank Dog Sports Club", meta: "Monday evenings · Field 3", image: P("arc-dogsport", 1600, 2845, "Dog sports club training") },
     { key: "jiujitsu", label: "Brindabank Jiu Jitsu", meta: "Wednesday nights · All ages", image: P("arc-jiujitsu", 1600, 2400, "Jiu jitsu class") },
@@ -227,6 +231,7 @@ export const clubArc = {
 };
 
 /* ------------------------------------------------------------ textSections */
+// Home page only.
 
 export const textSectionMembership = {
   eyebrow: "Membership",
@@ -236,7 +241,7 @@ export const textSectionMembership = {
   ],
   image: P("textsection-membership-v2", 1200, 1500, "A member being served a shared roast at The Clubhouse, friends raising a glass"),
   imagePosition: "left" as const,
-  cta: { label: "Get a membership", href: "/examples/clubhouse/membership" },
+  cta: { label: "Get a membership", href: `${ROOT}/membership` },
 };
 
 export const textSectionPlease = {
@@ -318,19 +323,19 @@ export const footer = {
   about: "A not for profit licensed club and restaurant supporting local sport at the Brindabank Recreation Reserve.",
   facebook: "https://www.facebook.com/theclubhousebrindabank",
   footerLinks: [
-    { key: "home", href: "/examples/clubhouse", label: "Home" },
-    { key: "dining", href: "/examples/clubhouse/dining-and-bars", label: "Dining and Bars" },
-    { key: "recreation", href: "/examples/clubhouse/entertainment", label: "Recreation" },
-    { key: "whats-on", href: "/examples/clubhouse/events", label: "What's On" },
-    { key: "membership", href: "/examples/clubhouse/membership", label: "Membership" },
-    { key: "community", href: "/examples/clubhouse/community", label: "Community" },
-    { key: "about", href: "/examples/clubhouse/about", label: "About" },
-    { key: "contact", href: "/examples/clubhouse/contact", label: "Contact" },
+    { key: "home", href: ROOT, label: "Home" },
+    { key: "dining", href: `${ROOT}/dining-and-bars`, label: "Dining and Bars" },
+    { key: "recreation", href: `${ROOT}/entertainment`, label: "Recreation" },
+    { key: "whats-on", href: `${ROOT}/events`, label: "What's On" },
+    { key: "membership", href: `${ROOT}/membership`, label: "Membership" },
+    { key: "community", href: `${ROOT}/community`, label: "Community" },
+    { key: "about", href: `${ROOT}/about`, label: "About" },
+    { key: "contact", href: `${ROOT}/contact`, label: "Contact" },
   ],
 };
 
 /* ---------------------------------------------------------------- stats */
-// Used on the About page (the real site's about-page statsSection), not the home page.
+// About page — the real site's about-page statsSection.
 
 export const stats = {
   eyebrow: "The Clubhouse in numbers",
@@ -344,83 +349,363 @@ export const stats = {
   ],
 };
 
-/* =================================================== secondary pages */
-// Content for the sub-pages nav links lead to — kept in the same simple
-// TextSection/Statement/CardGrid vocabulary as the home page rather than
-// inventing new section types for them.
+/* =================================================================== */
+/* DINING AND BARS — real page: hero(4) + textSection + chaptersSection, */
+/* plus a Containers for Change stepsSection appended (see note below).  */
+/* =================================================================== */
+
+export const diningHero: HeroSlide[] = [
+  {
+    key: "bar",
+    eyebrow: "You're always welcome",
+    heading: "The Clubhouse Bar",
+    image: P("hero-middlebar", 1600, 797, "The Clubhouse Bar"),
+    cta: { label: "See more", href: `${ROOT}/dining-and-bars#bar` },
+  },
+  {
+    key: "kitchen",
+    eyebrow: "Homestyle meals",
+    heading: "The Kitchen",
+    image: P("chef-plating", 1100, 1693, "Our chef plating a dish at The Kitchen"),
+    cta: { label: "Book a table", href: BOOK },
+  },
+  {
+    key: "functions",
+    eyebrow: "Book now at",
+    heading: "The Clubhouse",
+    image: P("chapter-functions", 1600, 797, "The Clubhouse function room"),
+    cta: { label: "Find out more", href: `${ROOT}/dining-and-bars#functions` },
+  },
+  {
+    key: "bottleshop",
+    eyebrow: "Takeaway drinks",
+    heading: "The Bottle Shop",
+    image: P("chapter-bottleshop", 1600, 797, "The Bottle Shop"),
+    cta: { label: "See specials", href: `${ROOT}/dining-and-bars#bottleshop` },
+  },
+];
 
 export const diningPage = {
-  heading: "Dining and Bars",
+  heading: "Relax at The Clubhouse — superb dining and drinks",
   intro:
-    "From a sit-down meal in The Kitchen to a quick drink at The Clubhouse Bar, takeaways from The Bottle Shop, or a private function — everything food and drink at The Clubhouse lives under one roof.",
+    "The Clubhouse is the perfect place to relax with a hearty meal and drink. Our friendly staff are always available to help with menu recommendations, function bookings and making sure your visit to The Clubhouse is a truly great experience.",
 };
 
-export const entertainmentPage = {
-  heading: "Entertainment",
-  intro: "Live music, trivia nights, members' functions and a modern gaming lounge — there's always something on at The Clubhouse.",
-  lounge: chapters.find((c) => c.key === "lounge")!,
+/**
+ * Containers for Change — a brief, real-world QLD container-refund service
+ * blurb (the club is an express drop-off point, not the organisation paying
+ * the refund itself), ported as a stepsSection the way the real site uses
+ * one for short step-by-step explainers.
+ */
+export const containersForChange = {
+  eyebrow: "Containers for Change",
+  heading: "The Clubhouse is an / express drop off point",
+  intro: "Queensland's container refund scheme, made easy — drop your eligible empties with us and we'll take care of the rest.",
+  paragraphs: [
+    "The Clubhouse isn't a refund point itself — we're an express drop off point for the official Containers for Change scheme. Bag up your eligible cans and bottles and leave them with us; the scheme processes the refund, not the club.",
+  ],
+  image: P("containers-for-change", 1100, 1466, "Crushed aluminium cans ready for recycling"),
+  items: [
+    { key: "head", title: "Head to The Clubhouse", text: "Bring your eligible, empty cans and bottles with you on your next visit." },
+    { key: "drop", title: "Drop them off", text: "Leave your bagged containers at our express drop off point — no need to count or sort them first." },
+    { key: "rest", title: "We do the rest", text: "We pass your containers on to the scheme, which processes the refund on your behalf." },
+  ],
 };
 
-export const membershipPage = {
-  heading: "Membership",
-  intro: "Becoming a Clubhouse member is quick, free to apply for, and pays for itself on your first visit.",
-  statement: {
-    eyebrow: "Why join",
-    from: "sand",
-    to: "clay",
-    text: "Members get *discounted food and drinks*, invitations to member-only nights, reward points on every visit, and first access to functions bookings.",
+/* =================================================================== */
+/* ENTERTAINMENT — real page: hero(2) + chaptersSection(2) + eventsSection */
+/* =================================================================== */
+
+export const entertainmentHero: HeroSlide[] = [
+  {
+    key: "pool",
+    eyebrow: "Come and have some fun at",
+    heading: "The Clubhouse",
+    image: P("hero-pool", 1600, 797, "Playing pool at The Clubhouse"),
   },
+  {
+    key: "football",
+    eyebrow: "Come and see the action",
+    heading: "The Clubhouse",
+    image: P("hero-community2-football", 1600, 797, "Football at The Clubhouse"),
+  },
+];
+
+export const entertainmentChapters: Chapter[] = [
+  {
+    key: "whats-on",
+    title: "What's On",
+    colour: "paddock",
+    kicker: "Sport, entertainment & events",
+    text: "Find out what you can do at The Clubhouse. We have a range of sports, entertainment and events on during the year, so be sure to know what's coming up!",
+    image: P("hero-facility", 1600, 757, "The Clubhouse facility"),
+    cta: { label: "See what's happening", href: `${ROOT}/events` },
+  },
+  {
+    key: "lounge",
+    title: "The Lounge",
+    colour: "night",
+    kicker: "Gaming lounge",
+    text: "With 20 modern poker machines available, you'll be sure to find your favourite. We have a number of giveaways and promotions throughout the year, so check back regularly to see what's on offer!",
+    image: P("chapter-lounge-pokies", 1600, 1066, "The Lounge gaming floor at The Clubhouse"),
+  },
+];
+
+/* =================================================================== */
+/* MEMBERSHIP — real page: hero(1) + stepsSection + statementSection +    */
+/* stepsSection                                                          */
+/* =================================================================== */
+
+export const membershipHero: HeroSlide[] = [
+  {
+    key: "membership",
+    eyebrow: "Enjoy the membership benefits at",
+    heading: "The Clubhouse",
+    image: P("hero-membership", 1920, 956, "Membership at The Clubhouse"),
+  },
+];
+
+export const membershipHowToJoin = {
+  eyebrow: "The Clubhouse Membership",
+  heading: "How to join / It's simple",
+  intro: "Becoming a member of The Clubhouse is simple.",
+  paragraphs: [
+    "With our membership base continually growing, we know that our members are our most important asset! The Clubhouse is the local area's most exciting club, with new initiatives introduced continually to ensure our members enjoy great facilities and services.",
+  ],
+  image: P("membership-friends-1", 1100, 1648, "Friends sharing drinks at The Clubhouse"),
+  imagePosition: "left" as const,
+  items: [
+    { key: "form", title: "Grab a form", text: "Ask one of our friendly bar or wait staff for a membership form." },
+    { key: "fill", title: "Fill it out", text: "Complete the form and bring it to the club with your current ID. You must be 18 years or older to become a member." },
+    { key: "pay", title: "Pay and you're in", text: "Pay the membership fee and your brand new membership card will be issued immediately." },
+  ],
 };
+
+export const membershipStatement = {
+  eyebrow: "Our members",
+  from: "cream",
+  to: "paddock",
+  text: "Our members are our *most important asset!*",
+};
+
+export const membershipBenefits = {
+  heading: "Membership benefits / Members save every visit",
+  intro: "Here are some of the fantastic rewards and exclusive offers you'll receive by becoming a Clubhouse member.",
+  paragraphs: ["You can subscribe to our email list or check our Facebook page for the latest offers."],
+  image: P("membership-friends-2", 1100, 1325, "Friends laughing together at The Clubhouse"),
+  imagePosition: "right" as const,
+  tone: "sand" as const,
+  items: [
+    { key: "meals", title: "Discounted meals at The Kitchen" },
+    { key: "drinks", title: "Discounted drinks at The Clubhouse Bar and Bottle Shop" },
+    { key: "invites", title: "Exclusive invites to our member events" },
+    { key: "gaming", title: "Exclusive gaming promotions" },
+    { key: "birthday", title: "Birthday offers" },
+  ],
+};
+
+/* =================================================================== */
+/* COMMUNITY — real page: hero(2) + statementSection + chaptersSection +  */
+/* textSection + gallerySection                                          */
+/* =================================================================== */
+
+export const communityHero: HeroSlide[] = [
+  {
+    key: "support",
+    eyebrow: "Support your team or group at",
+    heading: "The Clubhouse",
+    image: P("hero-community2-football", 1600, 797, "Community at The Clubhouse"),
+  },
+  {
+    key: "action",
+    eyebrow: "Come and see the action",
+    heading: "The Clubhouse",
+    image: P("hero-community2-football", 1600, 797, "Football at The Clubhouse"),
+  },
+];
 
 export const communityPage = {
-  heading: "Community",
   statement: {
-    eyebrow: "Our community",
+    eyebrow: "Community",
     from: "cream",
     to: "paddock",
-    text: "The Clubhouse exists because of the clubs that call it home — *rugby league, touch, walking football* and everything in between.",
+    text: "Healthy, Active, *Happy, Connected.*",
+  },
+  supportHeading: "How does The Clubhouse / support the sport clubs?",
+  supportParagraphs: [
+    "The Clubhouse supports each of the sporting codes that use our facilities at the Brindabank Recreation Reserve. The Clubhouse has taken the responsibility of maintaining the sporting fields, the club facilities and security.",
+  ],
+};
+
+export const communityChapters: Chapter[] = [
+  {
+    key: "rugby",
+    title: "Rugby League",
+    colour: "clay",
+    kicker: "The Rovers · Under 6's to seniors",
+    text: "Brindabank Rugby League, \"The Rovers,\" has teams ranging from under 6's right through to seniors for both boys and girls.",
+    image: P("arc-rugby", 1600, 2209, "Brindabank Rugby League"),
+    cta: { label: "How to join and play", href: `${ROOT}/community/rugby-league` },
+  },
+  {
+    key: "touch",
+    title: "Touch Football",
+    colour: "paddock",
+    kicker: "Monday nights · All ages",
+    text: "The Clubhouse Touch invites you to register to join a team. Or bring your whole team! Come and join the family fun, we have places for everyone.",
+    image: P("arc-touch", 1600, 2000, "Touch football at The Clubhouse"),
+    cta: { label: "How to join and play", href: `${ROOT}/community/touch` },
+  },
+  {
+    key: "school",
+    title: "School Sports",
+    colour: "gold",
+    kicker: "Gala days & carnivals",
+    text: "Local schools in the Brindabank area use The Clubhouse for sporting events and gala days.",
+    image: P("arc-schoolsport", 1600, 2400, "School sports gala day"),
+  },
+  {
+    key: "walking",
+    title: "Over 50's Walking Football",
+    colour: "eucalyptus",
+    kicker: "Mon, Wed & Fri mornings",
+    text: "Monday, Wednesday and Friday mornings. Come on down and join in the fun and get some exercise at the same time.",
+    image: P("arc-walking", 1600, 2843, "Over 50's walking football team"),
+    cta: { label: "More details", href: `${ROOT}/community/walking-football` },
+  },
+];
+
+export const communityGallery = {
+  eyebrow: "On the field",
+  heading: "Our clubs / in action",
+  intro: "Rugby League, Touch and Walking Football at the Brindabank Recreation Reserve.",
+  tone: "light" as const,
+  images: [
+    { key: "g1", ...P("hero-community2-football", 1600, 797, "Brindabank Rovers") },
+    { key: "g2", ...P("community-gallery-touch1", 469, 386, "The Clubhouse Touch") },
+    { key: "g3", ...P("community-gallery-walking1", 1920, 956, "Over 50's walking football team") },
+    { key: "g4", ...P("arc-rugby", 1600, 2209, "Brindabank Rovers") },
+    { key: "g5", ...P("community-gallery-walking2", 496, 389, "Over 50's walking football") },
+    { key: "g6", ...P("community-gallery-school1", 469, 386, "School sports") },
+  ],
+};
+
+/* ------------------------------------------------- community sub-pages */
+
+export const rugbyPage = {
+  hero: [{ key: "action", eyebrow: "Come and see the action", heading: "The Clubhouse", image: P("hero-community2-football", 1600, 797, "Football at The Clubhouse") }] satisfies HeroSlide[],
+  eyebrow: "The Rovers",
+  heading: "Brindabank Rugby League / Home since 1989",
+  paragraphs: [
+    "Brindabank Rugby League Football Club, \"The Rovers,\" have called The Clubhouse home since 1989. They have teams from Under 6's right through to Seniors for both boys and girls, so there is a place for everyone to play in an inclusive, friendly environment.",
+    "Want to come and play, help out or just after some information? Come down and have a chat with the coaching staff.",
+  ],
+  image: P("arc-rugby", 1600, 2209, "Brindabank Rugby League players"),
+  schedule: "Tue & Thu training · Sunday games",
+  statement: { eyebrow: "Brindabank Rovers", from: "cream", to: "clay", text: "A place for everyone to play in an *inclusive, friendly* environment." },
+  gallery: {
+    eyebrow: "Brindabank Rovers",
+    heading: "The Rovers / in action",
+    tone: "dark" as const,
+    images: [
+      { key: "r1", ...P("arc-rugby", 1600, 2209, "Brindabank Rovers") },
+      { key: "r2", ...P("hero-community2-football", 1600, 797, "Brindabank Rovers") },
+      { key: "r3", ...P("community-gallery-touch1", 469, 386, "Brindabank Rovers") },
+      { key: "r4", ...P("community-gallery-school1", 469, 386, "Brindabank Rovers") },
+    ],
   },
 };
 
-export const communityClubs = {
-  rugby: {
-    eyebrow: "Community · Rugby League",
-    heading: "Brindabank / Rugby League",
-    paragraphs: [
-      "Brindabank Rugby League has trained and played out of The Clubhouse's fields for over two decades, fielding junior, senior and masters sides every season.",
-      "Training is open to new players of all levels — come down on a Tuesday or Thursday evening and introduce yourself to the coaching staff.",
-    ],
-    image: clubArc.items[0].image,
-    schedule: clubArc.items[0].meta,
+export const touchPage = {
+  hero: [{ key: "signup", eyebrow: "Sign up today for", heading: "Touch Football!", image: P("hero-touch", 1240, 686, "Touch football at The Clubhouse"), cta: { label: "Sign up", href: "#sign-up" } }] satisfies HeroSlide[],
+  eyebrow: "Junior and senior teams for boys and girls",
+  heading: "The Clubhouse / touch football",
+  paragraphs: [
+    "Touch Football is Australia's largest social sport, with 700,000 participants around the country. The Clubhouse Touch Football club welcomes participants from both male and female, junior and senior age groups. It's a simple and fun game to play — the only skills you need are being able to run, pass and catch.",
+  ],
+  contact: { name: "Jordan Hale", phone: "0491 006 755", email: "touch@theclubhouse.example" },
+  image: P("arc-touch", 1600, 2000, "Touch football at The Clubhouse"),
+  schedule: "Monday nights · All ages",
+  statement: {
+    eyebrow: "We are looking to fill both junior and senior teams for boys and girls!",
+    from: "cream",
+    to: "paddock",
+    text: "Australia's largest social sport, with *700,000 participants* around the country.",
   },
-  touch: {
-    eyebrow: "Community · Touch Football",
-    heading: "The Clubhouse / Touch",
-    paragraphs: [
-      "The Clubhouse Touch competition runs every Monday night on the club's floodlit fields, with mixed social and competitive grades for all ages.",
-      "No need to have a team — register as an individual and we'll place you with a side looking for players.",
+  signup: {
+    heading: "Sign up / Join a team",
+    groups: [
+      { key: "new-team", title: "Sign up a team", description: "New team", cta: "Register a new team" },
+      { key: "returning", title: "Returning players", description: "Players from last term, get in touch and we'll find your team", cta: "Contact us" },
+      { key: "player", title: "Sign up as a player", description: "New players seeking a team", cta: "Help me find a team" },
     ],
-    image: clubArc.items[1].image,
-    schedule: clubArc.items[1].meta,
-  },
-  walking: {
-    eyebrow: "Community · Walking Football",
-    heading: "Over 50's / Walking Football",
-    paragraphs: [
-      "A slower-paced, no-running version of football for the over-50s crowd — three mornings a week, with a coffee at The Kitchen afterwards.",
-      "All fitness levels welcome; boots and a smile are the only requirements.",
-    ],
-    image: clubArc.items[2].image,
-    schedule: clubArc.items[2].meta,
   },
 };
+
+export const walkingPage = {
+  hero: [{ key: "walking", eyebrow: "Over 50's Walking Football at", heading: "The Clubhouse", image: P("community-gallery-walking1", 1920, 956, "Over 50's walking football team") }] satisfies HeroSlide[],
+  eyebrow: "Monday, Wednesday & Friday mornings",
+  heading: "Over 50's / Walking Football",
+  paragraphs: [
+    "We welcome you to join us on Monday, Wednesday and Friday mornings. Game times: Summer 8am – 10am, Winter 9am – 11am.",
+    "Come on down and join in the fun and get some exercise at the same time. Contact Alan on 0400 123 456 for more info, or keep up with us on Facebook.",
+  ],
+  image: P("arc-walking", 1600, 2843, "Over 50's walking football team"),
+  schedule: "Mon, Wed & Fri mornings",
+  statement: {
+    eyebrow: "Over 50's Walking Football",
+    from: "cream",
+    to: "eucalyptus",
+    text: "Come on down and *join in the fun* and get some exercise at the same time.",
+  },
+  gallery: {
+    eyebrow: "On the pitch",
+    heading: "Walking football / at Brindabank",
+    tone: "light" as const,
+    images: [
+      { key: "w1", ...P("community-gallery-walking1", 1920, 956, "Over 50's walking football team") },
+      { key: "w2", ...P("community-gallery-walking2", 496, 389, "Over 50's walking football") },
+      { key: "w3", ...P("walking-gallery3", 496, 389, "Over 50's walking football") },
+      { key: "w4", ...P("walking-gallery4", 496, 389, "Over 50's walking football") },
+      { key: "w5", ...P("walking-gallery5", 469, 386, "Over 50's walking football") },
+    ],
+  },
+};
+
+/* =================================================================== */
+/* ABOUT — real page: hero(1) + textSection(History) + statsSection +     */
+/* textSection(Entry requirements) + textSection(Courtesy bus)           */
+/* =================================================================== */
+
+export const aboutHero: HeroSlide[] = [{ key: "about", eyebrow: "Welcoming you to", heading: "The Clubhouse", image: P("hero-about", 1920, 956, "About The Clubhouse") }];
 
 export const aboutPage = {
-  heading: "About The Clubhouse",
-  intro: [
-    "The Clubhouse has been a part of life in Brindabank since 1968 — a not-for-profit community club built around food, sport and the people who show up for both.",
-    "What started as a single rugby league clubhouse has grown into a full dining, bar and entertainment venue, while still putting its profits back into the local clubs and groups that use its fields every week.",
-  ],
+  history: {
+    eyebrow: "About The Clubhouse",
+    heading: "History / Since 1968",
+    paragraphs: [
+      "The Clubhouse has been serving the local community since 1968.",
+      "The Clubhouse is a not for profit licensed club and restaurant that supports local sport by providing and maintaining facilities so people can play Rugby League, Soccer and Touch Football.",
+    ],
+  },
+  entryRequirements: {
+    heading: "Entry requirements",
+    tone: "sand" as const,
+    paragraphs: [
+      "Membership cards must be presented to staff upon entry and when requested.",
+      "Minors must be accompanied by a parent, legal guardian or responsible adult at all times.",
+      "Photo identification must be presented by all patrons when requested.",
+      "The Clubhouse prides itself on a high standard of dress, behaviour and service. Shoes must be worn at all times; bike pants, swimwear, singlets and offensive t-shirts are not permitted.",
+    ],
+    cta: { label: "Club policies", href: "#policies" },
+  },
+  courtesyBus: {
+    heading: "Courtesy bus",
+    paragraphs: [
+      "The Clubhouse no longer runs a courtesy bus service.",
+      "The idle courtesy bus was donated to a local charity so they could use it to ferry the elderly to appointments.",
+    ],
+  },
   policies: {
     heading: "Policies",
     paragraphs: [
@@ -430,7 +715,14 @@ export const aboutPage = {
   },
 };
 
+/* =================================================================== */
+/* CONTACT — real page: hero(1) + contactSection + mapSection             */
+/* =================================================================== */
+
+export const contactHero: HeroSlide[] = [{ key: "contact", eyebrow: "Contact us at", heading: "The Clubhouse", image: P("hero-contact", 1920, 956, "Contact The Clubhouse") }];
+
 export const contactPage = {
-  heading: "Contact The Clubhouse",
-  intro: "Questions about bookings, membership or functions? Get in touch — we're open 7 days a week.",
+  heading: "Get in touch",
+  intro: "Our friendly staff will be able to help you with any questions you might have.",
+  findUsHeading: "Find us / Brindabank",
 };

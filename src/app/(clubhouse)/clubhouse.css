@@ -1,0 +1,76 @@
+/*
+ * Stylesheet for the "The Clubhouse" showcase example only (see layout.tsx).
+ * Tailwind is told to scan just this example's own files, so this page's forest/cream
+ * theme tokens never leak into (and never collide with) the main site's own
+ * --color-ink / --color-cream, which carry different values there.
+ */
+@import "tailwindcss" source(none);
+@source "../../showcase/clubhouse";
+@source "./";
+@import "lenis/dist/lenis.css";
+
+/*
+ * Design tokens, ported from the client project's brand theme.
+ */
+@theme {
+  --color-forest: #1c3326;
+  --color-forest-deep: #12231a;
+  --color-moss: #3f5a3c;
+  --color-sage: #8aa58c;
+  --color-cream: #f4ede2;
+  --color-sand: #e9dfcd;
+  --color-gold: #b19b32;
+  --color-gold-light: #d4c06a;
+  --color-ink: #1b1d1a;
+  --color-muted: #5c6157;
+
+  --font-display: var(--font-clubhouse-display), ui-serif, Georgia, serif;
+  --font-sans: var(--font-clubhouse-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Lenis owns smooth scrolling; native smooth-scroll would fight it */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+body {
+  background: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+/* Rectangular, letter-spaced buttons */
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 px-7 py-3.5 text-xs font-bold uppercase tracking-[0.16em] transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold;
+}
+@utility btn-gold {
+  @apply btn bg-gold text-forest-deep hover:bg-gold-light;
+}
+@utility btn-forest {
+  @apply btn bg-forest text-cream hover:bg-moss;
+}
+@utility eyebrow {
+  @apply text-xs font-semibold uppercase tracking-[0.22em];
+}
+
+/* Display headings read best at 500 */
+.font-display {
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+/* Hide scrollbars on swipeable rows while keeping them scrollable */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}

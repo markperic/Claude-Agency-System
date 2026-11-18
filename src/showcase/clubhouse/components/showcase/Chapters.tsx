@@ -51,7 +51,7 @@ function ChapterCard({ c, i, n, p, still }: { c: Chapter; i: number; n: number; 
   const num = String(i + 1).padStart(2, "0");
 
   return (
-    <section className="relative md:sticky md:top-0 md:h-[100svh]" style={{ perspective: 1400 }} aria-label={c.title}>
+    <section id={c.key} className="relative md:sticky md:top-0 md:h-[100svh]" style={{ perspective: 1400 }} aria-label={c.title}>
       <motion.div
         className="relative flex h-full min-h-[100svh] origin-top flex-col overflow-hidden md:min-h-0"
         style={{ background: pal.bg, color: pal.fg, ...(still ? {} : { scale, rotateX }) }}

@@ -46,7 +46,9 @@ export default function ClubhouseExamplePage() {
         <TextSection eyebrow={textSectionMembership.eyebrow} heading={textSectionMembership.heading} paragraphs={textSectionMembership.paragraphs} image={textSectionMembership.image} imagePosition={textSectionMembership.imagePosition} cta={textSectionMembership.cta} />
         <TextSection heading={textSectionPlease.heading} paragraphs={textSectionPlease.paragraphs} image={textSectionPlease.image} imagePosition={textSectionPlease.imagePosition} />
         <HoursSection heading={hoursSection.heading} image={hoursSection.image} hoursNote={hoursNote} openingHours={openingHours} />
-        <CardGridSection heading={cardGrid.heading} intro={cardGrid.intro} tone={cardGrid.tone} columns={cardGrid.columns} cards={cardGrid.cards} />
+        <div id="menu" className="scroll-mt-24">
+          <CardGridSection heading={cardGrid.heading} intro={cardGrid.intro} tone={cardGrid.tone} columns={cardGrid.columns} cards={cardGrid.cards} />
+        </div>
         <div id="restaurant-bookings" className="scroll-mt-24">
           <BookingSection heading={bookingSection.heading} paragraphs={bookingSection.paragraphs} image={bookingSection.image} phone={footerContent.phone} />
         </div>

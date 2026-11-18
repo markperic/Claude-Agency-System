@@ -17,7 +17,7 @@ export function Footer() {
           </div>
           <div className="flex flex-wrap justify-center gap-3">
             <BookButton />
-            <a href="#" className="btn-outline text-cream">
+            <a href="/examples/clubhouse#menu" className="btn-outline text-cream">
               View the menu
             </a>
           </div>

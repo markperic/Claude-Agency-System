@@ -104,7 +104,20 @@ function EventsCarousel({ children }: { children: React.ReactNode }) {
   );
 }
 
-export function EventsSection({ eyebrow, heading, intro, events }: { eyebrow?: string; heading?: string; intro?: string; events: ClubEvent[] }) {
+export function EventsSection({
+  eyebrow,
+  heading,
+  intro,
+  events,
+  moreHref = "/examples/clubhouse/events",
+}: {
+  eyebrow?: string;
+  heading?: string;
+  intro?: string;
+  events: ClubEvent[];
+  /** Omit (pass null) on the full events page itself — linking "see everything on" to the page you're already on is a dead end of its own. */
+  moreHref?: string | null;
+}) {
   return (
     <section className="relative isolate overflow-hidden bg-sand py-24 sm:py-32">
       <Branch side="left" />
@@ -119,11 +132,13 @@ export function EventsSection({ eyebrow, heading, intro, events }: { eyebrow?: s
         ) : (
           <p className="border border-forest/15 p-10 text-center text-muted">New events are coming soon — follow us on Facebook for the latest.</p>
         )}
-        <div className="mt-14 text-center">
-          <a href="#" className="btn-forest">
-            See everything on
-          </a>
-        </div>
+        {moreHref && (
+          <div className="mt-14 text-center">
+            <a href={moreHref} className="btn-forest">
+              See everything on
+            </a>
+          </div>
+        )}
       </Container>
     </section>
   );

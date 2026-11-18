@@ -6,7 +6,7 @@ import { useDetached, useIsDesktop } from "@/showcase/clubhouse/lib/motion";
 import { ClubImage, type Img } from "@/showcase/clubhouse/components/ClubImage";
 import { SplitHeading } from "../motion/SplitHeading";
 
-export type ArcItem = { key: string; label: string; meta?: string; image?: Img };
+export type ArcItem = { key: string; label: string; meta?: string; image?: Img; href?: string };
 
 /**
  * Club life arc (Atmos gallery): a fanned deck of photo cards laid on a curve. Scrolling down slides the
@@ -40,14 +40,7 @@ export function ClubArc({ eyebrow, heading, intro, items }: { eyebrow?: string; 
         <div className="px-4 sm:px-8">{head}</div>
         <div className="no-scrollbar mt-12 flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-6 sm:px-8">
           {items.map((it, i) => (
-            <div
-              key={it.key}
-              className="relative aspect-[4/5] w-[72vw] max-w-80 shrink-0 snap-center overflow-hidden"
-              style={{ transform: `rotate(${i % 2 ? 2 : -2}deg)` }}
-            >
-              <ClubImage image={it.image} fill className="object-cover" sizes="72vw" />
-              <CardLabel it={it} />
-            </div>
+            <MobileCard key={it.key} it={it} rotate={i % 2 ? 2 : -2} />
           ))}
         </div>
       </section>
@@ -76,14 +69,42 @@ function ArcCard({ it, i, n, p, vw, W }: { it: ArcItem; i: number; n: number; p:
   const rotate = useTransform(u, (u) => u * 6.5);
   const scale = useTransform(u, (u) => 1 - Math.min(Math.abs(u), 3) * 0.035);
   const zIndex = useTransform(u, (u) => 50 - Math.round(Math.abs(u) * 4));
+  const cardClass = "group relative block aspect-[4/5] overflow-hidden shadow-[0_30px_60px_-20px_rgba(0,0,0,0.6)]";
 
   return (
     <motion.div className="absolute top-[34svh] origin-bottom" style={{ x, y, rotate, scale, zIndex, width: W, willChange: "transform" }}>
-      <div className="group relative block aspect-[4/5] overflow-hidden shadow-[0_30px_60px_-20px_rgba(0,0,0,0.6)]">
-        <ClubImage image={it.image} fill className="object-cover transition duration-[1200ms] ease-out group-hover:scale-105" sizes="380px" />
-        <CardLabel it={it} />
-      </div>
+      {it.href ? (
+        <a href={it.href} className={cardClass}>
+          <ClubImage image={it.image} fill className="object-cover transition duration-[1200ms] ease-out group-hover:scale-105" sizes="380px" />
+          <CardLabel it={it} />
+        </a>
+      ) : (
+        <div className={cardClass}>
+          <ClubImage image={it.image} fill className="object-cover transition duration-[1200ms] ease-out group-hover:scale-105" sizes="380px" />
+          <CardLabel it={it} />
+        </div>
+      )}
     </motion.div>
+  );
+}
+
+function MobileCard({ it, rotate }: { it: ArcItem; rotate: number }) {
+  const cardClass = "relative aspect-[4/5] w-[72vw] max-w-80 shrink-0 snap-center overflow-hidden";
+  const style = { transform: `rotate(${rotate}deg)` };
+  const inner = (
+    <>
+      <ClubImage image={it.image} fill className="object-cover" sizes="72vw" />
+      <CardLabel it={it} />
+    </>
+  );
+  return it.href ? (
+    <a href={it.href} className={cardClass} style={style}>
+      {inner}
+    </a>
+  ) : (
+    <div className={cardClass} style={style}>
+      {inner}
+    </div>
   );
 }
 

@@ -104,8 +104,8 @@ export const heroSlides: HeroSlide[] = [
 /* ---------------------------------------------------------- splitTitle */
 
 export const splitTitle = {
-  left: "The",
-  right: "Clubhouse",
+  left: "Club",
+  right: "House",
   eyebrow: "Brindabank · Since 1968",
   heading: "Everything you need for a great day or night out!",
   text:

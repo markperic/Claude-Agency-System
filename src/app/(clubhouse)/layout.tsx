@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Manrope, Roboto_Slab } from "next/font/google";
-import { Header } from "@/showcase/clubhouse/components/Header";
+import { ClubHeader } from "@/showcase/clubhouse/components/ClubHeader";
 import { LenisProvider } from "@/showcase/clubhouse/components/motion/LenisProvider";
 import { PageTransition } from "@/showcase/clubhouse/components/motion/PageTransition";
-import { site } from "@/showcase/clubhouse/content";
+import { announcement, nav, site } from "@/showcase/clubhouse/content";
 import "./clubhouse.css";
 
 /**
@@ -29,10 +29,9 @@ export default function ClubhouseLayout({ children }: { children: React.ReactNod
   return (
     <html lang={site.lang} className={`${slab.variable} ${manrope.variable} antialiased`}>
       <body className="min-h-dvh">
-        <div id="top" />
         <LenisProvider>
           <PageTransition>
-            <Header />
+            <ClubHeader nav={nav} announcement={announcement} />
             {children}
           </PageTransition>
         </LenisProvider>

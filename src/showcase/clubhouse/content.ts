@@ -1,12 +1,19 @@
 // All copy and image references live here — components take these as props.
 //
 // This is a template: "The Clubhouse" in the fictional suburb of Brindabank is
-// a made-up community sports and social club. The design and every photo were
-// ported from a real club-website client project; the name, location, club
-// names and figures below are invented so no real club or address is implied.
+// a made-up community sports and social club. The design, the page's section
+// sequence and every photo were ported from a real club-website client
+// project's actual current home page; the name, location, club names, prices
+// and figures below are invented so no real club, address or phone number is
+// implied. Nav links, the booking CTA and the "See everything on" events link
+// point to "#" or the page's own booking section — this is a single static
+// page with no sub-routes or booking backend to link to.
 
 import type { Chapter } from "@/showcase/clubhouse/components/showcase/Chapters";
 import type { ArcItem } from "@/showcase/clubhouse/components/showcase/ClubArc";
+import type { HeroSlide } from "@/showcase/clubhouse/components/ClubHero";
+import type { NavItem } from "@/showcase/clubhouse/components/ClubHeader";
+import type { ClubEvent } from "@/showcase/clubhouse/components/sections/EventsSection";
 
 const P = (name: string, width: number, height: number, alt: string) => ({
   src: `/showcase/clubhouse/${name}.jpg`,
@@ -15,18 +22,86 @@ const P = (name: string, width: number, height: number, alt: string) => ({
   alt,
 });
 
+const BOOK = "#restaurant-bookings";
+
 export const site = {
   name: "The Clubhouse — Dining, Bars & Community in Brindabank",
-  description: "A fictional suburban sports and social club, built to showcase a Lenis-smooth-scroll, scroll-driven set-piece design system.",
+  description: "The Clubhouse is the perfect venue for food, drinks and fun! Located between Fernlea and Corran Downs, we're open for lunch and dinner, 7 days a week.",
   lang: "en-AU",
 };
 
-export const header = {
-  logo: { label: "The Clubhouse", href: "/examples/clubhouse" },
-  cta: { label: "Book a table", href: "#visit" },
+/* ------------------------------------------------------------- header */
+
+export const nav: NavItem[] = [
+  { key: "home", href: "/examples/clubhouse", label: "Home" },
+  {
+    key: "dining",
+    href: "#",
+    label: "Dining and Bars",
+    children: [
+      { key: "kitchen", href: "#", label: "The Kitchen" },
+      { key: "bar", href: "#", label: "The Clubhouse Bar" },
+      { key: "bottleshop", href: "#", label: "The Bottle Shop" },
+      { key: "functions", href: "#", label: "Functions" },
+    ],
+  },
+  {
+    key: "entertainment",
+    href: "#",
+    label: "Entertainment",
+    children: [
+      { key: "whats-on", href: "#", label: "What's On" },
+      { key: "lounge", href: "#", label: "The Lounge" },
+    ],
+  },
+  { key: "membership", href: "#", label: "Membership" },
+  {
+    key: "community",
+    href: "#",
+    label: "Community",
+    children: [
+      { key: "rugby", href: "#", label: "Brindabank Rugby League" },
+      { key: "touch", href: "#", label: "The Clubhouse Touch" },
+      { key: "walking", href: "#", label: "Over 50s Walking Football" },
+    ],
+  },
+  { key: "about", href: "#", label: "About" },
+  { key: "contact", href: "#", label: "Contact" },
+];
+
+export const announcement = {
+  text: "Open for lunch and dinner, 7 days a week — bookings recommended",
 };
 
-/* -------------------------------------------------------------- hero */
+/* --------------------------------------------------------------- hero */
+
+export const heroSlides: HeroSlide[] = [
+  {
+    key: "welcome",
+    eyebrow: "Welcome to",
+    heading: "The Clubhouse",
+    text: "Located between Fernlea and Corran Downs, we are open for lunch and dinner, 7 days a week.",
+    image: P("hero-welcome", 1600, 797, "The Clubhouse dining room"),
+    cta: { label: "Book a table", href: BOOK },
+    cta2: { label: "View menu", href: "#" },
+  },
+  {
+    key: "bar",
+    eyebrow: "Drinks at the",
+    heading: "Clubhouse Bar",
+    image: P("chapter-bar", 1600, 797, "The Clubhouse Bar"),
+    cta: { label: "See what's on", href: "#" },
+  },
+  {
+    key: "functions",
+    eyebrow: "Book now at",
+    heading: "The Clubhouse",
+    image: P("chapter-functions", 1600, 797, "The Clubhouse function room"),
+    cta: { label: "Find out more", href: "#" },
+  },
+];
+
+/* ---------------------------------------------------------- splitTitle */
 
 export const splitTitle = {
   left: "The",
@@ -36,7 +111,7 @@ export const splitTitle = {
   text:
     "The Clubhouse is the perfect venue for food, drinks and fun! Located between Fernlea and Corran Downs, we're open for lunch and dinner, 7 days a week. Our kitchen keeps the menu moving with new dishes that are sure to satisfy even the largest appetite!",
   image: P("split-hero", 1600, 797, "The Clubhouse dining room, lit for evening service"),
-  cta: { label: "Book a table", href: "#visit" },
+  cta: { label: "Book a table", href: BOOK },
 };
 
 /* ---------------------------------------------------------- chapters */
@@ -49,7 +124,7 @@ export const chapters: Chapter[] = [
     kicker: "Restaurant · Lunch & dinner, 7 days",
     text: "Scratch-made pub classics and weekly specials, served all day in a room that looks out over the fields.",
     image: P("chapter-kitchen", 1600, 797, "The Clubhouse kitchen dining room"),
-    cta: { label: "Book a table", href: "#visit" },
+    cta: { label: "Book a table", href: BOOK },
   },
   {
     key: "bar",
@@ -85,7 +160,45 @@ export const chapters: Chapter[] = [
   },
 ];
 
-/* --------------------------------------------------------- statement */
+/* --------------------------------------------------------------- events */
+
+export const events: ClubEvent[] = [
+  {
+    key: "live-music",
+    title: "Friday Night Live: The Brindabank Rounders",
+    dateLabel: "Fri 27 November · 7 pm",
+    day: "27",
+    month: "Nov",
+    category: "Live music",
+    excerpt: "Local four-piece The Brindabank Rounders bring classic Aussie rock covers to the Clubhouse Bar. Free entry, happy hour from 5pm.",
+    image: P("chapter-bar", 1600, 797, "Friday Night Live at The Clubhouse Bar"),
+    cta: { label: "Find out more", href: BOOK },
+  },
+  {
+    key: "trivia",
+    title: "Big Wednesday Trivia Night",
+    dateLabel: "Wed 2 December · 7 pm",
+    day: "02",
+    month: "Dec",
+    category: "Trivia",
+    excerpt: "Round up your smartest mates for six rounds of general knowledge, music and sport. $100 bar tab for the winning table.",
+    image: P("event-trivia", 600, 415, "Trivia night at The Clubhouse"),
+    cta: { label: "Find out more", href: BOOK },
+  },
+  {
+    key: "christmas",
+    title: "Members' Christmas Party",
+    dateLabel: "Sun 13 December · 5 pm",
+    day: "13",
+    month: "Dec",
+    category: "Members",
+    excerpt: "Celebrate the year with fellow members — festive canapés, a lucky door prize, a visit from Santa for the kids and live carols.",
+    image: P("chapter-functions", 1600, 797, "Members' Christmas Party at The Clubhouse"),
+    cta: { label: "Find out more", href: "#" },
+  },
+];
+
+/* --------------------------------------------------------------- statement */
 
 export const statement = {
   eyebrow: "Our club",
@@ -111,50 +224,105 @@ export const clubArc = {
   ] satisfies ArcItem[],
 };
 
-/* ------------------------------------------------------------- stats */
+/* ------------------------------------------------------------ textSections */
 
-export const stats = {
-  eyebrow: "The Clubhouse in numbers",
-  heading: "Your local club / in Brindabank",
-  colour: "paddock",
-  items: [
-    { key: "since", value: 1968, label: "Serving the community", note: "A not-for-profit club, supporting local sport" },
-    { key: "codes", value: 3, label: "Football codes", note: "Rugby League, Soccer and Touch Football" },
-    { key: "machines", value: 20, label: "Modern poker machines", note: "In The Lounge" },
-    { key: "days", value: 7, label: "Days a week", note: "Open for lunch and dinner" },
+export const textSectionMembership = {
+  eyebrow: "Membership",
+  heading: "Join the club / Members save every visit",
+  paragraphs: [
+    "Join the club with a Clubhouse membership! Your yearly pass entitles you to discounted food and drinks, member only invites, reward points to use in venue and exclusive giveaway draws, all for a small membership fee.",
+  ],
+  image: P("textsection-membership", 1600, 797, "The Clubhouse membership cards"),
+  imagePosition: "left" as const,
+  cta: { label: "Get a membership", href: "#" },
+};
+
+export const textSectionPlease = {
+  heading: "We aim to please!",
+  paragraphs: [
+    "At The Clubhouse, we understand the importance of making sure that our customers receive the best quality food and the finest meals. Our expectations not only extend to our kitchen, but also to our bar and gaming room, where our staff will do all they can to ensure you have a memorable visit with us.",
+    "If at any time you are unsatisfied with anything at our club, please have no hesitation in contacting our manager, and we will do our best to make sure the issue is resolved.",
+    "We also ask that if you have had a wonderful time with us, that you tell your friends and family, and give us a top rating on both Google Reviews and Facebook.",
+    "Thanks for visiting us!",
+  ],
+  image: P("textsection-pleaseaim", 734, 428, "Cheesecake"),
+  imagePosition: "right" as const,
+};
+
+/* ------------------------------------------------------------ hoursSection */
+
+export const openingHours = [
+  { key: "mon", day: "MONDAY", hours: "10:00am – 12:00am" },
+  { key: "tue", day: "TUESDAY", hours: "10:00am – 12:00am" },
+  { key: "wed", day: "WEDNESDAY", hours: "10:00am – 12:00am" },
+  { key: "thu", day: "THURSDAY", hours: "10:00am – 12:00am" },
+  { key: "fri", day: "FRIDAY", hours: "10:00am – 12:00am (CLOSED GOOD FRIDAY)" },
+  { key: "sat", day: "SATURDAY", hours: "10:00am – 12:00am" },
+  { key: "sun", day: "SUNDAY", hours: "10:00am – 12:00am" },
+];
+
+export const hoursNote = "Closing hours may vary at management's discretion.";
+
+export const hoursSection = {
+  heading: "Opening hours",
+  image: P("hours-steak", 734, 428, "Steak"),
+};
+
+/* -------------------------------------------------------------- cardGrid */
+
+export const cardGrid = {
+  heading: "Recommendations from our Chef",
+  intro: "Our Chef has recommended these selections from our menu. Be sure to try them out when you visit us!",
+  tone: "sand" as const,
+  columns: 3 as const,
+  cards: [
+    {
+      key: "porterhouse",
+      title: "Porterhouse Steak",
+      paragraphs: ["300g of locally-sourced, tender beef striploin, served with beer battered chips and a garden salad. Cooked to your liking every time!"],
+      image: P("card-porterhouse", 734, 428, "Porterhouse Steak"),
+    },
+    {
+      key: "salmon",
+      title: "Crispy Skin Salmon",
+      paragraphs: ["200g Atlantic salmon fillet, pan seared until crispy, served on garlic mash potato, fresh seasonal vegetables with a salsa verde and a balsamic glaze."],
+      image: P("card-salmon", 734, 428, "Crispy Skin Salmon"),
+    },
+    {
+      key: "chicken",
+      title: "Chicken Skewers",
+      paragraphs: ["Teriyaki marinated chicken on two skewers, char grilled and served on a garden salad with grilled pineapple and a teriyaki plum glaze."],
+      image: P("card-chicken", 623, 387, "Chicken Skewers"),
+    },
   ],
 };
 
-/* ----------------------------------------------------------- gallery */
+/* ---------------------------------------------------------- bookingSection */
 
-export const gallery = {
-  eyebrow: "Inside the club",
-  heading: "Life at / The Clubhouse",
-  intro: "From the front bar to the function room — a look inside The Clubhouse.",
-  tone: "light" as const,
-  images: [
-    { key: "tap", ...P("gallery-tap", 1600, 1067, "A beer being poured from the tap") },
-    { key: "toast", ...P("gallery-toast", 1600, 2400, "Friends raising a toast at the bar") },
-    { key: "bartaps", ...P("gallery-bartaps", 1600, 1067, "Beer taps behind the bar") },
-    { key: "diningtables", ...P("gallery-diningtables", 1600, 1067, "Tables set for a formal dinner") },
-    { key: "guesttoast", ...P("gallery-guesttoast", 1600, 1067, "Guests raising a toast") },
-    { key: "floral", ...P("gallery-floral", 1600, 1067, "Reception tables with floral centrepieces") },
-  ],
+export const bookingSection = {
+  heading: "Restaurant Bookings",
+  paragraphs: ["For all restaurant bookings, please phone us to speak with one of our friendly staff members."],
+  image: P("booking-bg", 1600, 1067, ""),
 };
 
-/* -------------------------------------------------------------- visit */
+/* -------------------------------------------------------------- footer */
 
-export const visit = {
-  eyebrow: "Visit us",
-  heading: "Open 7 days, / lunch and dinner",
-  image: P("gallery-diningtables", 1600, 1067, "The Clubhouse dining room set for service"),
-  address: ["2 Clubhouse Drive", "Brindabank"],
-  hours: [
-    { label: "Mon – Thu", value: "11am – 10pm" },
-    { label: "Fri – Sat", value: "11am – 12am" },
-    { label: "Sun", value: "11am – 9pm" },
+export const footer = {
+  address: "12 – 18 Clubhouse Drive, Brindabank, QLD, 4306",
+  phone: "(07) 3900 1200",
+  openingHours,
+  hoursNote,
+  tagline: "The Clubhouse has been serving the local community since 1968.",
+  about: "A not for profit licensed club and restaurant supporting local sport at the Brindabank Recreation Reserve.",
+  facebook: "https://www.facebook.com/theclubhousebrindabank",
+  footerLinks: [
+    { key: "home", href: "/examples/clubhouse", label: "Home" },
+    { key: "dining", href: "#", label: "Dining and Bars" },
+    { key: "recreation", href: "#", label: "Recreation" },
+    { key: "whats-on", href: "#", label: "What's On" },
+    { key: "membership", href: "#", label: "Membership" },
+    { key: "community", href: "#", label: "Community" },
+    { key: "about", href: "#", label: "About" },
+    { key: "contact", href: "#", label: "Contact" },
   ],
-  phone: { label: "(07) 5500 0000", href: "tel:+61755000000" },
-  cta: { label: "Book a table", href: "#visit" },
-  note: "The Clubhouse is a registered community club — members and guests welcome.",
 };

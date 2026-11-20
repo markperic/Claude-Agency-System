@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, ExternalLink } from "lucide-react";
+import { ArrowLeft, ArrowRight, CodeXml, ExternalLink } from "lucide-react";
 import pagesData from "@/registry/pages.json";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
@@ -15,9 +15,10 @@ import { SiteFooter } from "@/components/site-footer";
  * and links out to each page's real route under /examples/ rather than
  * rendering it inline. An entry with `external: true` isn't built from the
  * module catalog at all — it's a standalone, independently cloneable repo
- * (see MODULE-LIBRARY.md's "split out" pattern), so its href points off-site
- * to that repo instead of an internal /examples/ route, and it opens in a
- * new tab.
+ * (see MODULE-LIBRARY.md's "split out" pattern): `href` points to its live
+ * deployment (opens in a new tab, same as clicking any other card) and an
+ * optional `repoHref` renders a small separate "View repo" link for anyone
+ * who wants the source instead of the live page.
  */
 export default function PagesCategoryPage() {
   const pages = pagesData.pages;
@@ -45,12 +46,9 @@ export default function PagesCategoryPage() {
       <div className="mx-auto max-w-5xl px-6 py-16">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           {pages.map((page) => (
-            <Link
+            <div
               key={page.slug}
-              href={page.href}
-              target={page.external ? "_blank" : undefined}
-              rel={page.external ? "noopener noreferrer" : undefined}
-              className="group rounded-2xl border border-zinc-200 p-6 transition-colors hover:border-zinc-300 hover:bg-zinc-50"
+              className="group relative rounded-2xl border border-zinc-200 p-6 transition-colors hover:border-zinc-300 hover:bg-zinc-50"
             >
               <div className="relative mb-5 aspect-[16/10] overflow-hidden rounded-xl bg-zinc-100">
                 <Image
@@ -70,11 +68,32 @@ export default function PagesCategoryPage() {
                 )}
               </div>
               <h2 className="flex items-center gap-1.5 text-lg font-semibold text-zinc-950">
-                {page.title}
+                {/* Stretched link: covers the whole card via ::before so the
+                    image/description are clickable too, while repoHref below
+                    stays its own independently-clickable element. */}
+                <Link
+                  href={page.href}
+                  target={page.external ? "_blank" : undefined}
+                  rel={page.external ? "noopener noreferrer" : undefined}
+                  className="before:absolute before:inset-0"
+                >
+                  {page.title}
+                </Link>
                 <ArrowRight className="h-4 w-4 -translate-x-1 opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100" />
               </h2>
               <p className="mt-1.5 text-sm text-zinc-600">{page.description}</p>
-            </Link>
+              {page.repoHref && (
+                <Link
+                  href={page.repoHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="relative z-10 mt-2 inline-flex items-center gap-1 text-xs font-medium text-zinc-500 hover:text-zinc-800"
+                >
+                  <CodeXml className="h-3 w-3" />
+                  View repo
+                </Link>
+              )}
+            </div>
           ))}
         </div>
       </div>

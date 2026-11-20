@@ -34,6 +34,14 @@
       "href": "/examples/clubhouse",
       "description": "A sports and social club site: split-title intro, colour chapters, club arc, stats, scroll gallery.",
       "thumb": "/thumbs/clubhouse.webp"
+    },
+    {
+      "slug": "treasure-kids-layout",
+      "title": "Treasure Kids",
+      "href": "https://github.com/markperic/treasure-kids-layout",
+      "external": true,
+      "description": "A childcare/early-learning layout: draw-on animated logo, safety-first feature section, pinned FAQ stack, rooms and tour CTA. Standalone repo, not built from the module catalog — clone or use as a GitHub template.",
+      "thumb": "/thumbs/treasure-kids-layout.webp"
     }
   ]
 }

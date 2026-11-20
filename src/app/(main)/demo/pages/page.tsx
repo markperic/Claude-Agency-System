@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, ExternalLink } from "lucide-react";
 import pagesData from "@/registry/pages.json";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
@@ -12,8 +12,12 @@ import { SiteFooter } from "@/components/site-footer";
  * not a single component that makes sense shown standalone, so this route
  * reads from src/registry/pages.json instead (each entry has an animated
  * `thumb` in public/thumbs/ — a looping slideshow of the page as it scrolls)
- * and links out to each page's
- * real route under /examples/ rather than rendering it inline.
+ * and links out to each page's real route under /examples/ rather than
+ * rendering it inline. An entry with `external: true` isn't built from the
+ * module catalog at all — it's a standalone, independently cloneable repo
+ * (see MODULE-LIBRARY.md's "split out" pattern), so its href points off-site
+ * to that repo instead of an internal /examples/ route, and it opens in a
+ * new tab.
  */
 export default function PagesCategoryPage() {
   const pages = pagesData.pages;
@@ -44,6 +48,8 @@ export default function PagesCategoryPage() {
             <Link
               key={page.slug}
               href={page.href}
+              target={page.external ? "_blank" : undefined}
+              rel={page.external ? "noopener noreferrer" : undefined}
               className="group rounded-2xl border border-zinc-200 p-6 transition-colors hover:border-zinc-300 hover:bg-zinc-50"
             >
               <div className="relative mb-5 aspect-[16/10] overflow-hidden rounded-xl bg-zinc-100">
@@ -56,6 +62,12 @@ export default function PagesCategoryPage() {
                   unoptimized
                   className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                 />
+                {page.external && (
+                  <span className="absolute right-3 top-3 inline-flex items-center gap-1 rounded-full bg-white/90 px-2.5 py-1 text-xs font-medium text-zinc-700 shadow-sm backdrop-blur">
+                    <ExternalLink className="h-3 w-3" />
+                    Standalone repo
+                  </span>
+                )}
               </div>
               <h2 className="flex items-center gap-1.5 text-lg font-semibold text-zinc-950">
                 {page.title}

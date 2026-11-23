@@ -10,7 +10,9 @@
     {
       "slug": "estate-agency",
       "title": "Estate Agency",
-      "href": "/examples/estate-agency",
+      "href": "https://estate.capote.design",
+      "repoHref": "https://github.com/markperic/estate-agency-layout",
+      "external": true,
       "description": "A high-end property agency architecture: cinematic opener, stat columns, case index, team slider.",
       "thumb": "/thumbs/estate-agency.webp"
     },

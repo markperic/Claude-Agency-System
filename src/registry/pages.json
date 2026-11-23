@@ -21,7 +21,9 @@
     {
       "slug": "pilates",
       "title": "Pilates Studio",
-      "href": "/examples/pilates",
+      "href": "https://pilates.capote.design",
+      "repoHref": "https://github.com/markperic/pilates-showcase",
+      "external": true,
       "description": "A reformer studio built as pinned stages: converging cards, orbiting carousel, split reveal, FAQ.",
       "thumb": "/thumbs/pilates.webp"
     },

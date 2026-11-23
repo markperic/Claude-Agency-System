@@ -22,12 +22,12 @@ const LINKS: KineticNavLink[] = [
  * panel in two columns at every breakpoint instead of being squeezed into the
  * bar. The pill itself is kept (white, bordered, blurred) rather than taking
  * the module's bare-header treatment, because SiteNav sits over both the light
- * /demo pages and the dark hero on /examples/design-manifesto, and the pill is
+ * /demo pages and the dark hero on /examples/pilates, and the pill is
  * what makes it legible on both.
  *
  * Rendered per-page (each page calls <SiteNav /> itself) rather than from the
  * root layout, same as SiteFooter — see that file for why. Pass `overlay` on
- * pages that open on a full-bleed hero (e.g. /examples/design-manifesto) so the
+ * pages that open on a full-bleed hero (e.g. /examples/pilates) so the
  * header floats over it instead of reserving a band above it.
  */
 export function SiteNav({ overlay = false }: { overlay?: boolean }) {

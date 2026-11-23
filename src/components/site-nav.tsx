@@ -27,7 +27,7 @@ const LINKS: KineticNavLink[] = [
  *
  * Rendered per-page (each page calls <SiteNav /> itself) rather than from the
  * root layout, same as SiteFooter — see that file for why. Pass `overlay` on
- * pages that open on a full-bleed hero (e.g. /examples/estate-agency) so the
+ * pages that open on a full-bleed hero (e.g. /examples/design-manifesto) so the
  * header floats over it instead of reserving a band above it.
  */
 export function SiteNav({ overlay = false }: { overlay?: boolean }) {

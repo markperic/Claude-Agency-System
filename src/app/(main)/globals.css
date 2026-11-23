@@ -10,9 +10,8 @@
   /* Height of the floating chrome stacked at the top of the page — the bottom
      edge of the lowest element that stays pinned there. Zero by default: most
      pages float nothing, and their sections should not reserve space for it.
-     A page that does stack chrome sets it on its own root element, e.g.
-     /examples/estate-agency sets 98px (site header condensed to 42px, chapter
-     pill beneath it to 98px), and every section inside inherits it.
+     A page that does stack chrome sets it on its own root element
+     (header + chapter pill → typically ~98px), and every section inside inherits it.
 
      Pinned sections read it to keep their resting content clear of that band —
      always as max(own padding, chrome + gap), so a page with no chrome keeps

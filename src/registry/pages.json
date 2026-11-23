@@ -3,7 +3,9 @@
     {
       "slug": "design-manifesto",
       "title": "Real Design Wins",
-      "href": "/examples/design-manifesto",
+      "href": "https://manifesto.capote.design",
+      "repoHref": "https://github.com/markperic/design-manifesto",
+      "external": true,
       "description": "A design-agency manifesto from the catalog: zoom video, animated stats, scroll statement, FAQ.",
       "thumb": "/thumbs/design-manifesto.webp"
     },

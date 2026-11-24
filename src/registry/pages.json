@@ -30,9 +30,11 @@
     {
       "slug": "property",
       "title": "Property",
-      "href": "/examples/property",
+      "href": "https://property.capote.design",
       "thumb": "/thumbs/property.webp",
-      "description": "A luxury villa site with its own scroll opener, sticky feature stages, card slider, testimonials."
+      "description": "A luxury villa site with its own scroll opener, sticky feature stages, card slider, testimonials.",
+      "repoHref": "https://github.com/markperic/property-website",
+      "external": true
     },
     {
       "slug": "clubhouse",

@@ -1,7 +1,5 @@
 @import "tailwindcss";
 
-/* /examples/property has its own root layout and stylesheet (its Tailwind scale differs), so keep its files out of this one. */
-@source not "../../showcase/property";
 
 :root {
   --background: #ffffff;

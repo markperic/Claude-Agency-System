@@ -13,7 +13,7 @@ import "./clubhouse.css";
  * site's: the client project's theme tokens (--color-ink, --color-cream) and
  * utility classes (eyebrow, btn, btn-gold) collide by name with the main
  * site's own, with different values — isolating the stylesheet keeps the two
- * apart entirely, the same reason `(property)` has its own root layout.
+ * apart entirely — same pattern as the other standalone showcase layouts.
  */
 const slab = Roboto_Slab({ variable: "--font-clubhouse-display", subsets: ["latin"], weight: ["400", "500", "600"] });
 const manrope = Manrope({ variable: "--font-clubhouse-sans", subsets: ["latin"] });

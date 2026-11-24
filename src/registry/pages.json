@@ -39,9 +39,11 @@
     {
       "slug": "clubhouse",
       "title": "The Clubhouse",
-      "href": "/examples/clubhouse",
+      "href": "https://clubhouse.capote.design",
       "description": "A sports and social club site: split-title intro, colour chapters, club arc, stats, scroll gallery.",
-      "thumb": "/thumbs/clubhouse.webp"
+      "thumb": "/thumbs/clubhouse.webp",
+      "repoHref": "https://github.com/markperic/clubhouse-website",
+      "external": true
     },
     {
       "slug": "treasure-kids-layout",
